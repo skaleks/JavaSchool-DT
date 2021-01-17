@@ -1,8 +1,6 @@
-/.idea/
-/out/
-/target/
-*.iml
-/.project
-/.classpath
-/.settings/
-/src/main/resources/application.properties
+*.idea
+/target
+*out
+*war
+*jar
+*ear

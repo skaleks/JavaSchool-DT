@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Magenta Operator</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
 </head>
 <body>
-<header th:replace="~{header::navbar}"></header>
+<header th:replace="~{header::navbarAdmin}"></header>
 <main class="container">
     <h1>List of contracts</h1>
     <div class="row">
@@ -19,19 +19,27 @@
                     <th scope="col">Number</th>
                     <th scope="col">Username</th>
                     <th scope="col">Tariff</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="contract: ${contracts}">
+                <tr th:each="contract: ${contracts.contractDtoList}">
                     <td th:text="${contract.getId()}"></td>
                     <td th:text="${contract.getNumber()}"></td>
-                    <td th:text="${contract.getUser()}"></td>
-                    <td th:text="${contract.getTariff()}"></td>
+                    <td th:text="${contract.getUser().getFirstname()}"></td>
+                    <td th:text="${contract.getTariff().getName()}"></td>
+                    <td th:text="${contract.getStatus()}"></td>
+                    <td th:text="${contract.getTariff().getPrice()}"></td>
+                    <td><a th:href="@{/admin/edit/deleteContract{id}(id = ${contract.getId()})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <a th:href="@{/admin}">Back to main</a>
 </main>
+<footer th:replace="~{footer::footer}"></footer>
 </body>
 </html>

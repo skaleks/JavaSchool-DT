@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Magenta Operator</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
 </head>
 <body>
-<header th:replace="~{header::navbar}"></header>
+<header th:replace="~{header::navbarAdmin}"></header>
 <main class="container">
     <h1>List of tariffs</h1>
     <div class="row">
@@ -18,14 +18,36 @@
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Price</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Status</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="tariff: ${tariffs}">
+                <tr th:each="tariff: ${tariffs.tariffDtoList}">
                     <td th:text="${tariff.getId()}"></td>
                     <td th:text="${tariff.getName()}"></td>
                     <td th:text="${tariff.getPrice()}"></td>
-                    <td><a th:href="@{/admin/{id}/deleteTariff(id = ${tariff.getId()})}">Delete</a></td>
+                    <td th:text="${tariff.getTariffDescription()}"></td>
+                    <td th:text="${tariff.getStatus()}"></td>
+                    <td><a th:href="@{/admin/edit/deleteTariff{id}(id = ${tariff.getId()})}">Delete</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <table th:each="tariff: ${tariffs.tariffDtoList}" class="table table-hover table-info">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Add Cost</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="option: ${tariff.options}">
+                    <td th:text="${option.id}"></td>
+                    <td th:text="${option.name}"></td>
+                    <td th:text="${option.price}"></td>
+                    <td th:text="${option.addCost}"></td>
                 </tr>
                 </tbody>
             </table>
@@ -33,5 +55,6 @@
     </div>
     <a th:href="@{/admin}">Back to main</a>
 </main>
+<footer th:replace="~{footer::footer}"></footer>
 </body>
 </html>

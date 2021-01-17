@@ -3,57 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <title>Magenta Operator</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
     <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
 </head>
 <body>
-<header th:replace="~{header::navbar}"></header>
-<main class="container">
-    <div class="row">
-        <div class="col-6 justify-content-start border border-3 border-dark rounded ">
-            <div class="row"><h1 class="text-center">New user</h1></div>
-            <form class="row" th:method="POST" th:action="@{/admin/user}" th:object="${user}">
-                <div class="col-6">
-                    <label for="firstname" class="form-label">First name</label>
-                    <input  id="firstname" type="text" class="form-control" placeholder="Telekom" th:field = "*{firstname}" aria-label="">
+<header th:replace="~{header::navbarAdmin}"></header>
+<main class="container-fluid">
+<!--    <div class="row mt-4 justify-content-center"><h3 class="h3 text-center">Something</h3></div>-->
+<!--    <div class="row justify-content-center">-->
+<!--        <div class="col-5 border border-3 border-dark rounded ">-->
+<!--            <div class="row justify-content-center"><h1 class="text-center">New user</h1></div>-->
+<!--            <form class="row" th:method="POST" th:action="@{/admin/new/user}" th:object="${user}">-->
+<!--                <div class="col-6">-->
+<!--                    <label for="firstname" class="form-label">First name</label>-->
+<!--                    <input  id="firstname" type="text" class="form-control" placeholder="Telekom" th:field = "*{firstname}">-->
+<!--                </div>-->
+<!--                <div class="col-6">-->
+<!--                    <label for="lastname" class="form-label">Last name</label>-->
+<!--                    <input id="lastname" type="text" class="form-control" placeholder="Deutsche" th:field = "*{lastname}">-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                    <label for="birthdate" class="form-label">Birth date</label>-->
+<!--                    <input id="birthdate" type="date" class="form-control" placeholder="Birthdate" th:field = "*{birthdate}">-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                    <label for="e-mail" class="form-label">E-mail</label>-->
+<!--                    <input id="e-mail" type="text" class="form-control" placeholder="E-mail" th:field = "*{email}">-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                    <label for="passport" class="form-label">Passport</label>-->
+<!--                    <input id="passport" type="text" class="form-control" placeholder="Passport" th:field = "*{passport}">-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                    <label for="login" class="form-label">Login</label>-->
+<!--                    <input id="login" type="text" class="form-control" placeholder="Login" th:field = "*{login}">-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                    <label for="password" class="form-label">Password</label>-->
+<!--                    <input id="password" type="text" class="form-control" placeholder="Password" th:field = "*{password}">-->
+<!--                </div>-->
+<!--                <div class="col-4">-->
+<!--                    <label for="role" class="form-label">Role</label>-->
+<!--                    <input id="role" type="text" class="form-control" placeholder="Who are you?" th:field = "*{role}">-->
+<!--                </div>-->
+<!--                <div class="col-12">-->
+<!--                    <label for="address" class="form-label">Address</label>-->
+<!--                    <input id="address" type="text" class="form-control" placeholder="Address" th:field = "*{address}">-->
+<!--                </div>-->
+<!--                <div class="col-12">-->
+<!--                    <label for="status" class="form-label">Status</label>-->
+<!--                    <input id="status" type="text" class="form-control" placeholder="Status" th:field = "*{status}">-->
+<!--                </div>-->
+<!--                <div class="col-12">-->
+<!--                    <br/>-->
+<!--                    <button type="submit" class="btn btn-primary">Sign in</button>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="py-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="display-4 mx-2">User registration page</h1>
                 </div>
-                <div class="col-6">
-                    <label for="lastname" class="form-label">Last name</label>
-                    <input id="lastname" type="text" class="form-control" placeholder="Deutsche" th:field = "*{lastname}">
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-8">
+                    <form class="m-1" th:method="POST" th:action="@{/admin/new/user}" th:object="${user}">
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label for="firstname" class="form-label ml-1">First name</label>
+                                <input id="firstname" type="text" class="form-control" th:classappend="${#fields.hasErrors('firstname')}?'is-invalid'" placeholder="Enter your first name" th:field = "*{firstname}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></small>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="lastname" class="form-label ml-1">Last name</label>
+                                <input id="lastname" type="text" class="form-control" th:classappend="${#fields.hasErrors('lastname')}?'is-invalid'" placeholder="Enter your last name" th:field = "*{lastname}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-4">
+                                <label for="birthdate" class="form-label ml-1">Birth date</label>
+                                <input id="birthdate" type="date" class="form-control" th:classappend="${#fields.hasErrors('birthdate')}?'is-invalid'" th:field = "*{birthdate}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></small>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="email" class="form-label ml-1">E-mail</label>
+                                <input id="email" type="text" class="form-control" th:classappend="${#fields.hasErrors('email')}?'is-invalid'" placeholder="info@t-systems.ru" th:field = "*{email}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                            </div>
+                            <div class="form-group col-4">
+                                <label for="passport" class="form-label ml-1">Passport</label>
+                                <input id="passport" type="text" class="form-control" th:classappend="${#fields.hasErrors('passport')}?'is-invalid'" placeholder="Passport" th:field = "*{passport}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('passport')}" th:errors="*{passport}"></small>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="address" class="form-label ml-1">Address</label>
+                                <input id="address" type="text" class="form-control" th:classappend="${#fields.hasErrors('address')}?'is-invalid'" placeholder="Saint-Petersburg, Street 13, 111" th:field = "*{address}">
+                                <small class="invalid-feedback" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></small>
+                            </div>
+                        </div>
+                        <hr class="w-75">
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label for="login" class="form-label ml-1">Login</label>
+                                <input id="login" type="text" class="form-control" th:classappend="${#fields.hasErrors('login')}?'is-invalid'" placeholder="Login" th:field = "*{login}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="password" class="form-label ml-1">Password</label>
+                                <input id="password" type="password" class="form-control" th:classappend="${#fields.hasErrors('password')}?'is-invalid'" placeholder="Password" th:field = "*{password}">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                            </div>
+                        </div>
+                        <div class="form-row pt-3">
+                            <div class="col-8"><button type="submit" class="btn btn-block btn-sm btn-success">Sign in</button></div>
+                            <div class="col"><a th:href="@{/admin/allUsers}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-4">
-                    <label for="birthdate" class="form-label">Birthdate</label>
-                    <input id="birthdate" type="date" class="form-control" placeholder="Birthdate" th:field = "*{birthdate}">
-                </div>
-                <div class="col-4">
-                    <label for="e-mail" class="form-label">E-mail</label>
-                    <input id="e-mail" type="text" class="form-control" placeholder="E-mail" th:field = "*{email}">
-                </div>
-                <div class="col-4">
-                    <label for="passport" class="form-label">Passport</label>
-                    <input id="passport" type="text" class="form-control" placeholder="Passport" th:field = "*{passport}">
-                </div>
-                <div class="col-4">
-                    <label for="login" class="form-label">Login</label>
-                    <input id="login" type="text" class="form-control" placeholder="Login" th:field = "*{login}">
-                </div>
-                <div class="col-4">
-                    <label for="password" class="form-label">Password</label>
-                    <input id="password" type="text" class="form-control" placeholder="Password" th:field = "*{password}">
-                </div>
-                <div class="col-4">
-                    <label for="role" class="form-label">Role</label>
-                    <input id="role" type="text" class="form-control" placeholder="Who are you?" th:field = "*{role}">
-                </div>
-                <div class="col-12">
-                    <label for="address" class="form-label">Address</label>
-                    <input id="address" type="text" class="form-control" placeholder="Address" th:field = "*{address}">
-                </div>
-                <div class="col-12">
-                    <br/>
-                    <button type="submit" class="btn btn-primary">Sign in</button>
-                </div>
-            </form>
+            </div>
         </div>
     </div>
     <!--        <form th:method="POST" th:action="@{/admin/user}" th:object="${user}">-->
@@ -96,5 +169,6 @@
     <!--            <input type="submit" value="Create User">-->
     <!--        </form>-->
 </main>
+<footer th:replace="~{footer::footer}"></footer>
 </body>
 </html>
