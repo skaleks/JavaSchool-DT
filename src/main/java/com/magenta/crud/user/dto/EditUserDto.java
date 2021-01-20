@@ -33,6 +33,6 @@ public class EditUserDto implements Serializable {
     @Email
     private String email;
 
-    @NotNull
+    @NotEmpty(message = "Should not be empty")
     private String password;
 }

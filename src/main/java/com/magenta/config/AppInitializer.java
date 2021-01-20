@@ -1,5 +1,6 @@
 package com.magenta.config;
 
+import com.magenta.security.SecurityConfiguration;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -7,7 +8,7 @@ public class AppInitializer extends AbstractAnnotationConfigDispatcherServletIni
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{PersistenceConfig.class};
+        return new Class[]{PersistenceConfig.class, SecurityConfiguration.class};
     }
 
     @Override

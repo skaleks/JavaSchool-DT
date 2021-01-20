@@ -6,6 +6,7 @@ import com.magenta.crud.contract.dto.NewContractDto;
 import com.magenta.crud.option.OptionService;
 import com.magenta.crud.tariff.TariffService;
 import com.magenta.crud.user.UserService;
+import com.magenta.crud.user.dto.EditUserDto;
 import com.magenta.crud.user.dto.UserDto;
 import com.magenta.myexception.MyException;
 import org.modelmapper.ModelMapper;
@@ -63,18 +64,19 @@ public class AdminEditController {
         return "redirect:/admin/allContracts";
     }
     @GetMapping("/updateUser{id}")
-    public String editUser(@PathVariable("id") int id, Model model) throws Exception {
-        model.addAttribute("user", userService.findById(id));
+    public String editUser(@PathVariable("id") int id, @ModelAttribute("editUserDto") EditUserDto editUserDto, Model model) throws Exception {
+        model.addAttribute("userDto", userService.findById(id));
         return "admin/updateUser";
     }
 
     @PostMapping("/{id}")
-    public String updateUser(@Valid @ModelAttribute("user") UserDto userDto, BindingResult result,
+    public String updateUser(@Valid @ModelAttribute("editUserDto") EditUserDto editUserDto, BindingResult result,
                              @PathVariable int id, Model model) throws MyException {
 
         if (result.hasErrors()) {
             return "admin/updateUser";
         }
+        UserDto userDto = modelMapper.map(editUserDto,UserDto.class);
         userService.update(userDto);
         model.addAttribute("user",userService.findById(id));
         return "admin/userInfo";

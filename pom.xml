@@ -14,12 +14,13 @@
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
     <spring.framework.version>5.2.11.RELEASE</spring.framework.version>
-    <springsecurity.version>5.0.4.RELEASE</springsecurity.version>
+    <springsecurity.version>5.3.4.RELEASE</springsecurity.version>
     <javax.persistence.version>2.2</javax.persistence.version>
     <hibernate.version>5.4.10.Final</hibernate.version>
     <postgresql.version>42.2.18</postgresql.version>
     <lombok.version>1.18.2</lombok.version>
     <modelmapper.version>2.3.8</modelmapper.version>
+    <thymeleaf.extras.version>3.0.4.RELEASE</thymeleaf.extras.version>
   </properties>
 
   <dependencies>
@@ -62,6 +63,11 @@
         <!--  Spring Security  -->
     <dependency>
       <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-core</artifactId>
+      <version>${springsecurity.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-web</artifactId>
       <version>${springsecurity.version}</version>
     </dependency>
@@ -82,8 +88,14 @@
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
     </dependency>
+    <dependency>
+      <groupId>org.thymeleaf.extras</groupId>
+      <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+      <version>${thymeleaf.extras.version}</version>
+    </dependency>
 
-        <!--  Database  -->
+
+    <!--  Database  -->
     <dependency>
       <groupId>org.postgresql</groupId>
       <artifactId>postgresql</artifactId>

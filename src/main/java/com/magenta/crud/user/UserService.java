@@ -11,11 +11,13 @@ public interface UserService {
 
     void save(NewUserDto newUserDto);
 
-    UserDto findById(int id) throws MyException;
-
     List<UserDto> findAllUsers();
 
+    UserDto findById(int id) throws MyException;
+
     UserDto findByNumber(String number) throws MyException;
+
+    User findByLogin(String login) throws MyException;
 
     void deleteById(int id);
 

@@ -13,6 +13,8 @@ public interface UserDao {
 
     List<User> findAllUsers();
 
+    User findByLogin(String login) throws MyException;
+
     void delete(int id);
 
     void update(User user);
