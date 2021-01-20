@@ -8,7 +8,7 @@ import com.magenta.crud.tariff.dto.AllTariffDto;
 import com.magenta.crud.user.UserService;
 import com.magenta.crud.user.dto.AllUsersDto;
 import com.magenta.myexception.MyException;
-import com.magenta.sessioncart.SessionCart;
+import com.magenta.security.SecurityService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +30,7 @@ public class AdminInformationController {
     private final ContractService contractService;
     private final TariffService tariffService;
     private final OptionService optionService;
-    private final SessionCart sessionCart;
+    private final SecurityService securityService;
 
 //    @Autowired
 //    public AdminInformationController(UserService userService, ContractService contractService, TariffService tariffService, OptionService optionService) {
@@ -41,8 +41,7 @@ public class AdminInformationController {
 //    }
 
     @GetMapping()
-    public String adminPanel(Model model){
-//        model.addAttribute("s", sessionCart.getCount());
+    public String adminPanel(){
         return "admin/adminPanel";
     }
 

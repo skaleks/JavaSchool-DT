@@ -26,8 +26,18 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @SuppressWarnings("unchecked")
     public List<User> findAllUsers() {
         return (List<User>) getSession()
-                .createQuery("SELECT c FROM User c")
+                .createQuery("SELECT u FROM User u")
                 .getResultList();
+    }
+
+    @Override
+    public User findByLogin(String login) throws MyException {
+        List users = getSession()
+                .createQuery("SELECT u FROM User u WHERE u.login = :login")
+                .setParameter("login", login)
+                .getResultList();
+        if (users.isEmpty()) throw new MyException("User isn't exist");
+        return (User) users.get(0);
     }
 
     @Override

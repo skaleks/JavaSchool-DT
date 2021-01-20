@@ -18,39 +18,39 @@
             </div>
             <div class="row mt-4">
                 <div class="col-md-8">
-                    <form class="m-1" th:method="POST" th:action="@{/admin/edit/{id}(id = ${user.getId()})}" th:object="${user}">
+                    <form class="m-1" th:method="POST" th:action="@{/admin/edit/{id}(id = ${userDto.getId()})}" th:object="${editUserDto}">
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="firstname" class="form-label ml-1">First name</label>
-                                <input id="firstname" type="text" class="form-control" th:classappend="${#fields.hasErrors('firstname')}?'is-invalid'" placeholder="Enter your first name" th:field = "*{firstname}">
+                                <input id="firstname" type="text" class="form-control" th:classappend="${#fields.hasErrors('firstname')}?'is-invalid'" th:placeholder="${userDto.firstname}" th:field = "*{firstname}">
                                 <small class="invalid-feedback" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></small>
                             </div>
                             <div class="form-group col-6">
                                 <label for="lastname" class="form-label ml-1">Last name</label>
-                                <input id="lastname" type="text" class="form-control" th:classappend="${#fields.hasErrors('lastname')}?'is-invalid'" placeholder="Enter your last name" th:field = "*{lastname}">
+                                <input id="lastname" type="text" class="form-control" th:classappend="${#fields.hasErrors('lastname')}?'is-invalid'" th:placeholder="${userDto.lastname}" th:field = "*{lastname}">
                                 <small class="invalid-feedback" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></small>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-4">
                                 <label for="birthdate" class="form-label ml-1">Birth date</label>
-                                <input id="birthdate" type="date" class="form-control" th:field = "*{birthdate}" readonly>
+                                <input id="birthdate" type="date" class="form-control" th:field = "${userDto.birthdate}" readonly>
                             </div>
                             <div class="form-group col-4">
                                 <label for="email" class="form-label ml-1">E-mail</label>
-                                <input id="email" type="text" class="form-control" th:classappend="${#fields.hasErrors('email')}?'is-invalid'" placeholder="info@t-systems.ru" th:field = "*{email}">
+                                <input id="email" type="text" class="form-control" th:classappend="${#fields.hasErrors('email')}?'is-invalid'" th:placeholder="${userDto.email}" th:field = "*{email}">
                                 <small class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
                             </div>
                             <div class="form-group col-4">
                                 <label for="passport" class="form-label ml-1">Passport</label>
-                                <input id="passport" type="text" class="form-control" th:classappend="${#fields.hasErrors('passport')}?'is-invalid'" placeholder="Passport" th:field = "*{passport}">
+                                <input id="passport" type="text" class="form-control" th:classappend="${#fields.hasErrors('passport')}?'is-invalid'" th:placeholder="${userDto.passport}" th:field = "*{passport}">
                                 <small class="invalid-feedback" th:if="${#fields.hasErrors('passport')}" th:errors="*{passport}"></small>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-12">
                                 <label for="address" class="form-label ml-1">Address</label>
-                                <input id="address" type="text" class="form-control" th:classappend="${#fields.hasErrors('address')}?'is-invalid'" placeholder="Saint-Petersburg, Street 13, 111" th:field = "*{address}">
+                                <input id="address" type="text" class="form-control" th:classappend="${#fields.hasErrors('address')}?'is-invalid'" th:placeholder="${userDto.address}" th:field = "*{address}">
                                 <small class="invalid-feedback" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></small>
                             </div>
                         </div>
@@ -58,8 +58,7 @@
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="login" class="form-label ml-1">Login</label>
-                                <input id="login" type="text" class="form-control" th:classappend="${#fields.hasErrors('login')}?'is-invalid'" placeholder="Login" th:field = "*{login}" readonly>
-                                <div class="invalid-feedback" th:if="${#fields.hasErrors('login')}" th:errors="*{login}"></div>
+                                <input id="login" type="text" class="form-control" th:field = "${userDto.login}" readonly>
                             </div>
                             <div class="form-group col-6">
                                 <label for="password" class="form-label ml-1">Password</label>
@@ -67,8 +66,8 @@
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                             </div>
                         </div>
-                        <input id="role" type="hidden" name="role" th:value="*{role}">
-                        <input id="status" type="hidden" name="status" th:value="*{status}">
+                        <input id="role" type="hidden" name="role" th:value="${userDto.role}">
+                        <input id="status" type="hidden" name="status" th:value="${userDto.status}">
                         <div class="form-row pt-3">
                             <div class="col-8"><button type="submit" class="btn btn-block btn-sm btn-success">Save changes</button></div>
                             <div class="col"><a th:href="@{/admin/adminPanel}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
@@ -76,9 +75,9 @@
                     </form>
                 </div>
                 <div class="col">
-                    <p th:text="${user.status}"></p>
-                    <p th:text="${user.id}"></p>
-                    <p th:text="${user.role}"></p>
+                    <p th:text="${userDto.status}"></p>
+                    <p th:text="${userDto.id}"></p>
+                    <p th:text="${userDto.role}"></p>
                 </div>
             </div>
         </div>

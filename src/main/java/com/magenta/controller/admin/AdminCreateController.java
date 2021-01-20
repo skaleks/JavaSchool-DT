@@ -36,15 +36,6 @@ public class AdminCreateController {
     private final ContractService contractService;
     private final SessionCart sessionCart;
 
-//    @Autowired
-//    public AdminCreateController(UserService userService, TariffService tariffService, OptionService optionService, ContractService contractService, ModelMapper modelMapper) {
-//        this.userService = userService;
-//        this.tariffService = tariffService;
-//        this.optionService = optionService;
-//        this.contractService = contractService;
-//        this.modelMapper = modelMapper;
-//    }
-
     @GetMapping("/user")
     public String newFormUser(@ModelAttribute("user") NewUserDto newUserDto){
         return "admin/addUser";

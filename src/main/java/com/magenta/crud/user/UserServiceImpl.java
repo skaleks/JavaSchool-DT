@@ -9,6 +9,7 @@ import com.magenta.crud.user.dto.UserDto;
 import com.magenta.myexception.MyException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,9 +20,17 @@ import java.util.List;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    UserDao userDao;
-    ContractService contractService;
-    ModelMapper modelMapper;
+    private final UserDao userDao;
+    private final ContractService contractService;
+    private final ModelMapper modelMapper;
+
+
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Autowired
     public UserServiceImpl(UserDao userDao, ModelMapper modelMapper, ContractService contractService){
@@ -33,6 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(NewUserDto newUserDto) {
         User user = modelMapper.map(newUserDto,User.class);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setStatus(Status.ACTIVE);
         user.setRole(Role.USER);
         userDao.save(user);
@@ -56,6 +66,11 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(contractDto.getUser(),UserDto.class);
     }
 
+    @Override
+    public User findByLogin(String login) throws MyException {
+        return userDao.findByLogin(login);
+    }
+
 
     @Override
     public void deleteById(int id) {
@@ -66,7 +81,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(UserDto userDto) {
         User user = modelMapper.map(userDto,User.class);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.update(user);
     }
-
 }
