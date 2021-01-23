@@ -22,11 +22,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Qualifier(value = "userDetailsService")
     UserDetailsService userServiceDetails;
 
-//    @Autowired
-//    public SecurityConfiguration(@Qualifier(value = "userDetailsService") CustomUserServiceDetails userServiceDetails) {
-//        this.userServiceDetails = userServiceDetails;
-//    }
-
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth
@@ -51,7 +46,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .usernameParameter("login").passwordParameter("password").successHandler(authenticationSuccessHandler())
-                .failureUrl("/403")
+                .and()
+                .exceptionHandling().accessDeniedPage("/403")
                 .and()
                 .logout();
     }

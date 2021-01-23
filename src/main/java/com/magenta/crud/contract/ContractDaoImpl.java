@@ -1,7 +1,7 @@
 package com.magenta.crud.contract;
 
 import com.magenta.crud.AbstractDao;
-import com.magenta.myexception.MyException;
+import com.magenta.myexception.DatabaseException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,7 +15,7 @@ public class ContractDaoImpl extends AbstractDao<Contract> implements ContractDa
     }
 
     @Override
-    public void deleteContract(Contract contract) throws Exception {
+    public void deleteContract(Contract contract) throws DatabaseException {
         delete(findById(contract.getId()));
     }
 
@@ -28,18 +28,17 @@ public class ContractDaoImpl extends AbstractDao<Contract> implements ContractDa
     }
 
     @Override
-    public Contract findById(int id) throws MyException {
+    public Contract findById(int id) throws DatabaseException {
         return super.findById(id);
     }
 
     @Override
-    public Contract findByNumber(String number) throws MyException {
+    public Contract findByNumber(String number) throws DatabaseException {
         List resultList = getSession()
                 .createQuery("SELECT c FROM Contract c WHERE c.number = :number")
                 .setParameter("number",number)
                 .getResultList();
-        if (resultList.isEmpty()) throw new MyException("Number isn't exist");
-        Contract contract = (Contract) resultList.get(0);
-        return contract;
+        if (resultList.isEmpty()) return null;
+        return (Contract) resultList.get(0);
     }
 }

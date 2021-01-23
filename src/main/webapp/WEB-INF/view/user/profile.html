@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Magenta Operator</title>
+    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
+</head>
+<body>
+<header th:replace="~{header::navbarUser}"></header>
+<main>
+    <div class="py-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 h-100 pl-5">
+                    <div class="form-row card-body pb-2">
+                        <div class="col-6 badge">
+                            <h2 class="pl-4"><b>Status:</b></h2>
+                        </div>
+                        <div class="col-6 badge pr-3">
+                            <h2 th:text="${profile.user.status}">None</h2>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-row">
+                                <form th:action="@{/user/block}" th:method="POST" th:object="${status}"
+                                      th:if="${profile.user.status == profile.user.status.ACTIVE}" class="col">
+                                    <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
+                                    <input type="hidden" th:attr="name='status'" th:value="'BLOCKED'">
+                                    <button type="submit" class="btn btn-block btn-outline-danger">Block account</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border rounded-lg border-dark shadow">
+                        <h4 class="card-header">Information</h4>
+                        <div class="card-body">
+                            <dl>
+                                <dt>First name</dt>
+                                <dd th:text="${profile.user.firstname}"></dd>
+                                <dt>Last name</dt>
+                                <dd th:text="${profile.user.lastname}"></dd>
+                                <dt>Address</dt>
+                                <dd th:text="${profile.user.address}"></dd>
+                                <dt>Birth date</dt>
+                                <dd th:text="${profile.user.birthdate}"></dd>
+                                <dt>E-mail</dt>
+                                <dd th:text="${profile.user.email}"></dd>
+                                <dt>Passport</dt>
+                                <dd th:text="${profile.user.passport}"></dd>
+                            </dl>
+                        </div>
+                        <div class="card-footer">
+
+                                <!--         edit page and controller method              -->
+
+                            <a class="btn btn-info" th:href="@{/}">Edit profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 pr-5">
+                    <div class="card">
+                        <div class="card-body border rounded-lg border-dark shadow">
+                            <h1 class="bg-dark text-white pl-5 text-left">Contract list</h1>
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center">
+                                    <thead class="text-uppercase">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Phone number</th>
+                                        <th>Tariff</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="contract : ${profile.userContractList}">
+                                        <td th:text="${contract.id}">1</td>
+                                        <td th:text="${contract.number}">89992477803</td>
+                                        <td th:text="${contract.tariff.name}">Super</td>
+                                        <td th:text="${contract.price}">500</td>
+                                        <td th:text="${contract.status}">Active</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card border border-info rounded-lg shadow">
+                                <h4 class="card-header">Tariff description</h4>
+                                <div th:each="contract:${profile.userContractList}" class="card-body h-25">
+                                    <blockquote class="blockquote mb-0">
+                                        <p th:text="${contract.tariff.tariffDescription}">Description</p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="list-group">
+                                <th:block th:each="contract: ${profile.userContractList}">
+                                    <div th:each="option: ${contract.options}" class="list-group-item list-group-item-action flex-column align-items-start">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h5 class="mb-1" th:text="${option.name}"></h5>
+                                            <small th:text="'Price: ' + ${option.price}"></small>
+                                        </div>
+                                        <p class="mb-1" th:text="${option.optionDescription}"></p>
+                                        <small th:text="'Connection cost' + ${option.addCost}"></small>
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{footer::footer}"></footer>
+</body>
+</html>

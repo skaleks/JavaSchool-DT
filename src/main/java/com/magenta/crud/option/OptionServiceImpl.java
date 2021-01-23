@@ -1,9 +1,10 @@
 package com.magenta.crud.option;
 
+import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.option.dto.NewOptionDto;
 import com.magenta.crud.option.dto.OptionDto;
 import com.magenta.crud.type.Status;
-import com.magenta.myexception.MyException;
+import com.magenta.myexception.DatabaseException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service("optionService")
 @Transactional
@@ -33,8 +35,9 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
-    public void deleteExistOption(OptionDto optionDto) {
-        optionDao.deleteExistOption(modelMapper.map(optionDto,Option.class));
+    public void deleteExistOption(int id) throws DatabaseException {
+        Option option = optionDao.findOptionById(id);
+        optionDao.deleteExistOption(option);
     }
 
     @Override
@@ -45,12 +48,25 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
-    public OptionDto findOptionById(int id) throws MyException {
+    public OptionDto findOptionById(int id) throws DatabaseException {
         return modelMapper.map(optionDao.findOptionById(id),OptionDto.class);
+    }
+
+    @Override
+    public Set<Option> findSetOptionsById(List<Integer> optionsList) {
+        return optionDao.findSetOptionsById(optionsList);
     }
 
     @Override
     public void updateOption(Option option) {
         optionDao.updateOption(option);
+    }
+
+    @Override
+    public void setStatus(ChangeStatusDto statusDto) throws DatabaseException {
+
+        Option option = optionDao.findOptionById(statusDto.getEntityId());
+        Status newStatus = modelMapper.map(statusDto.getStatus(),Status.class);
+        option.setStatus(newStatus);
     }
 }

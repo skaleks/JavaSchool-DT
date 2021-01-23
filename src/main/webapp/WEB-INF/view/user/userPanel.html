@@ -8,36 +8,106 @@
 </head>
 <body>
 <header th:replace="~{header::navbarUser}"></header>
-<!--<main>-->
-<!--    <div class="col-md-4">-->
-<!--        <div class="card">-->
-<!--            <h5 class="card-header">-->
-<!--                Info-->
-<!--            </h5>-->
-<!--            <div class="card-body">-->
-<!--                <dl>-->
-<!--                    <dt>First name</dt>-->
-<!--                    <dd th:text="${user.firstname}"></dd>-->
-<!--                    <dt>Last name</dt>-->
-<!--                    <dd th:text="${user.lastname}"></dd>-->
-<!--                    <dt>Address</dt>-->
-<!--                    <dd th:text="${user.address}"></dd>-->
-<!--                    <dt>Birth date</dt>-->
-<!--                    <dd th:text="${user.birthdate}"></dd>-->
-<!--                    <dt>E-mail</dt>-->
-<!--                    <dd th:text="${user.email}"></dd>-->
-<!--                    <dt>Passport</dt>-->
-<!--                    <dd th:text="${user.passport}"></dd>-->
-<!--                </dl>-->
-<!--            </div>-->
-<!--            <div class="card-footer">-->
-<!--                <a th:href="@{/admin/edit/deleteUser{id}(id = ${user.getId()})}"-->
-<!--                   class="btn btn-outline-danger btn-sm">Delete</a>-->
-<!--                <a th:href="@{/admin/edit/updateUser{id}(id = ${user.getId()})}"-->
-<!--                   class="btn btn-outline-primary btn-sm">Edit</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</main>-->
+<main class="container-fluid">
+    <div class="py-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 h-100 pl-5">
+                    <div class="form-row card-body pb-2">
+                        <div class="col-6 badge">
+                            <h2 class="pl-4"><b>Status:</b></h2>
+                        </div>
+                        <div class="col-6 badge pr-3">
+                            <h2 th:text="${user.status}">None</h2>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-row">
+                                <div class="col">
+                                    <a th:href="@{/admin/edit/change{status}(status = 'Deactivate')}"
+                                       class="btn btn-block btn-outline-danger">Deactivate</a>
+                                </div>
+                                <div class="col">
+                                    <a th:href="@{/admin/edit/change{status}(status = 'Block')}"
+                                       class="btn btn-block btn-outline-warning">Block</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card border rounded-lg border-dark shadow">
+                        <h4 class="card-header">Information</h4>
+                        <div class="card-body">
+                            <dl>
+                                <dt>First name</dt>
+                                <dd th:text="${user.firstname}">Kirill</dd>
+                                <dt>Last name</dt>
+                                <dd th:text="${user.lastname}">Streltsov</dd>
+                                <dt>E-mail</dt>
+                                <dd th:text="${user.email}">Skaleksandrovich@inbox.ru</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8 pr-5">
+                    <div class="card">
+                        <div class="card-body border rounded-lg border-dark shadow">
+                            <h1 class="bg-dark text-white pl-5 text-left">Contract list</h1>
+                            <div class="table-responsive">
+                                <table class="table table-hover text-center">
+                                    <thead class="text-uppercase">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Phone number</th>
+                                        <th>Tariff</th>
+                                        <th>Price</th>
+                                        <th>Status</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row pt-2">
+                        <div class="col-md-6"><a class="btn btn-primary btn-block" href="#">Add contract</a></div>
+                        <div class="col-md-6"></div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card border border-info rounded-lg shadow">
+                                <h4 class="card-header">Tariff description</h4>
+                                <div class="card-body h-25">
+                                    <blockquote class="blockquote mb-0">
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="list-group">
+                                <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Option #1</h5>
+                                        <small>Price: 7</small>
+                                    </div>
+                                    <p class="mb-1">Option Description for checked tariff</p>
+                                    <small>Connection cost: 50</small>
+                                </div>
+                                <div class="list-group-item list-group-item-action flex-column align-items-start">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">Option #2</h5>
+                                        <small class="text-muted">Price: 9</small>
+                                    </div>
+                                    <p class="mb-1">Description too</p>
+                                    <small class="text-muted">Connection cost: 80</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{footer::footer}"></footer>
 </body>
 </html>

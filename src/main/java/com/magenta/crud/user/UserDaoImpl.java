@@ -2,7 +2,7 @@ package com.magenta.crud.user;
 
 
 import com.magenta.crud.AbstractDao;
-import com.magenta.myexception.MyException;
+import com.magenta.myexception.DatabaseException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,9 +16,9 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User findById(int id) throws MyException {
+    public User findById(int id) throws DatabaseException {
         User user = super.findById(id);
-        if (user == null) throw new MyException("User isn't exist");
+        if (user == null) throw new DatabaseException("User isn't exist");
         return user;
     }
 
@@ -31,12 +31,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User findByLogin(String login) throws MyException {
+    public User findByLogin(String login) throws DatabaseException {
         List users = getSession()
                 .createQuery("SELECT u FROM User u WHERE u.login = :login")
                 .setParameter("login", login)
                 .getResultList();
-        if (users.isEmpty()) throw new MyException("User isn't exist");
+        if (users.isEmpty()) throw new DatabaseException("User isn't exist");
         return (User) users.get(0);
     }
 
@@ -52,6 +52,16 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public void update(User user){
         super.update(user);
+    }
+
+    @Override
+    public User findByEmail(String email) throws DatabaseException {
+        List users = getSession()
+                .createQuery("SELECT u FROM User u WHERE u.email = :email")
+                .setParameter("email", email)
+                .getResultList();
+        if (users.isEmpty()) throw new DatabaseException("User isn't exist");
+        return (User) users.get(0);
     }
 
 }

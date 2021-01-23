@@ -1,5 +1,6 @@
 package com.magenta.crud.contract;
 
+import com.magenta.crud.option.Option;
 import com.magenta.crud.tariff.Tariff;
 import com.magenta.crud.type.Status;
 import com.magenta.crud.user.User;
@@ -7,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -33,4 +35,10 @@ public class Contract {
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Tariff tariff;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "OPTIONS",
+            joinColumns = {@JoinColumn(name = "CONTRACT_ID", nullable = false, referencedColumnName = "CONTRACT_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "OPTION_ID", nullable = false, referencedColumnName = "OPTION_ID")})
+    private Set<Option> options;
 }

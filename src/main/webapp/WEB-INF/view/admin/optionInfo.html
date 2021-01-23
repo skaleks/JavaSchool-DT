@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Magenta Operator</title>
+    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
+</head>
+<body>
+<header th:replace="~{header::navbarAdmin}"></header>
+
+<a th:href="@{/admin/edit/deleteOption{id}(id = ${profile.option.id})}">Delete</a>
+<span th:text="${profile.option.name}"></span>
+<span th:text="${profile.option.price}"></span>
+<span th:text="${profile.option.optionDescription}"></span>
+<span th:text="${profile.option.status}"></span>
+<span th:text="${profile.option.addCost}"></span>
+<footer th:replace="~{footer::footer}"></footer>
+</body>
+</html>

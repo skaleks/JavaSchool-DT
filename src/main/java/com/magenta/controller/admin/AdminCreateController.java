@@ -8,8 +8,8 @@ import com.magenta.crud.tariff.TariffService;
 import com.magenta.crud.tariff.dto.NewTariffDto;
 import com.magenta.crud.user.UserService;
 import com.magenta.crud.user.dto.NewUserDto;
+import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
-import com.magenta.sessioncart.SessionCart;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +34,6 @@ public class AdminCreateController {
     private final TariffService tariffService;
     private final OptionService optionService;
     private final ContractService contractService;
-    private final SessionCart sessionCart;
 
     @GetMapping("/user")
     public String newFormUser(@ModelAttribute("user") NewUserDto newUserDto){
@@ -42,18 +41,20 @@ public class AdminCreateController {
     }
 
     @PostMapping("/user")
-    public String addUser(@Valid @ModelAttribute("user") NewUserDto newUserDto, BindingResult result){
+    public String addUser(@Valid @ModelAttribute("user") NewUserDto newUserDto, BindingResult result, Model model) throws DatabaseException {
         if (result.hasErrors()){
             return "admin/addUser";
         }
         userService.save(newUserDto);
-        return "redirect:/admin";
+        String login = newUserDto.getLogin();
+        model.addAttribute("user", userService.findByLogin(login));
+        return "admin/userInfo";
     }
 
     @GetMapping("/tariff")
     public String newFormTariff(@ModelAttribute("tariff") NewTariffDto newTariffDto, Model model){
         model.addAttribute("options", optionService.findAllOptions());
-//        model.addAttribute("s", sessionCart.getCount());
+        LOGGER.info("Options size:" + optionService.findAllOptions());
         return "admin/addTariff";
     }
 
@@ -63,8 +64,8 @@ public class AdminCreateController {
             model.addAttribute("options", optionService.findAllOptions());
             return "admin/addTariff";
         }
+        LOGGER.info("Options list is empty: " + newTariffDto.getAvailableOptionsForThisTariff().isEmpty());
         tariffService.createNewTariff(newTariffDto);
-//        sessionCart.setSize(25);
         return "redirect:/admin";
     }
 
@@ -82,8 +83,13 @@ public class AdminCreateController {
         return "redirect:/admin";
     }
 
+    @GetMapping("/contract")
+    public String newFormContract(){
+        return "admin/newContract";
+    }
+
     @PostMapping("/contract")
-    public String addContract(@ModelAttribute("contract") NewContractDto newContractDto) throws MyException {
+    public String addContract(@ModelAttribute("contract") NewContractDto newContractDto) throws DatabaseException, MyException {
         contractService.saveContract(newContractDto);
         return "redirect:/admin";
     }

@@ -22,10 +22,10 @@
                         <a class="nav-link text-light" th:href="@{/login}">Log in</a>
                     </li>
                     <li th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}" class="nav-item mx-1">
-                        <a class="nav-link text-light" th:href="@{/admin}" th:text="${#authentication.name}">Admin</a>
+                        <a class="nav-link text-light" th:href="@{/admin}" th:text="${#authentication.name}"></a>
                     </li>
                     <li th:if="${#authorization.expression('hasRole(''ROLE_USER'')')}" class="nav-item mx-1">
-                        <a class="nav-link text-light" th:href="@{/user}">User</a>
+                        <a class="nav-link text-light" th:href="@{/user}" th:text="${#authentication.name}"></a>
                     </li>
                     <li th:if="${#authorization.expression('hasAnyRole(''ROLE_ADMIN'', ''ROLE_USER'')')}" class="nav-item mx-1">
                         <a class="nav-link text-light" th:href="@{/logout}">Log Out</a>
@@ -50,7 +50,7 @@
                         <a class="nav-link text-light" th:href="@{/user}">Tariff</a>
                     </li>
                     <li class="nav-item mx-1">
-                        <a class="nav-link text-light" th:href="@{/user}">Option</a>
+                        <a class="nav-link text-light" th:href="@{/user/profile}">My profile</a>
                     </li>
                     <li>
                         <a class="nav-link text-light" th:href="@{/logout}">Log Out</a>
@@ -69,8 +69,8 @@
                         <a class="nav-link active" th:href="@{/}">Home</a>
                     </li>
                     <li class="nav-item mx-3 pt-1">
-                        <form class="form-inline pt-2" th:action="@{/admin/searchByNumber}" th:method="GET">
-                            <input class="form-control mr-sm-2" type="search" th:name="search" placeholder="Enter the number" aria-label="Search">
+                        <form class="form-inline pt-2" th:action="@{/admin/searchByNumberOrEmail}" th:method="GET">
+                            <input class="form-control mr-sm-2" type="search" th:name="search" placeholder="Enter number or e-mail" aria-label="Search">
                             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                         </form>
                     </li>

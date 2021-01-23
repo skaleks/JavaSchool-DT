@@ -10,7 +10,7 @@
 <header th:replace="~{header::navbarAdmin}"></header>
 <main>
     <div class="py-1">
-        <div class="container-fluid">
+        <div class="container">
             <div class="row">
                 <div class="col-md-4 h-100 pl-5">
                     <div class="form-row card-body pb-2">
@@ -22,8 +22,30 @@
                         </div>
                         <div class="col-12">
                             <div class="form-row">
-                                <div class="col"><a th:href="@{/}" class="btn btn-block btn-outline-danger">Deactivate</a></div>
-                                <div class="col"><a th:href="@{/}" class="btn btn-block btn-outline-warning">Block</a></div>
+                                <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
+                                      th:if="${user.status == user.status.ACTIVE}" class="col">
+                                    <input type="hidden" th:attr="name='entityId'" th:value="${user.id}">
+                                    <input type="hidden" th:attr="name='status'" th:value="'INACTIVE'">
+                                    <button type="submit" class="btn btn-block btn-outline-danger">Deactivate</button>
+                                </form>
+                                <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
+                                      th:if="${user.status == user.status.ACTIVE}" class="col">
+                                    <input type="hidden" th:attr="name='entityId'" th:value="${user.id}">
+                                    <input type="hidden" th:attr="name='status'" th:value="'BLOCKED'">
+                                    <button type="submit" class="btn btn-block btn-outline-warning">Block</button>
+                                </form>
+                                <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
+                                      th:if="${user.status == user.status.INACTIVE}" class="col">
+                                    <input type="hidden" th:attr="name='entityId'" th:value="${user.id}">
+                                    <input type="hidden" th:attr="name='status'" th:value="'ACTIVE'">
+                                    <button type="submit" class="btn btn-block btn-outline-success">Activate</button>
+                                </form>
+                                <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
+                                      th:if="${user.status == user.status.BLOCKED}" class="col">
+                                    <input type="hidden" th:attr="name='entityId'" th:value="${user.id}">
+                                    <input type="hidden" th:attr="name='status'" th:value="'ACTIVE'">
+                                    <button type="submit" class="btn btn-block btn-outline-success">Unblock</button>
+                                </form>
                             </div>
                         </div>
                     </div>

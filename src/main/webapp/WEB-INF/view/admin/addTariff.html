@@ -22,7 +22,7 @@
                         <div class="form-row mb-2">
                             <div class="col-7 px-3">
                                 <div class="form-row">
-                                    <div class="form-group col-8">
+                                    <div class="form-group col-8 ">
                                         <label for="name" class="form-label ml-1">Name</label>
                                         <input type="text" class="form-control shadow-sm" th:classappend="${#fields.hasErrors('name')}?'is-invalid'" th:field="*{name}" placeholder="Come up with a new name" id="name">
                                         <small class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
@@ -41,9 +41,6 @@
                             </div>
                             <div class="col-5 px-3">
                                 <label class="form-label ml-1">Available options</label>
-<!--                                <p th:text="${s}"></p>-->
-<!--                                <p th:text="${session.sessionCart.count}">one</p>-->
-<!--                                <p th:text="${session.SessionCart.count}">two</p>-->
                                 <div class="input-group">
                                     <select multiple class="custom-select" th:field="*{availableOptionsForThisTariff}">
                                         <option th:each="option:${options}"
@@ -57,7 +54,7 @@
                         <hr class="w-75">
                         <div class="form-row pt-3">
                             <div class="col-8"><button type="submit" class="btn btn-block btn-sm btn-success">Create</button></div>
-                            <div class="col"><a th:href="@{/admin/allUsers}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
+                            <div class="col"><a th:href="@{/admin/allTariffs}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
                         </div>
                     </form>
                 </div>
@@ -65,66 +62,6 @@
         </div>
     </div>
 </main>
-<!--<main>-->
-<!--    <div class="row mt-4 justify-content-center"><h3 class="h3 text-center">Something</h3></div>-->
-<!--    <div class="row justify-content-center">-->
-<!--        <div class="col-6 border border-3 border-dark rounded ">-->
-<!--            <div class="row justify-content-center"><h1 class="text-center">New tariff</h1></div>-->
-<!--            <form class="row" th:method="POST" th:action="@{/admin/new/tariff}" th:object="${tariff}">-->
-<!--                <div class="col-6">-->
-<!--                    <div class="row px-2 mt-3">-->
-<!--                        <div class="col-6">-->
-<!--                            <label for="name" class="form-label">Name</label>-->
-<!--                            <input  id="name" type="text" class="form-control" placeholder="Name" th:field = "*{name}">-->
-<!--                        </div>-->
-<!--                        <div class="col-6">-->
-<!--                            <label for="price" class="form-label">Price</label>-->
-<!--                            <input id="price" type="text" class="form-control" th:field = "*{price}">-->
-<!--                        </div>-->
-<!--                        <div class="col-12">-->
-<!--                            <label for="descript" class="form-label">Description</label>-->
-<!--                            <textarea id="descript" type="text" class="form-control" placeholder="Description" th:field = "*{tariffDescription}" rows="3"></textarea>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-6">-->
-<!--                    <div class="card">-->
-<!--                        <h3 class="card-header">Available options</h3>-->
-<!--                        <div class="card-body">-->
-<!--                            <div class="table-responsive">-->
-<!--                                <table class="table table-hover check">-->
-<!--                                    <thead>-->
-<!--                                    <tr>-->
-<!--                                        <td>Name</td>-->
-<!--                                        <td>Price</td>-->
-<!--                                        <td>Cost</td>-->
-<!--                                        <td></td>-->
-<!--                                    </tr>-->
-<!--                                    </thead>-->
-<!--                                    <tbody>-->
-<!--                                    <tr th:each="option:${options}">-->
-<!--                                        <td th:text="${option.name}"></td>-->
-<!--                                        <td th:text="${option.price}"></td>-->
-<!--                                        <td th:text="${option.addCost}"></td>-->
-<!--                                        <td>-->
-<!--                                            <input type="checkbox" th:field="*{availableOptionsForThisTariff}">-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
-<!--                                    </tbody>-->
-<!--                                </table>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-12">-->
-<!--                    <br/>-->
-<!--                    <button type="submit" class="btn btn-primary">Create tariff</button>-->
-<!--                </div>-->
-<!--            </form>-->
-
-<!--        </div>-->
-<!--    </div>-->
-<!--</main>-->
 <footer th:replace="~{footer::footer}"></footer>
 </body>
 </html>

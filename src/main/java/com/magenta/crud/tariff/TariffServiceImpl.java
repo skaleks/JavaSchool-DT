@@ -1,11 +1,13 @@
 package com.magenta.crud.tariff;
 
+import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.option.Option;
 import com.magenta.crud.option.OptionDao;
+import com.magenta.crud.option.dto.OptionDto;
 import com.magenta.crud.tariff.dto.NewTariffDto;
 import com.magenta.crud.tariff.dto.TariffDto;
 import com.magenta.crud.type.Status;
-import com.magenta.myexception.MyException;
+import com.magenta.myexception.DatabaseException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +45,7 @@ public class TariffServiceImpl implements TariffService {
         newTariffDto.getAvailableOptionsForThisTariff().forEach(optionId -> {
             try {
                 result.add(optionDao.findOptionById(optionId));
-            } catch (MyException e) {
+            } catch (DatabaseException e) {
                 e.printStackTrace();
             }
         });
@@ -53,24 +55,47 @@ public class TariffServiceImpl implements TariffService {
     }
 
     @Override
-    public void deleteExistTariff(TariffDto tariffDto) {
-        tariffDao.deleteExistTariff(modelMapper.map(tariffDto,Tariff.class));
+    public void deleteExistTariff(int id) throws DatabaseException {
+        Tariff tariff = tariffDao.findTariffById(id);
+        tariffDao.deleteExistTariff(tariff);
     }
 
     @Override
     public List<TariffDto> findAllTariff(){
         List<TariffDto> resultList = new ArrayList<>();
-        tariffDao.findAllTariff().forEach(tariff->resultList.add(modelMapper.map(tariff,TariffDto.class)));
+        List<Tariff> tariffList = tariffDao.findAllTariff();
+        tariffList.forEach(tariff -> resultList.add(mapToTariffDto(tariff)));
         return resultList;
     }
 
     @Override
-    public TariffDto findTariffById(int id) throws MyException {
-        return modelMapper.map(tariffDao.findTariffById(id),TariffDto.class);
+    public TariffDto findTariffById(int id) throws DatabaseException {
+        Tariff tariff = tariffDao.findTariffById(id);
+        return mapToTariffDto(tariff);
     }
 
     @Override
     public void updateTariff(Tariff tariff) {
         tariffDao.updateTariff(tariff);
+    }
+
+    @Override
+    public void setStatus(ChangeStatusDto statusDto) throws DatabaseException {
+
+        Tariff tariff = tariffDao.findTariffById(statusDto.getEntityId());
+        Status newStatus = modelMapper.map(statusDto.getStatus(),Status.class);
+        tariff.setStatus(newStatus);
+    }
+
+    private Set<OptionDto> toOptionDtoSet(Set<Option> baseList){
+        Set<OptionDto> resultList = new HashSet<>();
+        baseList.forEach(option -> resultList.add(modelMapper.map(option,OptionDto.class)));
+        return resultList;
+    }
+
+    private TariffDto mapToTariffDto(Tariff tariff){
+        TariffDto tariffDto = modelMapper.map(tariff, TariffDto.class);
+        tariffDto.setAvailableOptions(toOptionDtoSet(tariff.getOptions()));
+        return tariffDto;
     }
 }

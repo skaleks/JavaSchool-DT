@@ -28,7 +28,7 @@ public class Tariff {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "TARIFF_STATUS", nullable = false)
-    private Status status = Status.ACTIVE;
+    private Status status;
 
     @OneToMany(mappedBy = "tariff", fetch = FetchType.LAZY)
     private Set<Contract> contracts;

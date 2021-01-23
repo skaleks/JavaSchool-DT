@@ -50,7 +50,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "USER_STATUS", nullable = false)
-    private Status status = Status.ACTIVE;
+    private Status status;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "USER_ROLE", nullable = false)

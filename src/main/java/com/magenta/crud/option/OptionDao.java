@@ -1,8 +1,9 @@
 package com.magenta.crud.option;
 
-import com.magenta.myexception.MyException;
+import com.magenta.myexception.DatabaseException;
 
 import java.util.List;
+import java.util.Set;
 
 public interface OptionDao {
 
@@ -12,7 +13,9 @@ public interface OptionDao {
 
     List<Option> findAllOptions();
 
-    Option findOptionById(int id) throws MyException;
+    Set<Option> findSetOptionsById(List<Integer> optionsList);
+
+    Option findOptionById(int id) throws DatabaseException;
 
     void updateOption(Option option);
 }

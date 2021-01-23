@@ -3,15 +3,14 @@ package com.magenta.crud.tariff.dto;
 
 import com.magenta.crud.option.dto.OptionDto;
 import com.magenta.crud.type.Status;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Set;
 
-
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 public class TariffDto implements Serializable {
 
     private int id;
@@ -19,5 +18,5 @@ public class TariffDto implements Serializable {
     private String tariffDescription;
     private double price;
     private Status status;
-    private Set<OptionDto> options;
+    private Set<OptionDto> availableOptions;
 }
