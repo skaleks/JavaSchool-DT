@@ -3,6 +3,7 @@ package com.magenta.crud.contract;
 import com.magenta.crud.contract.dto.ContractDto;
 import com.magenta.crud.contract.dto.NewContractDto;
 import com.magenta.crud.global.dto.ChangeStatusDto;
+import com.magenta.crud.tariff.dto.SwitchTariffDto;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 
@@ -21,4 +22,6 @@ public interface ContractService {
     ContractDto findByNumber(String number) throws DatabaseException;
 
     void setStatus(ChangeStatusDto statusDto) throws DatabaseException;
+
+    void switchTariff(SwitchTariffDto newTariff) throws DatabaseException, MyException;
 }

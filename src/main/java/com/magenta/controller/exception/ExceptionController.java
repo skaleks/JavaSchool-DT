@@ -38,7 +38,6 @@ public class ExceptionController {
         return choosePath(myException.getMessage());
     }
 
-
     @ExceptionHandler(value = DatabaseException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     public ModelAndView databaseException(DatabaseException databaseException){

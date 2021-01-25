@@ -10,10 +10,8 @@ import com.magenta.crud.tariff.TariffService;
 import com.magenta.crud.tariff.dto.TariffPageDto;
 import com.magenta.crud.user.UserService;
 import com.magenta.crud.user.dto.UserDto;
-import com.magenta.crud.user.dto.UserMainDto;
 import com.magenta.crud.user.dto.UserProfileDto;
 import com.magenta.myexception.DatabaseException;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,32 +30,39 @@ public class DataService {
     private final TariffService tariffService;
     private final OptionService optionService;
     private final ContractService contractService;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public DataService(UserService userService, TariffService tariffService, ModelMapper modelMapper, OptionService optionService, ContractService contractService) {
+    public DataService(UserService userService, TariffService tariffService, OptionService optionService, ContractService contractService) {
         this.userService = userService;
         this.tariffService = tariffService;
-        this.modelMapper = modelMapper;
         this.optionService = optionService;
         this.contractService = contractService;
     }
 
-    public UserMainDto getMainPageForUser(String login) throws DatabaseException {
-        UserMainDto userPage = modelMapper.map(userService.findByLogin(login), UserMainDto.class);
-        userPage.setTariffDtoList(tariffService.findAllTariff());
-        return userPage;
-    }
-
+//    public UserMainDto getMainPageForUser(String login) {
+//        return new UserMainDto();
+//    }
     public AdminMainDto getMainPageForAdmin(String login) {
         return new AdminMainDto();
     }
 
-    public UserProfileDto getUserProfile(String login) throws DatabaseException {
+    public UserProfileDto getUserProfileByLogin(String login) throws DatabaseException {
 
         UserDto user = userService.findByLogin(login);
         List<ContractDto> contracts = user.getNumbers();
+        return new UserProfileDto(user,contracts);
+    }
+    public UserProfileDto getUserProfileById(int id) throws DatabaseException {
 
+        UserDto user = userService.findById(id);
+        List<ContractDto> contracts = user.getNumbers();
+        return new UserProfileDto(user,contracts);
+    }
+
+    public UserProfileDto getUserProfileByNumberOrEmail(String request) throws DatabaseException {
+
+        UserDto user = userService.findByNumberOrEmail(request);
+        List<ContractDto> contracts = user.getNumbers();
         return new UserProfileDto(user,contracts);
     }
 
@@ -69,7 +74,7 @@ public class DataService {
         return new OptionPageDto(optionService.findOptionById(id));
     }
 
-    public ContractPageDto getContractPage(int id) throws Exception {
+    public ContractPageDto getContractPage(int id) throws DatabaseException {
         return new ContractPageDto(contractService.findById(id));
     }
 

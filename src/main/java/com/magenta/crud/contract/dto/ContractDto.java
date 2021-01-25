@@ -21,6 +21,4 @@ public class ContractDto implements Serializable {
     private TariffDto tariff;
     private UserDto user;
     private Set<OptionDto> options;
-
-
 }

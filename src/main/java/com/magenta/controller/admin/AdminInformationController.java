@@ -10,6 +10,7 @@ import com.magenta.crud.tariff.TariffService;
 import com.magenta.crud.tariff.dto.AllTariffDto;
 import com.magenta.crud.user.UserService;
 import com.magenta.crud.user.dto.AllUsersDto;
+import com.magenta.crud.user.dto.UserProfileDto;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.security.SecurityService;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,12 @@ public class AdminInformationController {
         return new ModelAndView("admin/adminPanel","panel", adminMainDto);
     }
 
+    @GetMapping("/profile")
+    public ModelAndView adminLikeUserProfile() throws DatabaseException {
+        UserProfileDto userProfile = dataService.getUserProfileByLogin(securityService.getPrincipal());
+        return new ModelAndView("admin/profile","profile", userProfile);
+    }
+
     @GetMapping("/allUsers")
     public String allUsers(Model model){
         AllUsersDto allUsersDto = new AllUsersDto();
@@ -75,7 +82,7 @@ public class AdminInformationController {
 
     @GetMapping("/user{id}")
     public String userInfo(@PathVariable("id") int id, Model model) throws DatabaseException {
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("profile", dataService.getUserProfileById(id));
         return "admin/userInfo";
     }
 
@@ -99,7 +106,7 @@ public class AdminInformationController {
 
     @GetMapping("/searchByNumberOrEmail")
     public String searchByNumberOrEmail(@RequestParam("search") String request, Model model) throws DatabaseException {
-        model.addAttribute("user", userService.findByNumberOrEmail(request));
+        model.addAttribute("profile", dataService.getUserProfileByNumberOrEmail(request));
         return "admin/userInfo";
     }
 }

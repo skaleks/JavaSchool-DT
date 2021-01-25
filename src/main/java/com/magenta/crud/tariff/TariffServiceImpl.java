@@ -1,5 +1,7 @@
 package com.magenta.crud.tariff;
 
+import com.magenta.crud.contract.Contract;
+import com.magenta.crud.contract.ContractDao;
 import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.option.Option;
 import com.magenta.crud.option.OptionDao;
@@ -8,6 +10,7 @@ import com.magenta.crud.tariff.dto.NewTariffDto;
 import com.magenta.crud.tariff.dto.TariffDto;
 import com.magenta.crud.type.Status;
 import com.magenta.myexception.DatabaseException;
+import com.magenta.myexception.MyException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,16 +28,17 @@ public class TariffServiceImpl implements TariffService {
 
     private static final Logger LOGGER = Logger.getLogger("Info");
 
-    TariffDao tariffDao;
-    OptionDao optionDao;
-    ModelMapper modelMapper;
-
+    private final TariffDao tariffDao;
+    private final OptionDao optionDao;
+    private final ContractDao contractDao;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public void setTariffDao(TariffDao tariffDao, ModelMapper modelMapper, OptionDao optionDao) {
+    public TariffServiceImpl(TariffDao tariffDao, OptionDao optionDao, ContractDao contractDao, ModelMapper modelMapper) {
         this.tariffDao = tariffDao;
-        this.modelMapper = modelMapper;
         this.optionDao = optionDao;
+        this.contractDao = contractDao;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -55,8 +59,13 @@ public class TariffServiceImpl implements TariffService {
     }
 
     @Override
-    public void deleteExistTariff(int id) throws DatabaseException {
+    public void deleteExistTariff(int id) throws DatabaseException, MyException {
         Tariff tariff = tariffDao.findTariffById(id);
+        for (Contract contract : contractDao.findAllContracts()) {
+            if (contract.getTariff().equals(tariff)) {
+                throw new MyException("One or more contracts are still using this tariff");
+            }
+        }
         tariffDao.deleteExistTariff(tariff);
     }
 

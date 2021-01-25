@@ -8,41 +8,46 @@
 </head>
 <body>
 <header th:replace="~{header::navbarAdmin}"></header>
-<main>
-    <div class="py-1">
+<main class="mt-4">
+    <div class="py-1" style="">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4 h-100 pl-5">
-                    <div class="form-row card-body pb-2">
-                        <div class="col-6 badge">
-                            <h2 class="pl-4"><b>Status:</b></h2>
+            <div class="row justify-content-between">
+                <div class="col-md-4">
+                    <div class="col-md-12 px-0">
+                        <div class="card text-white bg-info shadow-lg my-0">
+                            <div class="row justify-content-center my-2">
+                                <h4 class="col-md-6 text-center"><b class="text-uppercase">Balance:</b></h4>
+                                <div class="col-md-6">
+                                    <p class="lead text-center mr-auto mb-0" th:text="${profile.user.balance} + '$'"></p>
+                                </div>
+                                <div class="col-md-10 btn btn-outline-dark py-0" th:href="@{/admin/user{id}balance (id = ${profile.user.id})}">Add funds</div>
+                            </div>
                         </div>
-                        <div class="col-6 badge pr-3">
-                            <h2 th:text="${user.status}">None</h2>
-                        </div>
-                        <div class="col-12">
+                    </div>
+                    <div class="form-row card-body pb-2 mb-2">
+                        <div class="col-md-12">
                             <div class="form-row">
                                 <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
-                                      th:if="${user.status == user.status.ACTIVE}" class="col">
-                                    <input type="hidden" th:attr="name='entityId'" th:value="${user.id}">
+                                      th:if="${profile.user.status == profile.user.status.ACTIVE}" class="col">
+                                    <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
                                     <input type="hidden" th:attr="name='status'" th:value="'INACTIVE'">
                                     <button type="submit" class="btn btn-block btn-outline-danger">Deactivate</button>
                                 </form>
                                 <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
-                                      th:if="${user.status == user.status.ACTIVE}" class="col">
-                                    <input type="hidden" th:attr="name='entityId'" th:value="${user.id}">
+                                      th:if="${profile.user.status == profile.user.status.ACTIVE}" class="col">
+                                    <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
                                     <input type="hidden" th:attr="name='status'" th:value="'BLOCKED'">
                                     <button type="submit" class="btn btn-block btn-outline-warning">Block</button>
                                 </form>
                                 <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
-                                      th:if="${user.status == user.status.INACTIVE}" class="col">
-                                    <input type="hidden" th:attr="name='entityId'" th:value="${user.id}">
+                                      th:if="${profile.user.status == profile.user.status.INACTIVE}" class="col">
+                                    <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
                                     <input type="hidden" th:attr="name='status'" th:value="'ACTIVE'">
                                     <button type="submit" class="btn btn-block btn-outline-success">Activate</button>
                                 </form>
                                 <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
-                                      th:if="${user.status == user.status.BLOCKED}" class="col">
-                                    <input type="hidden" th:attr="name='entityId'" th:value="${user.id}">
+                                      th:if="${profile.user.status == profile.user.status.BLOCKED}" class="col">
+                                    <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
                                     <input type="hidden" th:attr="name='status'" th:value="'ACTIVE'">
                                     <button type="submit" class="btn btn-block btn-outline-success">Unblock</button>
                                 </form>
@@ -54,86 +59,65 @@
                         <div class="card-body">
                             <dl>
                                 <dt>First name</dt>
-                                <dd th:text="${user.firstname}">Kirill</dd>
+                                <dd th:text="${profile.user.firstname}">Kirill</dd>
                                 <dt>Last name</dt>
-                                <dd th:text="${user.lastname}">Streltsov</dd>
+                                <dd th:text="${profile.user.lastname}">Streltsov</dd>
                                 <dt>Address</dt>
-                                <dd th:text="${user.address}">Saint-Petersburg</dd>
+                                <dd th:text="${profile.user.address}">Saint-Petersburg</dd>
                                 <dt>Birth date</dt>
-                                <dd th:text="${user.birthdate}">14.01.1992</dd>
+                                <dd th:text="${profile.user.birthdate}">14.01.1992</dd>
                                 <dt>E-mail</dt>
-                                <dd th:text="${user.email}">Skaleksandrovich@inbox.ru</dd>
+                                <dd th:text="${profile.user.email}">Skaleksandrovich@inbox.ru</dd>
                                 <dt>Passport</dt>
-                                <dd th:text="${user.passport}">1111 234567</dd>
+                                <dd th:text="${profile.user.passport}">1111 234567</dd>
                             </dl>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-info" th:href="@{/admin/edit/updateUser{id}(id=${user.id})}">Edit</a>
-                            <a class="btn btn-danger" th:href="@{/admin/edit/deleteUser{id}(id=${user.id})}">Delete</a>
+                            <a class="btn btn-info" th:href="@{/admin/edit/updateUser{id}(id=${profile.user.id})}">Edit</a>
+                            <a class="btn btn-danger" th:href="@{/admin/edit/deleteUser{id}(id=${profile.user.id})}">Delete</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-8 pr-5">
+                <div class="col-md-7">
+                    <div class="row" th:if="${profile.user.status == profile.user.status.BLOCKED}">
+                        <div class="alert alert-warning flex-grow-1 shadow-lg mb-4">
+                            <h1 class="alert-heading text-center mb-0">Account blocked!</h1>
+                        </div>
+                    </div>
+                    <div class="row" th:if="${profile.user.status == profile.user.status.INACTIVE}">
+                        <div class="alert alert-danger flex-grow-1 shadow-lg mb-4">
+                            <h1 class="alert-heading text-center mb-0">Account inactive!</h1>
+                        </div>
+                    </div>
+                    <div class="row" th:if="${profile.user.status == profile.user.status.ACTIVE}">
+                        <div class="alert alert-success flex-grow-1 shadow-lg mb-4">
+                            <h1 class="alert-heading text-center mb-0">Account active</h1>
+                        </div>
+                    </div>
+                    <div class="col-md-12 my-2 pt-1">
+                        <a class="btn btn-primary btn-block" th:href="@{/admin/edit/{id}/addContract (id = ${profile.user.id})}">Add contract</a>
+                    </div>
                     <div class="card">
-                        <div class="card-body border rounded-lg border-dark shadow">
-                            <h1 class="bg-dark text-white pl-5 text-left">Contract list</h1>
-                            <div class="table-responsive">
-                                <table class="table table-hover text-center">
-                                    <thead class="text-uppercase">
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Phone number</th>
-                                        <th>Tariff</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:each="contract : ${user.numbers}">
-                                        <td th:text="${contract.id}">1</td>
-                                        <td th:text="${contract.number}">89992477803</td>
-                                        <td th:text="${contract.tariff.name}">Super</td>
-                                        <td th:text="${contract.price}">500</td>
-                                        <td th:text="${contract.status}">Active</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row pt-2">
-                        <div class="col-md-6"><a class="btn btn-primary btn-block" th:href="@{/admin/edit/{id}/addContract (id = ${user.getId()})}">Add contract</a></div>
-                        <div class="col-md-6"></div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-md-6">
-                            <div class="card border border-info rounded-lg shadow">
-                                <h4 class="card-header">Tariff description</h4>
-                                <div th:each="contract:${user.numbers}" class="card-body h-25">
-                                    <blockquote class="blockquote mb-0">
-                                        <p th:text="${contract.tariff.tariffDescription}">Description</p>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
+                        <div class="card-body shadow border-top border-info">
+                            <h1 class="text-center bg-light text-body">Contract list</h1>
                             <div class="list-group">
-                                <div class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Option #1</h5>
-                                        <small>Price: 7</small>
+                                <a th:each="contract: ${profile.numbers}" th:href="@{/admin/contract{id}(id = ${contract.id})}"
+                                   class="list-group-item list-group-item-action flex-column align-items-start shadow">
+                                    <div class="card">
+                                        <div class="card-body row justify-content-between">
+                                            <div class="col-md-6">
+                                                <h4 class="card-title text-center"><b th:text="${contract.number}"></b></h4>
+                                                <h5 class="card-subtitle my-2 text-center" th:text="${contract.tariff.name}"></h5>
+                                                <p class="card-text text-center" th:text="${contract.tariff.tariffDescription}"></p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <ul th:each="option: ${contract.options}">
+                                                    <li class="" th:text="${option.name}"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="mb-1">Option Description for checked tariff</p>
-                                    <small>Connection cost: 50</small>
-                                </div>
-                                <div class="list-group-item list-group-item-action flex-column align-items-start">
-                                    <div class="d-flex w-100 justify-content-between">
-                                        <h5 class="mb-1">Option #2</h5>
-                                        <small class="text-muted">Price: 9</small>
-                                    </div>
-                                    <p class="mb-1">Description too</p>
-                                    <small class="text-muted">Connection cost: 80</small>
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -141,116 +125,6 @@
             </div>
         </div>
     </div>
-<!--  Переход. Не удалять!  -->
-<!--    <div class="py-3">-->
-<!--        <div class="container-fluid px-5">-->
-<!--            <div class="row">-->
-<!--                <div class="col-md-12">-->
-<!--                    <ul class="nav nav-fill">-->
-<!--                        <li class="nav-item text-uppercase bg-danger"> <a href="#" class="nav-link text-light"><b>Block</b></a></li>-->
-<!--                        <li class="nav-item text-uppercase bg-primary"> <a class="nav-link text-light"><b>Activate</b></a> </li>-->
-<!--                    </ul>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="py-1">-->
-<!--        <div class="container-fluid">-->
-<!--            <div class="row">-->
-<!--            </div>-->
-<!--            <div class="row">-->
-<!--                <div class="col-md-4 h-100 pl-5" style="">-->
-<!--                    <div class="card border rounded-lg border-dark shadow">-->
-<!--                        <h4 class="card-header">Information</h4>-->
-<!--                        <div class="card-body">-->
-<!--                            <dl>-->
-<!--                                <dt>Id</dt>-->
-<!--                                <dd th:text="${user.id}"></dd>-->
-<!--                                <dt>First name</dt>-->
-<!--                                <dd th:text="${user.firstname}"></dd>-->
-<!--                                <dt>Last name</dt>-->
-<!--                                <dd th:text="${user.lastname}"></dd>-->
-<!--                                <dt>Address</dt>-->
-<!--                                <dd th:text="${user.address}"></dd>-->
-<!--                                <dt>Birth date</dt>-->
-<!--                                <dd th:text="${user.birthdate}"></dd>-->
-<!--                                <dt>E-mail</dt>-->
-<!--                                <dd th:text="${user.email}"></dd>-->
-<!--                                <dt>Passport</dt>-->
-<!--                                <dd th:text="${user.passport}"></dd>-->
-<!--                            </dl>-->
-<!--                        </div>-->
-<!--                        <div class="card-footer">-->
-<!--                            <a class="btn btn-info" th:href="@{/admin/edit/updateUser{id}(id=${user.id})}">Edit</a>-->
-<!--                            <a class="btn btn-danger" th:href="@{/admin/edit/deleteUser{id}(id=${user.id})}">Delete</a>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="col-md-8 pr-5" style="">-->
-<!--                    <div class="card border rounded-lg border-dark shadow">-->
-<!--                        <div class="card-body">-->
-<!--                            <h1 class="bg-dark text-white pl-5 text-left" >Contract list</h1>-->
-<!--                            <div class="table-responsive">-->
-<!--                                <table class="table table-hover text-center">-->
-<!--                                    <thead class="text-uppercase">-->
-<!--                                    <tr>-->
-<!--                                        <th>Id</th>-->
-<!--                                        <th>Phone number</th>-->
-<!--                                        <th>Tariff</th>-->
-<!--                                        <th>Price</th>-->
-<!--                                        <th>Status</th>-->
-<!--                                    </tr>-->
-<!--                                    </thead>-->
-<!--                                    <tbody>-->
-<!--                                    <tr th:each="contract : ${user.numbers}">-->
-<!--                                        <td th:text="${contract.id}"></td>-->
-<!--                                        <td th:text="${contract.number}"></td>-->
-<!--                                        <td th:text="${contract.tariff.name}"></td>-->
-<!--                                        <td th:text="${contract.price}"></td>-->
-<!--                                        <td th:text="${contract.status}"></td>-->
-<!--                                    </tr>-->
-<!--                                    </tbody>-->
-<!--                                </table>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="card-footer">-->
-<!--                            <div class="col-md-4">-->
-<!--                                <a class="btn btn-primary btn-block" th:href="@{/admin/edit/{id}/addContract (id = ${user.getId()})}">Add contract</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="row mt-4">-->
-<!--                        <div class="col-md-6">-->
-<!--                            <div class="card border border-info rounded-lg shadow" th:each="contract:${user.numbers}">-->
-<!--                                <h4 class="card-header">Tariff description</h4>-->
-<!--                                <div class="card-body h-25">-->
-<!--                                    <blockquote class="blockquote mb-0">-->
-<!--                                        <p th:text="${contract.tariff.tariffDescription}"></p>-->
-<!--                                    </blockquote>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-6">-->
-<!--                            <div class="list-group">-->
-<!--                                <div class="list-group-item list-group-item-action flex-column align-items-start">-->
-<!--                                    <div class="d-flex w-100 justify-content-between">-->
-<!--                                        <h5 class="mb-1">All inclusive</h5>-->
-<!--                                    </div>-->
-<!--                                    <p class="mb-1">This is a very good option for your tariff</p>-->
-<!--                                </div>-->
-<!--                                <div class="list-group-item list-group-item-action flex-column align-items-start">-->
-<!--                                    <div class="d-flex w-100 justify-content-between">-->
-<!--                                        <h5 class="mb-1">Option #1</h5>-->
-<!--                                    </div>-->
-<!--                                    <p class="mb-1">Best First Option</p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
 </main>
 <footer th:replace="~{footer::footer}"></footer>
 </body>

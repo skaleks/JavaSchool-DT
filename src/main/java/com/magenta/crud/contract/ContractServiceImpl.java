@@ -8,6 +8,7 @@ import com.magenta.crud.option.OptionDao;
 import com.magenta.crud.option.dto.OptionDto;
 import com.magenta.crud.tariff.Tariff;
 import com.magenta.crud.tariff.TariffDao;
+import com.magenta.crud.tariff.dto.SwitchTariffDto;
 import com.magenta.crud.type.Status;
 import com.magenta.crud.user.UserDao;
 import com.magenta.myexception.DatabaseException;
@@ -100,6 +101,18 @@ public class ContractServiceImpl implements ContractService {
         Contract contract = contractDao.findById(statusDto.getEntityId());
         Status newStatus = modelMapper.map(statusDto.getStatus(),Status.class);
         contract.setStatus(newStatus);
+    }
+
+    @Override
+    public void switchTariff(SwitchTariffDto newTariff) throws DatabaseException, MyException {
+
+        Contract contract = contractDao.findById(newTariff.getContractId());
+        if (contract.getStatus().equals(Status.BLOCKED)){
+            throw new MyException("You can't do it. Contract blocked!");
+        }
+        Tariff tariff = tariffDao.findTariffById(newTariff.getTariffId());
+
+        contract.setTariff(tariff);
     }
 
     private boolean isNumberExist(String number) throws DatabaseException {

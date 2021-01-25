@@ -7,30 +7,12 @@
     <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
 </head>
 <body>
-<header th:replace="~{header::navbarUser}"></header>
+<header th:replace="~{header::navbarAdmin}"></header>
 <main>
     <div class="py-1">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 h-100 pl-5">
-                    <div class="form-row card-body pb-2">
-                        <div class="col-6 badge">
-                            <h2 class="pl-4"><b>Status:</b></h2>
-                        </div>
-                        <div class="col-6 badge pr-3">
-                            <h2 th:text="${profile.user.status}">None</h2>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-row">
-                                <form th:action="@{/user/block}" th:method="POST" th:object="${status}"
-                                      th:if="${profile.user.status == profile.user.status.ACTIVE}" class="col">
-                                    <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
-                                    <input type="hidden" th:attr="name='status'" th:value="'BLOCKED'">
-                                    <button type="submit" class="btn btn-block btn-outline-danger">Block account</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <div class="card border rounded-lg border-dark shadow">
                         <h4 class="card-header">Information</h4>
                         <div class="card-body">
@@ -51,7 +33,7 @@
                         </div>
                         <div class="card-footer">
 
-                                <!--         edit page and controller method              -->
+                            <!--         edit page and controller method              -->
 
                             <a class="btn btn-info" th:href="@{/}">Edit profile</a>
                         </div>

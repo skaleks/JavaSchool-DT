@@ -34,7 +34,7 @@
                         <div class="form-row">
                             <div class="form-group col-4">
                                 <label for="birthdate" class="form-label ml-1">Birth date</label>
-                                <input id="birthdate" type="date" class="form-control" th:field = "${userDto.birthdate}" readonly>
+                                <input id="birthdate" type="date" class="form-control" th:placeholder = "${userDto.birthdate}" readonly>
                             </div>
                             <div class="form-group col-4">
                                 <label for="email" class="form-label ml-1">E-mail</label>
@@ -58,7 +58,7 @@
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="login" class="form-label ml-1">Login</label>
-                                <input id="login" type="text" class="form-control" th:field = "${userDto.login}" readonly>
+                                <input id="login" type="text" class="form-control" th:placeholder = "${userDto.login}" readonly>
                             </div>
                             <div class="form-group col-6">
                                 <label for="password" class="form-label ml-1">Password</label>
@@ -66,8 +66,8 @@
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                             </div>
                         </div>
-                        <input id="role" type="hidden" name="role" th:value="${userDto.role}">
-                        <input id="status" type="hidden" name="status" th:value="${userDto.status}">
+<!--                        <input id="role" type="hidden" th:name="'role'" th:value="${userDto.role}">-->
+<!--                        <input id="status" type="hidden" th:name="'status'" th:value="${userDto.status}">-->
                         <div class="form-row pt-3">
                             <div class="col-8"><button type="submit" class="btn btn-block btn-sm btn-success">Save changes</button></div>
                             <div class="col"><a th:href="@{/admin/adminPanel}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>

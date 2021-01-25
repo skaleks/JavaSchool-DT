@@ -2,6 +2,7 @@ package com.magenta.controller.admin;
 
 import com.magenta.crud.contract.ContractService;
 import com.magenta.crud.contract.dto.NewContractDto;
+import com.magenta.crud.global.DataService;
 import com.magenta.crud.option.OptionService;
 import com.magenta.crud.option.dto.NewOptionDto;
 import com.magenta.crud.tariff.TariffService;
@@ -34,6 +35,7 @@ public class AdminCreateController {
     private final TariffService tariffService;
     private final OptionService optionService;
     private final ContractService contractService;
+    private final DataService dataService;
 
     @GetMapping("/user")
     public String newFormUser(@ModelAttribute("user") NewUserDto newUserDto){
@@ -46,8 +48,9 @@ public class AdminCreateController {
             return "admin/addUser";
         }
         userService.save(newUserDto);
+
         String login = newUserDto.getLogin();
-        model.addAttribute("user", userService.findByLogin(login));
+        model.addAttribute("profile", dataService.getUserProfileByLogin(login));
         return "admin/userInfo";
     }
 

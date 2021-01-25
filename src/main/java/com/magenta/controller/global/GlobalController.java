@@ -21,17 +21,22 @@ public class GlobalController {
 
     @GetMapping("/")
     public String mainPage(){
-        return "index";
-    }
-
-    @GetMapping("/login")
-    public String login(){
         Authentication auth = securityService.getAuthentication();
         if (auth == null || securityService.isAnonymous()){
-            return "login";
+            return "/index";
         }
-        return "redirect:/";
+        return securityService.isAdmin()? "redirect:/admin" : "redirect:/user";
+//        return "index";
     }
+
+//    @GetMapping("/login")
+//    public String login(){
+//        Authentication auth = securityService.getAuthentication();
+//        if (auth == null || securityService.isAnonymous()){
+//            return "login";
+//        }
+//        return "redirect:/";
+//    }
 
     @GetMapping("/logout")
     public String logout(){
@@ -39,7 +44,7 @@ public class GlobalController {
         if (auth != null){
             SecurityContextHolder.getContext().setAuthentication(null);
         }
-        return "redirect:/login?logout";
+        return "redirect:/?logout";
     }
 
     @GetMapping("/403")

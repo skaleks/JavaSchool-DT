@@ -8,27 +8,44 @@
 </head>
 <body>
 <header th:replace="~{header::navbar}"></header>
-<!--<main class="py-5">-->
-<!--    <div class="container">-->
-<!--        <div class="row">-->
-<!--            <div class="p-5 col-lg-6">-->
-<!--                <h1>Welcome to Magenta</h1>-->
-<!--                <p class="mb-3">Please, enter your login and password</p>-->
-<!--                <form>-->
-<!--                    <div class="form-group">-->
-<!--                        <input type="text" class="form-control" placeholder="Login" id="login" aria-label="login">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <input type="password" class="form-control" placeholder="Password" id="password" aria-label="password">-->
-<!--                        <small class="form-text text-muted text-right">-->
-<!--                        <a href="#"> Forgot your password?</a>-->
-<!--                    </small>-->
-<!--                    </div> <button type="submit" class="btn btn-primary">Sign in</button>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</main>-->
+<main class="container my-5 py-5">
+    <div class="my-4 py-5">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-md-6">
+                    <h2 class="text-center">Welcome to Magenta!</h2>
+                    <h4 class="p-3 text-center">Unfortunately, at this time we are unable to provide options for anonymous users.</h4>
+                    <p class="lead text-center"> To use our services, you need to register! </p>
+                </div>
+                <div class="col-md-5 px-2">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <p>Please, enter your login and password</p>
+                            <form method="POST" th:action="@{/}">
+                                <div th:if="${param.error}" class="alert alert-danger">
+                                    Invalid username and password.
+                                </div>
+                                <div th:if="${param.logout}" class="alert alert-success">
+                                    You have been logged out.
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="login" placeholder="Login" id="login" aria-label="login" required autofocus>
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" name="password" placeholder="Password" id="password" aria-label="password" required>
+                                    <small class="form-text text-muted text-right">
+                                        <a th:href="@{/forgotPassword}"> Forgot your password?</a>
+                                    </small>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Log in!</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 <footer th:replace="~{footer::footer}"></footer>
 </body>
 </html>

@@ -29,4 +29,5 @@ public class UserDto implements Serializable {
     private Role role;
     private Status status;
     private List<ContractDto> numbers;
+    private String balance;
 }

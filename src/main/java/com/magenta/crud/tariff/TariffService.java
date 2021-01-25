@@ -12,7 +12,7 @@ public interface TariffService {
 
     void createNewTariff(NewTariffDto newTariffDto);
 
-    void deleteExistTariff(int id) throws DatabaseException;
+    void deleteExistTariff(int id) throws DatabaseException, MyException;
 
     List<TariffDto> findAllTariff();
 

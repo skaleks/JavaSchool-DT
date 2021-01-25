@@ -5,10 +5,12 @@ import com.magenta.crud.contract.dto.ContractDto;
 import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.type.Role;
 import com.magenta.crud.type.Status;
+import com.magenta.crud.user.dto.AddFundsDto;
 import com.magenta.crud.user.dto.NewUserDto;
 import com.magenta.crud.user.dto.UserDto;
 import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
+import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, ModelMapper modelMapper, ContractService contractService, SecurityService securityService){
+    public UserServiceImpl(UserDao userDao, ModelMapper modelMapper, ContractService contractService,
+                           SecurityService securityService){
         this.userDao = userDao;
         this.modelMapper = modelMapper;
         this.contractService = contractService;
@@ -51,6 +54,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setStatus(Status.ACTIVE);
         user.setRole(Role.USER);
+        user.setBalance(0.0);
         userDao.save(user);
     }
 
@@ -84,7 +88,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void deleteById(int id) {
+    public void deleteById(int id) throws DatabaseException, MyException {
+        if (!userDao.findById(id).getNumbers().isEmpty()){
+            throw new MyException("User still have one or more contracts.");
+        }
         userDao.delete(id);
     }
 
@@ -108,5 +115,13 @@ public class UserServiceImpl implements UserService {
 
         Status newStatus = modelMapper.map(statusDto.getStatus(),Status.class);
         user.setStatus(newStatus);
+    }
+
+    @Override
+    public void addFunds(AddFundsDto funds) throws DatabaseException {
+        User user = userDao.findById(funds.getUserId());
+        double old = user.getBalance();
+        double add = funds.getFunds();
+        user.setBalance(old + add);
     }
 }

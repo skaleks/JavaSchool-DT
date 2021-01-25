@@ -58,4 +58,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Contract> numbers;
+
+    @Column(name = "BALANCE")
+    private Double balance;
 }

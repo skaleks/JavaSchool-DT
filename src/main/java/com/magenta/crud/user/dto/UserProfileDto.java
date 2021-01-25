@@ -12,5 +12,5 @@ import java.util.List;
 public class UserProfileDto {
 
     private UserDto user;
-    private List<ContractDto> userContractList;
+    private List<ContractDto> numbers;
 }
