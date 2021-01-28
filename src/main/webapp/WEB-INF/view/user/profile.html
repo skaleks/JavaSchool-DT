@@ -22,7 +22,7 @@
                         </div>
                         <div class="col-12">
                             <div class="form-row">
-                                <form th:action="@{/user/block}" th:method="POST" th:object="${status}"
+                                <form th:action="@{/user/block-account}" th:method="POST" th:object="${status}"
                                       th:if="${profile.user.status == profile.user.status.ACTIVE}" class="col">
                                     <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
                                     <input type="hidden" th:attr="name='status'" th:value="'BLOCKED'">

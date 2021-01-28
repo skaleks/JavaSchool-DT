@@ -118,8 +118,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addFunds(AddFundsDto funds) throws DatabaseException {
+    public void addFunds(AddFundsDto funds) throws DatabaseException, MyException {
         User user = userDao.findById(funds.getUserId());
+
+        if (!user.getStatus().equals(Status.ACTIVE)){
+            throw new MyException("User isn't active!");
+        }
         double old = user.getBalance();
         double add = funds.getFunds();
         user.setBalance(old + add);

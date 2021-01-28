@@ -29,5 +29,5 @@ public interface UserService {
 
     void setStatus(ChangeStatusDto statusDto) throws DatabaseException, AuthorizationException;
 
-    void addFunds(AddFundsDto funds) throws DatabaseException;
+    void addFunds(AddFundsDto funds) throws DatabaseException, MyException;
 }

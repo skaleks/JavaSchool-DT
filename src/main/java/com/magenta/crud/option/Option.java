@@ -1,7 +1,6 @@
 package com.magenta.crud.option;
 
 
-import com.magenta.crud.tariff.Tariff;
 import com.magenta.crud.type.Status;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,9 +34,27 @@ public class Option {
     @Column(name = "DESCRIPTION")
     private String optionDescription;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "TARIFF_OPTION",
-            joinColumns = {@JoinColumn(name = "OPTION_ID", referencedColumnName = "OPTION_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "TARIFF_ID",referencedColumnName = "TARIFF_ID")})
-    private Set<Tariff> tariffs;
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "TARIFF_OPTION",
+//            joinColumns = {@JoinColumn(name = "OPTION_ID", referencedColumnName = "OPTION_ID")},
+//            inverseJoinColumns = {@JoinColumn(name = "TARIFF_ID",referencedColumnName = "TARIFF_ID")})
+//    private Set<Tariff> tariffs;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinTable(name = "RELATED_OPTIONS",
+            joinColumns = {@JoinColumn(name = "OPTION_ID", nullable = false, referencedColumnName = "OPTION_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "RELATED_OPTION_ID", nullable = false, referencedColumnName = "OPTION_ID")})
+    private Set<Option> relatedOptions;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinTable(name = "EXCLUDING_OPTIONS",
+            joinColumns = {@JoinColumn(name = "OPTION_ID", nullable = false, referencedColumnName = "OPTION_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "EXCLUDING_OPTION_ID", nullable = false, referencedColumnName = "OPTION_ID")})
+    private Set<Option> excludedOptions;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinTable(name = "LEAD_OPTIONS",
+            joinColumns = {@JoinColumn(name = "OPTION_ID", nullable = false, referencedColumnName = "OPTION_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "RELATED_FOR", nullable = false, referencedColumnName = "OPTION_ID")})
+    private Set<Option> leadOptions;
 }

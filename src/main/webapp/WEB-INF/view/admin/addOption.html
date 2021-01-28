@@ -44,17 +44,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-5 px-3">
-                                <label class="form-label ml-1">Excluded options</label>
-                                <div class="list-group">
-                                    <div class="list-group-item list-group-item-action">
-                                        <div class="form-check-inline">
-                                            <input id="exclude" class="form-check-input" type="checkbox">
-                                            <label for="exclude" class="form-check-label">option</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<!--                            <div class="col-5 px-3">-->
+<!--                                <label class="form-label ml-1">Excluded options</label>-->
+<!--                                <div class="list-group">-->
+<!--                                    <div class="list-group-item list-group-item-action">-->
+<!--                                        <div class="form-check-inline">-->
+<!--                                            <input id="exclude" class="form-check-input" type="checkbox">-->
+<!--                                            <label for="exclude" class="form-check-label">option</label>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                         </div>
                         <hr class="w-75">
                         <div class="form-row pt-3">
@@ -66,35 +66,6 @@
             </div>
         </div>
     </div>
-<!--  Не удалять!  -->
-<!--    <div class="row mt-4 justify-content-center"><h3 class="h3">Option form</h3></div>-->
-<!--    <div class="row justify-content-center">-->
-<!--        <div class="col-6 border border-3 border-dark rounded justify-content-center">-->
-<!--            <div class="row justify-content-center"><h1 class="text-center">New option</h1></div>-->
-<!--            <form class="row" th:method="POST" th:action="@{/admin/new/option}" th:object="${option}">-->
-<!--                <div class="col-6">-->
-<!--                    <label for="name" class="form-label">Name</label>-->
-<!--                    <input  id="name" type="text" class="form-control" placeholder="Name" th:field = "*{name}">-->
-<!--                </div>-->
-<!--                <div class="col-3">-->
-<!--                    <label for="price" class="form-label">Price</label>-->
-<!--                    <input id="price" type="text" class="form-control" th:field = "*{price}">-->
-<!--                </div>-->
-<!--                <div class="col-3">-->
-<!--                    <label for="costAdd" class="form-label">Option connection cost</label>-->
-<!--                    <input id="costAdd" type="text" class="form-control" th:field = "*{addCost}">-->
-<!--                </div>-->
-<!--                <div class="col-12">-->
-<!--                    <label for="descript" class="form-label">Description</label>-->
-<!--                    <textarea id="descript" type="text" class="form-control" placeholder="Description" th:field = "*{optionDescription}"></textarea>-->
-<!--                </div>-->
-<!--                <div class="col-12 pb-3">-->
-<!--                    <br/>-->
-<!--                    <button type="submit" class="btn btn-primary">Sign in</button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
 </main>
 <footer th:replace="~{footer::footer}"></footer>
 </body>

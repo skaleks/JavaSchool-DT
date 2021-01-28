@@ -71,11 +71,11 @@ public class DataService {
     }
 
     public OptionPageDto getOptionPage(int id) throws DatabaseException {
-        return new OptionPageDto(optionService.findOptionById(id));
+        return new OptionPageDto(optionService.findOptionById(id), new HashSet<>(optionService.findAvailableOptions(id)));
     }
 
     public ContractPageDto getContractPage(int id) throws DatabaseException {
-        return new ContractPageDto(contractService.findById(id));
+        return new ContractPageDto(contractService.findById(id), tariffService.findAllTariff());
     }
 
 }

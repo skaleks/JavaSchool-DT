@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.logging.Logger;
@@ -57,7 +58,6 @@ public class AdminCreateController {
     @GetMapping("/tariff")
     public String newFormTariff(@ModelAttribute("tariff") NewTariffDto newTariffDto, Model model){
         model.addAttribute("options", optionService.findAllOptions());
-        LOGGER.info("Options size:" + optionService.findAllOptions());
         return "admin/addTariff";
     }
 
@@ -67,19 +67,22 @@ public class AdminCreateController {
             model.addAttribute("options", optionService.findAllOptions());
             return "admin/addTariff";
         }
-        LOGGER.info("Options list is empty: " + newTariffDto.getAvailableOptionsForThisTariff().isEmpty());
         tariffService.createNewTariff(newTariffDto);
         return "redirect:/admin";
     }
 
     @GetMapping("/option")
-    public String newFormOption(@ModelAttribute("option")NewOptionDto newOptionDto){
-        return "admin/addOption";
+    public ModelAndView newFormOption(@ModelAttribute("option")NewOptionDto newOptionDto){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("admin/addOption");
+        mav.addObject("allOptions", optionService.findAllOptions());
+        return mav;
     }
 
     @PostMapping("/option")
-    public String addOption(@Valid @ModelAttribute("option") NewOptionDto newOptionDto, BindingResult result){
+    public String addOption(@Valid @ModelAttribute("option") NewOptionDto newOptionDto, BindingResult result, Model model){
         if (result.hasErrors()){
+            model.addAttribute("allOptions", optionService.findAllOptions());
             return "admin/addOption";
         }
         optionService.createNewOption(newOptionDto);

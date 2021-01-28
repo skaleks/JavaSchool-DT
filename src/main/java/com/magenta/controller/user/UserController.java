@@ -3,6 +3,7 @@ package com.magenta.controller.user;
 
 import com.magenta.crud.contract.ContractService;
 import com.magenta.crud.contract.dto.ContractPageDto;
+import com.magenta.crud.contract.dto.EditContractDto;
 import com.magenta.crud.global.DataService;
 import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.tariff.TariffService;
@@ -49,21 +50,26 @@ public class UserController {
         return new ModelAndView("user/profile","profile", userProfile);
     }
 
-    @PostMapping("/block")
+    @PostMapping("/block-account")
     public ModelAndView blockAccount(@ModelAttribute("status") ChangeStatusDto statusDto) throws DatabaseException, AuthorizationException {
         userService.setStatus(statusDto);
         UserProfileDto userProfile = dataService.getUserProfileByLogin(securityService.getPrincipal());
         return new ModelAndView("user/profile","profile", userProfile);
     }
 
+    @PostMapping("/block-contract")
+    public ModelAndView blockContract(@ModelAttribute("status") ChangeStatusDto statusDto) throws DatabaseException, AuthorizationException {
+        contractService.setStatus(statusDto);
+        ContractPageDto contractPage = dataService.getContractPage(statusDto.getEntityId());
+        return new ModelAndView("user/contractInfo","profile", contractPage);
+    }
+
     @GetMapping("/contract{id}")
     public ModelAndView contractInfo(@PathVariable("id") int id) throws DatabaseException {
         ModelAndView mav = new ModelAndView();
         ContractPageDto contractPage = dataService.getContractPage(id);
-        List<TariffDto> tariffs = tariffService.findAllTariff();
 
         mav.addObject("profile",contractPage);
-        mav.addObject("tariffs", tariffs);
         mav.setViewName("user/contractInfo");
         return mav;
     }
@@ -92,13 +98,22 @@ public class UserController {
     }
 
     @PostMapping("/balance")
-    public ModelAndView addFunds(@ModelAttribute("funds") AddFundsDto fundsDto) throws DatabaseException {
+    public ModelAndView addFunds(@ModelAttribute("funds") AddFundsDto fundsDto) throws DatabaseException, MyException {
         userService.addFunds(fundsDto);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("user/userPanel");
         mav.addObject("success",true);
         mav.addObject("profile", dataService.getUserProfileById(fundsDto.getUserId()));
         mav.addObject("tariffs", tariffService.findAllTariff());
+        return mav;
+    }
+
+    @PostMapping("/deleteOption")
+    public ModelAndView delOptionFromContract(@ModelAttribute("optionFromContract") EditContractDto editContractDto) throws DatabaseException, MyException {
+        contractService.deleteOptionFromContract(editContractDto);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("user/contractInfo");
+        mav.addObject("profile", dataService.getContractPage(editContractDto.getContractId()));
         return mav;
     }
 }

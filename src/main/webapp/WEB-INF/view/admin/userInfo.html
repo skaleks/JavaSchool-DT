@@ -20,7 +20,9 @@
                                 <div class="col-md-6">
                                     <p class="lead text-center mr-auto mb-0" th:text="${profile.user.balance} + '$'"></p>
                                 </div>
-                                <div class="col-md-10 btn btn-outline-dark py-0" th:href="@{/admin/user{id}balance (id = ${profile.user.id})}">Add funds</div>
+                                <a class="col-md-10 btn btn-outline-dark py-0"
+                                     th:classappend="${profile.user.status != profile.user.status.ACTIVE}? 'disabled' "
+                                     th:href="@{/admin/edit/user{id}balance (id = ${profile.user.id})}">Add funds</a>
                             </div>
                         </div>
                     </div>
@@ -95,7 +97,9 @@
                         </div>
                     </div>
                     <div class="col-md-12 my-2 pt-1">
-                        <a class="btn btn-primary btn-block" th:href="@{/admin/edit/{id}/addContract (id = ${profile.user.id})}">Add contract</a>
+                        <a class="btn btn-primary btn-block"
+                           th:classappend="${profile.user.status != profile.user.status.ACTIVE}? 'disabled' "
+                           th:href="@{/admin/edit/{id}/addContract (id = ${profile.user.id})}">Add contract</a>
                     </div>
                     <div class="card">
                         <div class="card-body shadow border-top border-info">

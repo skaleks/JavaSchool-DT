@@ -88,6 +88,7 @@ public class AdminInformationController {
 
     @GetMapping("/tariff{id}")
     public String tariffInfo(@PathVariable("id") int id, Model model) throws DatabaseException {
+
         model.addAttribute("profile", dataService.getTariffPage(id));
         return "admin/tariffInfo";
     }
@@ -99,9 +100,12 @@ public class AdminInformationController {
     }
 
     @GetMapping("/contract{id}")
-    public String contractInfo(@PathVariable("id") int id, Model model) throws Exception {
-        model.addAttribute("profile", dataService.getContractPage(id));
-        return "admin/contractInfo";
+    public ModelAndView contractInfo(@PathVariable("id") int id) throws Exception {
+
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("admin/contractInfo");
+        mav.addObject("profile", dataService.getContractPage(id));
+        return mav;
     }
 
     @GetMapping("/searchByNumberOrEmail")

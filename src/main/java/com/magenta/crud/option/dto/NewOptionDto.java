@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -28,4 +29,7 @@ public class NewOptionDto {
     @NotNull
     @Min(value = 1, message = "Set cost, please")
     private double addCost;
+
+    private Set<Integer> leadOptions;
+    private Set<Integer> excludingOptions;
 }

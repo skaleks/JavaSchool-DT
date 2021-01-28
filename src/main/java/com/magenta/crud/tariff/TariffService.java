@@ -1,6 +1,7 @@
 package com.magenta.crud.tariff;
 
 import com.magenta.crud.global.dto.ChangeStatusDto;
+import com.magenta.crud.option.dto.EditTariffOptionList;
 import com.magenta.crud.tariff.dto.NewTariffDto;
 import com.magenta.crud.tariff.dto.TariffDto;
 import com.magenta.myexception.DatabaseException;
@@ -18,9 +19,11 @@ public interface TariffService {
 
     TariffDto findTariffById(int id) throws DatabaseException;
 
-//    void addOption(Option option);
-
     void updateTariff(Tariff tariff);
 
     void setStatus(ChangeStatusDto statusDto) throws MyException, DatabaseException;
+
+    void addOption(EditTariffOptionList optionToTariff) throws DatabaseException, MyException;
+
+    void delOption(EditTariffOptionList optionToTariff) throws DatabaseException, MyException;
 }

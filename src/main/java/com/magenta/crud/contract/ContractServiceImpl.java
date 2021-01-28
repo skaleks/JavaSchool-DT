@@ -1,6 +1,7 @@
 package com.magenta.crud.contract;
 
 import com.magenta.crud.contract.dto.ContractDto;
+import com.magenta.crud.contract.dto.EditContractDto;
 import com.magenta.crud.contract.dto.NewContractDto;
 import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.option.Option;
@@ -10,9 +11,12 @@ import com.magenta.crud.tariff.Tariff;
 import com.magenta.crud.tariff.TariffDao;
 import com.magenta.crud.tariff.dto.SwitchTariffDto;
 import com.magenta.crud.type.Status;
+import com.magenta.crud.user.User;
 import com.magenta.crud.user.UserDao;
+import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
+import com.magenta.security.SecurityService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,14 +39,16 @@ public class ContractServiceImpl implements ContractService {
     private final TariffDao tariffDao;
     private final OptionDao optionDao;
     private final ModelMapper modelMapper;
+    private final SecurityService securityService;
 
     @Autowired
-    public ContractServiceImpl(ContractDao contractDao, UserDao userDao, TariffDao tariffDao, OptionDao optionDao, ModelMapper modelMapper) {
+    public ContractServiceImpl(ContractDao contractDao, UserDao userDao, TariffDao tariffDao, OptionDao optionDao, ModelMapper modelMapper, SecurityService securityService) {
         this.contractDao = contractDao;
         this.userDao = userDao;
         this.tariffDao = tariffDao;
         this.optionDao = optionDao;
         this.modelMapper = modelMapper;
+        this.securityService = securityService;
     }
 
     @Override
@@ -87,7 +93,8 @@ public class ContractServiceImpl implements ContractService {
     @Override
     public ContractDto findById(int id) throws DatabaseException {
         Contract contract = contractDao.findById(id);
-        return mapToContractDto(contract);
+        ContractDto dto = mapToContractDto(contract);
+        return dto;
     }
 
     @Override
@@ -96,9 +103,13 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
-    public void setStatus(ChangeStatusDto statusDto) throws DatabaseException {
-
+    public void setStatus(ChangeStatusDto statusDto) throws DatabaseException, AuthorizationException {
         Contract contract = contractDao.findById(statusDto.getEntityId());
+
+        if (!securityService.isAdmin() && contract.getStatus().equals(Status.BLOCKED)){
+            throw new AuthorizationException("Only administrator can do it");
+        }
+
         Status newStatus = modelMapper.map(statusDto.getStatus(),Status.class);
         contract.setStatus(newStatus);
     }
@@ -107,12 +118,43 @@ public class ContractServiceImpl implements ContractService {
     public void switchTariff(SwitchTariffDto newTariff) throws DatabaseException, MyException {
 
         Contract contract = contractDao.findById(newTariff.getContractId());
+        User user = userDao.findById(newTariff.getUserId());
+
+        if (!user.getStatus().equals(Status.ACTIVE)){
+            throw new MyException("User isn't active!");
+        }
+
         if (contract.getStatus().equals(Status.BLOCKED)){
             throw new MyException("You can't do it. Contract blocked!");
         }
         Tariff tariff = tariffDao.findTariffById(newTariff.getTariffId());
 
+        contract.getOptions().retainAll(tariff.getOptions());
         contract.setTariff(tariff);
+    }
+
+    @Override
+    public void addOptionToContract(EditContractDto editContractDto) throws DatabaseException, MyException {
+        Contract contract = contractDao.findById(editContractDto.getContractId());
+
+        if (contract.getStatus().equals(Status.BLOCKED)){
+            throw new MyException("Contract is blocked!");
+        }
+
+        Option option = optionDao.findOptionById(editContractDto.getOptionId());
+        contract.getOptions().add(option);
+    }
+
+    @Override
+    public void deleteOptionFromContract(EditContractDto editContractDto) throws DatabaseException, MyException {
+        Contract contract = contractDao.findById(editContractDto.getContractId());
+
+        if (contract.getStatus().equals(Status.BLOCKED)){
+            throw new MyException("Contract is blocked!");
+        }
+
+        Option option = optionDao.findOptionById(editContractDto.getOptionId());
+        contract.getOptions().remove(option);
     }
 
     private boolean isNumberExist(String number) throws DatabaseException {

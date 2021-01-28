@@ -5,6 +5,7 @@ import com.magenta.crud.contract.ContractDao;
 import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.option.Option;
 import com.magenta.crud.option.OptionDao;
+import com.magenta.crud.option.dto.EditTariffOptionList;
 import com.magenta.crud.option.dto.OptionDto;
 import com.magenta.crud.tariff.dto.NewTariffDto;
 import com.magenta.crud.tariff.dto.TariffDto;
@@ -53,7 +54,6 @@ public class TariffServiceImpl implements TariffService {
                 e.printStackTrace();
             }
         });
-        LOGGER.warning("Size: " + result.size());
         tariff.setOptions(result);
         tariffDao.createNewTariff(tariff);
     }
@@ -94,6 +94,26 @@ public class TariffServiceImpl implements TariffService {
         Tariff tariff = tariffDao.findTariffById(statusDto.getEntityId());
         Status newStatus = modelMapper.map(statusDto.getStatus(),Status.class);
         tariff.setStatus(newStatus);
+    }
+
+    @Override
+    public void addOption(EditTariffOptionList optionToTariff) throws DatabaseException, MyException {
+        Option option = optionDao.findOptionById(optionToTariff.getOptionId());
+        Tariff tariff = tariffDao.findTariffById(optionToTariff.getTariffId());
+
+        if (tariff.getOptions().contains(option)){
+            throw new MyException("Tariff already has this option");
+        }
+        tariff.getOptions().add(option);
+    }
+
+    @Override
+    public void delOption(EditTariffOptionList optionFromTariff) throws DatabaseException {
+
+        Option option = optionDao.findOptionById(optionFromTariff.getOptionId());
+        Tariff tariff = tariffDao.findTariffById(optionFromTariff.getTariffId());
+
+        tariff.getOptions().remove(option);
     }
 
     private Set<OptionDto> toOptionDtoSet(Set<Option> baseList){
