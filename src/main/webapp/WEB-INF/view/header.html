@@ -52,7 +52,7 @@
     <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top py-3">
         <div class="container justify-content-center">
             <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
-                <form class="form-inline pt-2 mr-auto" th:action="@{/admin/searchByNumberOrEmail}" th:method="GET">
+                <form class="form-inline pt-2 mr-auto" th:action="@{/admin/search}" th:method="GET">
                     <input class="form-control mr-sm-2" type="search" th:name="search" placeholder="Enter number or e-mail" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
@@ -64,13 +64,13 @@
                         <div class="dropdown">
                             <a class="btn text-light mt-1" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Create new</a>
                             <div class="dropdown-menu" aria-labelledby="userDropdown">
-                                <a class="text-dark dropdown-item" th:href="@{/admin/new/contract}">Contract</a>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/contract/new}">Contract</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="text-dark dropdown-item" th:href="@{/admin/new/user}">User</a>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/user/new}">User</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="text-dark dropdown-item" th:href="@{/admin/new/tariff}">Tariff</a>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/tariff/new}">Tariff</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="text-dark dropdown-item" th:href="@{/admin/new/option}">Option</a>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/option/new}">Option</a>
                             </div>
                         </div>
                     </li>
@@ -78,13 +78,13 @@
                         <div class="dropdown">
                             <a class="btn text-light mt-1" role="button" id="contractDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Find all</a>
                             <div class="dropdown-menu" aria-labelledby="contractDropdown">
-                                <a class="text-dark dropdown-item" th:href="@{/admin/allContracts}">Contracts</a>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/contract/all}">Contracts</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="text-dark dropdown-item" th:href="@{/admin/allUsers}">Users</a>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/user/all}">Users</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="text-dark dropdown-item" th:href="@{/admin/allTariffs}">Tariffs</a>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/tariff/all}">Tariffs</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="text-dark dropdown-item" th:href="@{/admin/allOptions}">Options</a>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/option/all}">Options</a>
                             </div>
                         </div>
                     </li>

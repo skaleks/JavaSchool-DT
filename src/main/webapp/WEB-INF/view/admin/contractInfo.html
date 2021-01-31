@@ -23,13 +23,13 @@
         <div class="col-md-4 pt-4">
             <div class="col-md-12">
                 <div class="form-row">
-                    <form th:action="@{/admin/edit/contract-status}" th:method="POST" th:object="${status}"
+                    <form th:action="@{/admin/contract/status}" th:method="POST" th:object="${status}"
                           th:if="${profile.contract.status == profile.contract.status.ACTIVE}" class="col">
                         <input type="hidden" th:attr="name='entityId'" th:value="${profile.contract.id}">
                         <input type="hidden" th:attr="name='status'" th:value="'BLOCKED'">
                         <button type="submit" class="btn btn-block btn-outline-warning">Block</button>
                     </form>
-                    <form th:action="@{/admin/edit/contract-status}" th:method="POST" th:object="${status}"
+                    <form th:action="@{/admin/contract/status}" th:method="POST" th:object="${status}"
                           th:if="${profile.contract.status == profile.contract.status.BLOCKED
                   && profile.contract.user.status == profile.contract.user.status.ACTIVE}" class="col">
                         <input type="hidden" th:attr="name='entityId'" th:value="${profile.contract.id}">
@@ -54,7 +54,7 @@
                         </dl>
                     </div>
                     <div class="card-footer">
-                        <a class="btn btn-danger" th:href="@{/admin/edit/deleteContract{id}(id=${profile.contract.id})}">Delete</a>
+                        <a class="btn btn-danger" th:href="@{/admin/contract/delete{id}(id=${profile.contract.id})}">Delete</a>
                     </div>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                                     <td th:text="${option.price}"></td>
                                     <td th:text="${option.addCost}"></td>
                                     <td>
-                                        <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/edit/deleteOptionFromContract}" th:object="${optionFromContract}">
+                                        <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/contract/deleteOption}" th:object="${optionFromContract}">
                                             <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">
                                             <input type="hidden" th:value="${option.id}" th:attr="name='optionId'">
                                             <button type="submit" class="btn btn-outline-danger">Delete</button>
@@ -101,7 +101,7 @@
                 <div th:if="${profile.contract.status == profile.contract.status.ACTIVE
                     && profile.contract.user.status == profile.contract.user.status.ACTIVE}">
                     <h2>Available tariff</h2>
-                    <form th:action="@{/admin/edit/switchTariff}" th:method="POST" th:object="${switch}">
+                    <form th:action="@{/admin/contract/switchTariff}" th:method="POST" th:object="${switch}">
                         <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">
                         <input type="hidden" th:value="${profile.contract.user.id}" th:attr="name='userId'">
                         <select id="tariff" class="custom-select" th:attr="name='tariffId'">

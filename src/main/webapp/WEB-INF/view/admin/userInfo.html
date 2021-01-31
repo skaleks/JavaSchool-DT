@@ -22,32 +22,32 @@
                                 </div>
                                 <a class="col-md-10 btn btn-outline-dark py-0"
                                      th:classappend="${profile.user.status != profile.user.status.ACTIVE}? 'disabled' "
-                                     th:href="@{/admin/edit/user{id}balance (id = ${profile.user.id})}">Add funds</a>
+                                     th:href="@{/admin/user/{id}balance (id = ${profile.user.id})}">Add funds</a>
                             </div>
                         </div>
                     </div>
                     <div class="form-row card-body pb-2 mb-2">
                         <div class="col-md-12">
                             <div class="form-row">
-                                <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
+                                <form th:action="@{/admin/user/status}" th:method="POST" th:object="${status}"
                                       th:if="${profile.user.status == profile.user.status.ACTIVE}" class="col">
                                     <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
                                     <input type="hidden" th:attr="name='status'" th:value="'INACTIVE'">
                                     <button type="submit" class="btn btn-block btn-outline-danger">Deactivate</button>
                                 </form>
-                                <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
+                                <form th:action="@{/admin/user/status}" th:method="POST" th:object="${status}"
                                       th:if="${profile.user.status == profile.user.status.ACTIVE}" class="col">
                                     <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
                                     <input type="hidden" th:attr="name='status'" th:value="'BLOCKED'">
                                     <button type="submit" class="btn btn-block btn-outline-warning">Block</button>
                                 </form>
-                                <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
+                                <form th:action="@{/admin/user/status}" th:method="POST" th:object="${status}"
                                       th:if="${profile.user.status == profile.user.status.INACTIVE}" class="col">
                                     <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
                                     <input type="hidden" th:attr="name='status'" th:value="'ACTIVE'">
                                     <button type="submit" class="btn btn-block btn-outline-success">Activate</button>
                                 </form>
-                                <form th:action="@{/admin/edit/user-status}" th:method="POST" th:object="${status}"
+                                <form th:action="@{/admin/user/status}" th:method="POST" th:object="${status}"
                                       th:if="${profile.user.status == profile.user.status.BLOCKED}" class="col">
                                     <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
                                     <input type="hidden" th:attr="name='status'" th:value="'ACTIVE'">
@@ -75,8 +75,8 @@
                             </dl>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-info" th:href="@{/admin/edit/updateUser{id}(id=${profile.user.id})}">Edit</a>
-                            <a class="btn btn-danger" th:href="@{/admin/edit/deleteUser{id}(id=${profile.user.id})}">Delete</a>
+                            <a class="btn btn-info" th:href="@{/admin/user/edit{id}(id=${profile.user.id})}">Edit</a>
+                            <a class="btn btn-danger" th:href="@{/admin/user/delete{id}(id=${profile.user.id})}">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -99,13 +99,13 @@
                     <div class="col-md-12 my-2 pt-1">
                         <a class="btn btn-primary btn-block"
                            th:classappend="${profile.user.status != profile.user.status.ACTIVE}? 'disabled' "
-                           th:href="@{/admin/edit/{id}/addContract (id = ${profile.user.id})}">Add contract</a>
+                           th:href="@{/admin/user/{id}/addContract (id = ${profile.user.id})}">Add contract</a>
                     </div>
                     <div class="card">
                         <div class="card-body shadow border-top border-info">
                             <h1 class="text-center bg-light text-body">Contract list</h1>
                             <div class="list-group">
-                                <a th:each="contract: ${profile.numbers}" th:href="@{/admin/contract{id}(id = ${contract.id})}"
+                                <a th:each="contract: ${profile.numbers}" th:href="@{/admin/contract/{id}(id = ${contract.id})}"
                                    class="list-group-item list-group-item-action flex-column align-items-start shadow">
                                     <div class="card">
                                         <div class="card-body row justify-content-between">

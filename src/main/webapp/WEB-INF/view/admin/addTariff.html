@@ -18,7 +18,7 @@
             </div>
             <div class="row mt-3">
                 <div class="col-md-12">
-                    <form class="my-2" th:method="POST" th:action="@{/admin/new/tariff}" th:object="${tariff}">
+                    <form class="my-2" th:method="POST" th:action="@{/admin/tariff/new}" th:object="${tariff}">
                         <div class="form-row mb-2">
                             <div class="col-7 px-3">
                                 <div class="form-row">
@@ -54,7 +54,7 @@
                         <hr class="w-75">
                         <div class="form-row pt-3">
                             <div class="col-8"><button type="submit" class="btn btn-block btn-sm btn-success">Create</button></div>
-                            <div class="col"><a th:href="@{/admin/allTariffs}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
+                            <div class="col"><a th:href="@{/admin/tariff/all}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
                         </div>
                     </form>
                 </div>

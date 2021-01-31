@@ -16,7 +16,7 @@
                     <div class="row display-3 mx-auto">Options</div>
                 </div>
                 <div class="btn btn-success col-md-4 text-center text-uppercase p-4">
-                    <a class="btn text-light" th:href="@{/admin/new/option}">Add new option</a>
+                    <a class="btn text-light" th:href="@{/admin/option/new}">Add new option</a>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <div class="bg-dark col-md-12">
                     <div class="list-group">
                         <a class="list-group-item list-group-item-action flex-column align-items-start list-group-item-light"
-                           th:each="option: ${options.optionDtoList}" th:href="@{/admin/option{id}(id = ${option.id})}">
+                           th:each="option: ${options.optionDtoList}" th:href="@{/admin/option/{id}(id = ${option.id})}">
                             <div class="d-flex w-100 justify-content-between">
                                 <h3 class="mb-1" th:text="${option.name}"></h3>
                                 <strong class="h4" th:text="${option.status}"></strong>

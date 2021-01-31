@@ -16,7 +16,7 @@
                     <div class="row display-3 mx-auto">Users</div>
                 </div>
                 <div class="btn btn-success col-md-4 text-center text-uppercase p-4">
-                    <a class="btn text-light" th:href="@{/admin/new/user}">Add new user</a>
+                    <a class="btn text-light" th:href="@{/admin/user/new}">Add new user</a>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <div class="bg-info col-md-12">
                     <div class="list-group">
                         <a class="list-group-item list-group-item-action flex-column align-items-start list-group-item-light"
-                           th:each="user: ${users.listOfUsers}" th:href="@{/admin/user{id}(id = ${user.id})}">
+                           th:each="user: ${users.listOfUsers}" th:href="@{/admin/user/{id}(id = ${user.id})}">
                             <div class="d-flex w-100 justify-content-between">
                                 <h3 class="mb-1" th:text="${user.firstname +' '+ user.lastname}"></h3>
                                 <strong class="h4" th:text="${user.status}"></strong>

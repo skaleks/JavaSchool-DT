@@ -28,7 +28,7 @@
                     </dl>
                 </div>
                 <div class="card-footer">
-                    <a class="btn btn-danger" th:href="@{/admin/edit/deleteOption{id}(id=${profile.option.id})}">Delete</a>
+                    <a class="btn btn-danger" th:href="@{/admin/option/delete{id}(id=${profile.option.id})}">Delete</a>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                                             <td th:text="${related.price}"></td>
                                             <td th:text="${related.addCost}"></td>
                                             <td>
-                                                <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/edit/relativeDel}" th:object="${relDel}">
+                                                <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/option/relativeDel}" th:object="${relDel}">
                                                     <input type="hidden" th:value="${profile.option.id}" th:attr="name='targetOptionId'">
                                                     <input type="hidden" th:value="${related.id}" th:attr="name='addedOptionId'">
                                                     <input type="hidden" th:value="'RELATED'" th:attr="name='optionRelative'">
@@ -97,7 +97,7 @@
                                         <td th:text="${excluded.price}"></td>
                                         <td th:text="${excluded.addCost}"></td>
                                         <td>
-                                            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/edit/relativeDel}" th:object="${relDel}">
+                                            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/option/relativeDel}" th:object="${relDel}">
                                                 <input type="hidden" th:value="${profile.option.id}" th:attr="name='targetOptionId'">
                                                 <input type="hidden" th:value="${excluded.id}" th:attr="name='addedOptionId'">
                                                 <input type="hidden" th:value="'EXCLUDED'" th:attr="name='optionRelative'">
@@ -143,7 +143,7 @@
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/edit/relativeAdd}" th:object="${relAdd}">
+                    <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/option/relativeAdd}" th:object="${relAdd}">
                         <h4 class="h4">All available options</h4>
                         <div class="row">
                             <div class="col-6 p-2">

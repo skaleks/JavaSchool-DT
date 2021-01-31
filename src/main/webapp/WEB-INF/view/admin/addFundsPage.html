@@ -16,12 +16,12 @@
                 <div class="card-header h2 text-left">Balance form</div>
                 <div class="card-body">
                     <h2 class="card-title text-center mb-4" th:text="'Current balance: ' + ${user.balance} + '$'"></h2>
-                    <form class="form-inline justify-content-around" th:method="POST" th:action="@{/admin/edit/balance}" th:object="${funds}">
+                    <form class="form-inline justify-content-around" th:method="POST" th:action="@{/admin/user/balance}" th:object="${funds}">
                         <div class="input-group">
                             <input type="hidden" th:value="${user.id}" th:attr="name='userId'">
                             <input type="number" class="form-control" placeholder="500.000" th:field="*{funds}">
                             <div class="col-3 input-group-append ml-3"><button class="btn btn-block btn-success" type="submit">Yes</button></div>
-                            <div class="col-3 input-group-append ml-3"><a th:href="@{/admin/user{id}(id = ${user.id})}" class="btn btn-block btn-outline-danger">Cancel</a></div>
+                            <div class="col-3 input-group-append ml-3"><a th:href="@{/admin/user/{id}(id = ${user.id})}" class="btn btn-block btn-outline-danger">Cancel</a></div>
                         </div>
                     </form>
                 </div>

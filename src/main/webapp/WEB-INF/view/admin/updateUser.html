@@ -18,7 +18,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-md-8">
-                    <form class="m-1" th:method="POST" th:action="@{/admin/edit/{id}(id = ${userDto.getId()})}" th:object="${editUserDto}">
+                    <form class="m-1" th:method="POST" th:action="@{/admin/user/edit{id}(id = ${userDto.getId()})}" th:object="${editUserDto}">
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="firstname" class="form-label ml-1">First name</label>
@@ -70,7 +70,7 @@
 <!--                        <input id="status" type="hidden" th:name="'status'" th:value="${userDto.status}">-->
                         <div class="form-row pt-3">
                             <div class="col-8"><button type="submit" class="btn btn-block btn-sm btn-success">Save changes</button></div>
-                            <div class="col"><a th:href="@{/admin/user{id}(id = ${userDto.id})}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
+                            <div class="col"><a th:href="@{/admin/user/{id}(id = ${userDto.id})}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
                         </div>
                     </form>
                 </div>

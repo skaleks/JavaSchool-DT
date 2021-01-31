@@ -90,53 +90,7 @@ public class OptionServiceImpl implements OptionService {
     }
 
     @Override
-    public void addRelativeToOption(AddRelativeToOption addRelativeToOption) throws DatabaseException, MyException {
-//        HashSet<Option> realRelatedOptions;
-//        OptionRelative rule = OptionRelative.valueOf(addRelativeToOption.getOptionRelative());
-//        Option targetOption = optionDao.findOptionById(addRelativeToOption.getTargetOptionId());
-//        Option addedOption = optionDao.findOptionById(addRelativeToOption.getAddedOptionId());
-//
-//        if (rule.equals(OptionRelative.RELATED)) {
-//
-//            HashSet<Option> expectedSet = new HashSet<>();
-//            HashSet<Option> topSet = findTop(targetOption);
-//
-//            for (Option tariffOptionTop : topSet) {
-//
-//                realRelatedOptions = generateRealRelatedOptionList(tariffOptionTop.getRelatedOptions());
-//                realRelatedOptions.add(tariffOptionTop);
-//                expectedSet.addAll(realRelatedOptions);
-//            }
-//
-//            topSet = findTop(addedOption);
-//            for (Option tariffOptionTop : topSet) {
-//                realRelatedOptions = generateRealRelatedOptionList(tariffOptionTop.getRelatedOptions());
-//                realRelatedOptions.add(tariffOptionTop);
-//                expectedSet.addAll(realRelatedOptions);
-//            }
-//
-//            for (Option option : expectedSet) {
-//                option.getExcludedOptions().retainAll(expectedSet);
-//                if (!option.getExcludedOptions().isEmpty()) {
-//                    StringBuilder sb = new StringBuilder();
-//                    option.getExcludedOptions().forEach(anotherOption -> sb.append(anotherOption.getName()).append(";"));
-//                    String exceptionMessage = "Options " + sb.toString() + " exclude " + option.getName() + ".";
-//                    throw new MyException(exceptionMessage);
-//                }
-//            }
-//            addedOption.getLeadOptions().add(targetOption);
-//            targetOption.getRelatedOptions().add(addedOption);
-//        }
-//        if (rule.equals(OptionRelative.EXCLUDED)) {
-//            HashSet<Option> topSet = findTop(targetOption);
-//            for (Option tariffOptionTop : topSet) {
-//                realRelatedOptions = generateRealRelatedOptionList(tariffOptionTop.getRelatedOptions());
-//                realRelatedOptions.add(tariffOptionTop);
-//                realRelatedOptions.add(addedOption);
-//            }
-//            targetOption.getExcludedOptions().add(addedOption);
-//            addedOption.getExcludedOptions().add(targetOption);
-//        }
+    public void addRelativeToOption(AddRelativeToOption addRelativeToOption) throws DatabaseException {
         OptionRelative rule = OptionRelative.valueOf(addRelativeToOption.getOptionRelative());
         Option targetOption = optionDao.findOptionById(addRelativeToOption.getTargetOptionId());
         Option addedOption = optionDao.findOptionById(addRelativeToOption.getAddedOptionId());
@@ -189,36 +143,4 @@ public class OptionServiceImpl implements OptionService {
         baseList.forEach(option->resultList.add(modelMapper.map(option, OptionDto.class)));
         return resultList;
     }
-
-//    private HashSet<Option> findTop(Option tariffOption) {
-//        HashSet<Option> topSet = new HashSet<>();
-//
-//        anotherIsRelatedFor(tariffOption, topSet);
-//        return topSet;
-//    }
-//
-//    private void anotherIsRelatedFor(Option anotherIsRelatedFor, HashSet<Option> topSet) {
-//
-//        if (anotherIsRelatedFor.getLeadOptions().isEmpty()) {
-//
-//            topSet.add(anotherIsRelatedFor);
-//        }
-//
-//        for (Option isRelatedFor : anotherIsRelatedFor.getLeadOptions()) {
-//            anotherIsRelatedFor(isRelatedFor, topSet);
-//        }
-//    }
-//
-//    private HashSet<Option> generateRealRelatedOptionList (Set<Option> anotherRelatedOptionList) {
-//        HashSet<Option> realRelatedOptions = new HashSet<>();
-//        anotherRelatedFor(anotherRelatedOptionList, realRelatedOptions);
-//        return realRelatedOptions;
-//    }
-//
-//    private void anotherRelatedFor(Set<Option> anotherRelatedOptionList, HashSet<Option> realRelatedOptions) {
-//        realRelatedOptions.addAll(anotherRelatedOptionList);
-//        for (Option tariffOption : anotherRelatedOptionList) {
-//            anotherRelatedFor(tariffOption.getRelatedOptions(), realRelatedOptions);
-//        }
-//    }
 }

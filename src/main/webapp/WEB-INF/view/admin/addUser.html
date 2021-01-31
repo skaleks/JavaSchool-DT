@@ -18,7 +18,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-md-8">
-                    <form class="m-1" th:method="POST" th:action="@{/admin/new/user}" th:object="${user}">
+                    <form class="m-1" th:method="POST" th:action="@{/admin/user/new}" th:object="${user}">
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="firstname" class="form-label ml-1">First name</label>
@@ -70,52 +70,13 @@
                         </div>
                         <div class="form-row pt-3">
                             <div class="col-8"><button type="submit" class="btn btn-block btn-sm btn-success">Sign in</button></div>
-                            <div class="col"><a th:href="@{/admin/allUsers}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
+                            <div class="col"><a th:href="@{/admin/user/all}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!--        <form th:method="POST" th:action="@{/admin/user}" th:object="${user}">-->
-    <!--            <div class="row">-->
-    <!--                <div class="col">-->
-    <!--                    <input type="text" class="form-control" placeholder="Enter first name" th:field = "*{firstname}">-->
-    <!--                </div>-->
-    <!--                <div class="col">-->
-    <!--                    <input type="text" class="form-control" placeholder="Enter last name" th:field = "*{lastname}">-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--            <label for="firstname">Name:</label>-->
-    <!--            <input type="text" th:field = "*{firstname}" id="firstname">-->
-    <!--            <br/>-->
-    <!--            <label for="lastname">Surname:</label>-->
-    <!--            <input type="text" th:field = "*{lastname}" id="lastname">-->
-    <!--            <br/>-->
-    <!--            <label for="birthdate">Birthdate:</label>-->
-    <!--            <input type="date" th:field = "*{birthdate}" id="birthdate">-->
-    <!--            <br/>-->
-    <!--            <label for="email">E-mail:</label>-->
-    <!--            <input type="text" th:field = "*{email}" id="email">-->
-    <!--            <br/>-->
-    <!--            <label for="passport">Passport:</label>-->
-    <!--            <input type="text" th:field = "*{passport}" id="passport">-->
-    <!--            <br/>-->
-    <!--            <label for="login">Login</label>-->
-    <!--            <input type="text" th:field = "*{login}" id="login">-->
-    <!--            <br/>-->
-    <!--            <label for="password">Password:</label>-->
-    <!--            <input type="text" th:field = "*{password}" id="password">-->
-    <!--            <br/>-->
-    <!--            <label for="address">Address</label>-->
-    <!--            <input type="text" th:field = "*{address}" id="address">-->
-    <!--            <br/>-->
-    <!--            <label for="role">Role</label>-->
-    <!--            <input type="text" th:field = "*{role}" id="role">-->
-    <!--            <br/>-->
-    <!--            <br/>-->
-    <!--            <input type="submit" value="Create User">-->
-    <!--        </form>-->
 </main>
 <footer th:replace="~{footer::footer}"></footer>
 </body>

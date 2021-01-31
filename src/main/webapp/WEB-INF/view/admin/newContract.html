@@ -13,13 +13,13 @@
         <div class="row">
             <div class="col-md-6">
                 <h3>Find user by Number or E-mail</h3>
-                <form class="form-inline pt-2" th:action="@{/admin/searchByNumberOrEmail}" th:method="GET">
+                <form class="form-inline pt-2" th:action="@{/admin/search}" th:method="GET">
                     <input class="form-control mr-sm-2" type="search" th:name="search" placeholder="Enter number or e-mail" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
             </div>
             <div class="col-md-6">
-                <a class="btn btn-outline-primary" th:href="@{/admin/new/user}">New user</a>
+                <a class="btn btn-outline-primary" th:href="@{/admin/user/new}">New user</a>
             </div>
         </div>
     </div>

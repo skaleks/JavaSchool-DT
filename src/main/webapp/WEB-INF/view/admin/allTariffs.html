@@ -16,7 +16,7 @@
                     <div class="row display-3 mx-auto">List of tariff</div>
                 </div>
                 <div class="btn btn-success col-md-4 text-center text-uppercase p-4">
-                    <a class="btn text-light" th:href="@{/admin/new/tariff}">Add new tariff</a>
+                    <a class="btn text-light" th:href="@{/admin/tariff/new}">Add new tariff</a>
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@
                 <div class="bg-dark col-md-12">
                     <div class="list-group">
                         <a class="list-group-item list-group-item-action flex-column align-items-start list-group-item-light"
-                           th:each="tariff: ${tariffs.tariffDtoList}" th:href="@{/admin/tariff{id}(id = ${tariff.id})}">
+                           th:each="tariff: ${tariffs.tariffDtoList}" th:href="@{/admin/tariff/{id}(id = ${tariff.id})}">
                             <div class="d-flex w-100 justify-content-between">
                                 <h3 class="mb-1" th:text="${tariff.name}"></h3>
                                 <strong class="h4" th:text="${tariff.status}"></strong>

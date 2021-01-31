@@ -6,23 +6,21 @@ import com.magenta.crud.contract.dto.NewContractDto;
 import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.option.Option;
 import com.magenta.crud.option.OptionDao;
-import com.magenta.crud.option.dto.OptionDto;
 import com.magenta.crud.tariff.Tariff;
 import com.magenta.crud.tariff.TariffDao;
 import com.magenta.crud.tariff.dto.SwitchTariffDto;
 import com.magenta.crud.type.Status;
 import com.magenta.crud.user.User;
 import com.magenta.crud.user.UserDao;
+import com.magenta.mapper.MyModelMapper;
 import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,11 +36,11 @@ public class ContractServiceImpl implements ContractService {
     private final UserDao userDao;
     private final TariffDao tariffDao;
     private final OptionDao optionDao;
-    private final ModelMapper modelMapper;
+    private final MyModelMapper modelMapper;
     private final SecurityService securityService;
 
     @Autowired
-    public ContractServiceImpl(ContractDao contractDao, UserDao userDao, TariffDao tariffDao, OptionDao optionDao, ModelMapper modelMapper, SecurityService securityService) {
+    public ContractServiceImpl(ContractDao contractDao, UserDao userDao, TariffDao tariffDao, OptionDao optionDao, MyModelMapper modelMapper, SecurityService securityService) {
         this.contractDao = contractDao;
         this.userDao = userDao;
         this.tariffDao = tariffDao;
@@ -85,16 +83,14 @@ public class ContractServiceImpl implements ContractService {
 
     @Override
     public List<ContractDto> findAllContracts() {
-        List<ContractDto> resultList = new ArrayList<>();
-        contractDao.findAllContracts().forEach(contract->resultList.add(modelMapper.map(contract,ContractDto.class)));
-        return resultList;
+        List<Contract> baseList = contractDao.findAllContracts();
+        return modelMapper.mapToList(baseList ,ContractDto.class);
     }
 
     @Override
     public ContractDto findById(int id) throws DatabaseException {
         Contract contract = contractDao.findById(id);
-        ContractDto dto = mapToContractDto(contract);
-        return dto;
+        return modelMapper.map(contract,ContractDto.class);
     }
 
     @Override
@@ -159,17 +155,5 @@ public class ContractServiceImpl implements ContractService {
 
     private boolean isNumberExist(String number) throws DatabaseException {
         return (contractDao.findByNumber(number) != null);
-    }
-
-    private Set<OptionDto> toOptionDtoSet(Set<Option> baseList){
-        Set<OptionDto> resultList = new HashSet<>();
-        baseList.forEach(option -> resultList.add(modelMapper.map(option,OptionDto.class)));
-        return resultList;
-    }
-
-    private ContractDto mapToContractDto(Contract contract){
-        ContractDto contractDto = modelMapper.map(contract, ContractDto.class);
-        contractDto.setOptions(toOptionDtoSet(contract.getOptions()));
-        return contractDto;
     }
 }

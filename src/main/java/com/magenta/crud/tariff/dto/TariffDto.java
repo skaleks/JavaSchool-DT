@@ -18,5 +18,5 @@ public class TariffDto implements Serializable {
     private String tariffDescription;
     private double price;
     private Status status;
-    private Set<OptionDto> availableOptions;
+    private Set<OptionDto> options;
 }

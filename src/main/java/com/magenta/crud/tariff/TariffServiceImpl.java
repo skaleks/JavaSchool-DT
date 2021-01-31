@@ -10,6 +10,7 @@ import com.magenta.crud.option.dto.OptionDto;
 import com.magenta.crud.tariff.dto.NewTariffDto;
 import com.magenta.crud.tariff.dto.TariffDto;
 import com.magenta.crud.type.Status;
+import com.magenta.mapper.MyModelMapper;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import org.modelmapper.ModelMapper;
@@ -32,10 +33,10 @@ public class TariffServiceImpl implements TariffService {
     private final TariffDao tariffDao;
     private final OptionDao optionDao;
     private final ContractDao contractDao;
-    private final ModelMapper modelMapper;
+    private final MyModelMapper modelMapper;
 
     @Autowired
-    public TariffServiceImpl(TariffDao tariffDao, OptionDao optionDao, ContractDao contractDao, ModelMapper modelMapper) {
+    public TariffServiceImpl(TariffDao tariffDao, OptionDao optionDao, ContractDao contractDao, MyModelMapper modelMapper) {
         this.tariffDao = tariffDao;
         this.optionDao = optionDao;
         this.contractDao = contractDao;
@@ -71,16 +72,14 @@ public class TariffServiceImpl implements TariffService {
 
     @Override
     public List<TariffDto> findAllTariff(){
-        List<TariffDto> resultList = new ArrayList<>();
-        List<Tariff> tariffList = tariffDao.findAllTariff();
-        tariffList.forEach(tariff -> resultList.add(mapToTariffDto(tariff)));
-        return resultList;
+        List<Tariff> baseList = tariffDao.findAllTariff();
+        return modelMapper.mapToList(baseList,TariffDto.class);
     }
 
     @Override
     public TariffDto findTariffById(int id) throws DatabaseException {
         Tariff tariff = tariffDao.findTariffById(id);
-        return mapToTariffDto(tariff);
+        return modelMapper.map(tariff, TariffDto.class);
     }
 
     @Override
@@ -116,15 +115,4 @@ public class TariffServiceImpl implements TariffService {
         tariff.getOptions().remove(option);
     }
 
-    private Set<OptionDto> toOptionDtoSet(Set<Option> baseList){
-        Set<OptionDto> resultList = new HashSet<>();
-        baseList.forEach(option -> resultList.add(modelMapper.map(option,OptionDto.class)));
-        return resultList;
-    }
-
-    private TariffDto mapToTariffDto(Tariff tariff){
-        TariffDto tariffDto = modelMapper.map(tariff, TariffDto.class);
-        tariffDto.setAvailableOptions(toOptionDtoSet(tariff.getOptions()));
-        return tariffDto;
-    }
 }
