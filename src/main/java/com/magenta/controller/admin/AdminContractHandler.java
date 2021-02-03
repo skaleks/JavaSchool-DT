@@ -32,7 +32,7 @@ public class AdminContractHandler {
     private final ContractService contractService;
     private final DataService dataService;
 
-    @GetMapping("/all")
+    @GetMapping("/list")
     public String all(Model model) {
         AllContractsDto allContractsDto = new AllContractsDto();
         allContractsDto.setContractDtoList(contractService.findAllContracts());

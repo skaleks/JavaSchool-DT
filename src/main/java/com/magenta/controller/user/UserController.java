@@ -18,9 +18,11 @@ import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -98,9 +100,17 @@ public class UserController {
     }
 
     @PostMapping("/balance")
-    public ModelAndView addFunds(@ModelAttribute("funds") AddFundsDto fundsDto) throws DatabaseException, MyException {
-        userService.addFunds(fundsDto);
+    public ModelAndView addFunds(@Valid @ModelAttribute("funds") AddFundsDto fundsDto, BindingResult result) throws DatabaseException, MyException {
+
         ModelAndView mav = new ModelAndView();
+        if (result.hasErrors()){
+            mav.setViewName("user/addFundsPage");
+            mav.addObject("funds", new AddFundsDto());
+            mav.addObject("user", userService.findById(fundsDto.getUserId()));
+            return mav;
+        }
+
+        userService.addFunds(fundsDto);
         mav.setViewName("user/userPanel");
         mav.addObject("success",true);
         mav.addObject("profile", dataService.getUserProfileById(fundsDto.getUserId()));

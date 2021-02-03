@@ -28,7 +28,7 @@ public class AdminOptionHandler {
     private final OptionService optionService;
     private final DataService dataService;
 
-    @GetMapping("/all")
+    @GetMapping("/list")
     public String all(Model model) {
         AllOptionsDto allOptionsDto = new AllOptionsDto();
         allOptionsDto.setOptionDtoList(optionService.findAllOptions());

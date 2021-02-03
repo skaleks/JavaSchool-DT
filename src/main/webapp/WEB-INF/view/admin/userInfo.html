@@ -12,6 +12,12 @@
     <div class="py-1" style="">
         <div class="container">
             <div class="row justify-content-between">
+                <div class="row" th:if="${success}">
+                    <div class="alert alert-success flex-grow-1 shadow-lg mb-4">
+                        <button type="button" class="close" data-dismiss="alert"><small>x</small></button>
+                        <h1 class="alert-heading text-center mb-0">Successfull!</h1>
+                    </div>
+                </div>
                 <div class="col-md-4">
                     <div class="col-md-12 px-0">
                         <div class="card text-white bg-info shadow-lg my-0">
@@ -22,7 +28,7 @@
                                 </div>
                                 <a class="col-md-10 btn btn-outline-dark py-0"
                                      th:classappend="${profile.user.status != profile.user.status.ACTIVE}? 'disabled' "
-                                     th:href="@{/admin/user/{id}balance (id = ${profile.user.id})}">Add funds</a>
+                                     th:href="@{/admin/user/{id}/balance (id = ${profile.user.id})}">Add funds</a>
                             </div>
                         </div>
                     </div>

@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.validation.Valid;
 import java.util.logging.Logger;
 
@@ -27,7 +28,7 @@ public class AdminTariffHandler {
     private final OptionService optionService;
     private final DataService dataService;
 
-    @GetMapping("/all")
+    @GetMapping("/list")
     public String allTariffs(Model model) {
         AllTariffDto allTariffDto = new AllTariffDto();
         allTariffDto.setTariffDtoList(tariffService.findAllTariff());

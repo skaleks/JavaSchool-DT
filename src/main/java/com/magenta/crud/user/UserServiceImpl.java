@@ -8,11 +8,11 @@ import com.magenta.crud.type.Status;
 import com.magenta.crud.user.dto.AddFundsDto;
 import com.magenta.crud.user.dto.NewUserDto;
 import com.magenta.crud.user.dto.UserDto;
+import com.magenta.mapper.MyModelMapper;
 import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
     private final ContractService contractService;
-    private final ModelMapper modelMapper;
+    private final MyModelMapper modelMapper;
     private final SecurityService securityService;
     private PasswordEncoder passwordEncoder;
 
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Autowired
-    public UserServiceImpl(UserDao userDao, ModelMapper modelMapper, ContractService contractService,
+    public UserServiceImpl(UserDao userDao, MyModelMapper modelMapper, ContractService contractService,
                            SecurityService securityService){
         this.userDao = userDao;
         this.modelMapper = modelMapper;

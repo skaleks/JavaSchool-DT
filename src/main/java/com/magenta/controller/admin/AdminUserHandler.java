@@ -1,11 +1,9 @@
 package com.magenta.controller.admin;
 
 
-import com.magenta.crud.contract.ContractService;
 import com.magenta.crud.contract.dto.NewContractDto;
 import com.magenta.crud.global.DataService;
 import com.magenta.crud.global.dto.ChangeStatusDto;
-import com.magenta.crud.option.OptionService;
 import com.magenta.crud.tariff.TariffService;
 import com.magenta.crud.user.UserService;
 import com.magenta.crud.user.dto.*;
@@ -40,7 +38,7 @@ public class AdminUserHandler {
         return "admin/userInfo";
     }
 
-    @GetMapping("/all")
+    @GetMapping("/list")
     public String all(Model model){
         AllUsersDto allUsersDto = new AllUsersDto();
         allUsersDto.setListOfUsers(userService.findAllUsers());
@@ -68,7 +66,7 @@ public class AdminUserHandler {
     @GetMapping("/delete{id}")
     public String delete(@PathVariable("id") int id) throws DatabaseException, MyException {
         userService.deleteById(id);
-        return "redirect:/admin/allUsers";
+        return "admin/allUsers";
     }
 
     @GetMapping("/edit{id}")
@@ -109,7 +107,7 @@ public class AdminUserHandler {
         return new ModelAndView("admin/userInfo","profile", profile);
     }
 
-    @GetMapping("/{id}balance")
+    @GetMapping("/{id}/balance")
     public ModelAndView addFundsForm(@PathVariable("id") int id) throws DatabaseException {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("admin/addFundsPage");
@@ -119,9 +117,17 @@ public class AdminUserHandler {
     }
 
     @PostMapping("/balance")
-    public ModelAndView addFunds(@ModelAttribute("funds") AddFundsDto fundsDto) throws DatabaseException, MyException {
-        userService.addFunds(fundsDto);
+    public ModelAndView addFunds(@Valid @ModelAttribute("funds") AddFundsDto fundsDto, BindingResult result) throws DatabaseException, MyException {
+
         ModelAndView mav = new ModelAndView();
+        if (result.hasErrors()){
+            mav.setViewName("admin/addFundsPage");
+            mav.addObject("funds", new AddFundsDto());
+            mav.addObject("user", userService.findById(fundsDto.getUserId()));
+            return mav;
+        }
+
+        userService.addFunds(fundsDto);
         mav.setViewName("admin/userInfo");
         mav.addObject("success",true);
         mav.addObject("profile", dataService.getUserProfileById(fundsDto.getUserId()));

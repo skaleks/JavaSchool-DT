@@ -19,6 +19,7 @@ public class UserDto implements Serializable {
     private int id;
     private String firstname;
     private String lastname;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthdate;
     private String passport;

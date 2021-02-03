@@ -6,6 +6,7 @@ import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -31,7 +32,6 @@ public class ExceptionController {
         return choosePath(exception.getMessage());
     }
 
-
     @ExceptionHandler(value = MyException.class)
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView myException(MyException myException){
@@ -39,23 +39,24 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(value = DatabaseException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     public ModelAndView databaseException(DatabaseException databaseException){
         return choosePath(databaseException.getMessage());
     }
 
     @ExceptionHandler(value = AuthorizationException.class)
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
-    public ModelAndView myException(AuthorizationException authorizationException){
+    public ModelAndView authException(AuthorizationException authorizationException){
         return choosePath(authorizationException.getMessage());
     }
 
 
     private ModelAndView choosePath(String error){
 
-        LOGGER.info(error);
+        LOGGER.info("In ExceptionController: " + error);
         String viewName;
-        ModelAndView modelAndView = new ModelAndView();
+        ModelMap modelMap = new ModelMap();
+        modelMap.addAttribute("exception", error);
 
         if (securityService.getAuthorities().stream().anyMatch(role->role.getAuthority().equals("ROLE_ADMIN"))){
             viewName = "admin/error";
@@ -63,8 +64,6 @@ public class ExceptionController {
             viewName = "user/error";
         }
 
-        modelAndView.setViewName(viewName);
-        modelAndView.addObject("exception", error);
-        return modelAndView;
+        return new ModelAndView(viewName,modelMap);
     }
 }
