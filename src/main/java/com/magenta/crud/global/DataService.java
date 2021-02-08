@@ -12,19 +12,20 @@ import com.magenta.crud.user.UserService;
 import com.magenta.crud.user.dto.UserDto;
 import com.magenta.crud.user.dto.UserProfileDto;
 import com.magenta.myexception.DatabaseException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service("pageFromDataService")
 @Transactional
 public class DataService {
 
-    private static final Logger LOGGER = Logger.getLogger("DataService");
+    private static final Logger LOGGER = LogManager.getLogger(DataService.class);
 
     private final UserService userService;
     private final TariffService tariffService;

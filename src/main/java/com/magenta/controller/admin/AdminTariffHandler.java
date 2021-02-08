@@ -9,6 +9,8 @@ import com.magenta.crud.tariff.dto.NewTariffDto;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,14 +18,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/admin/tariff")
 @AllArgsConstructor
 public class AdminTariffHandler {
 
-    private static final Logger LOGGER = Logger.getLogger("TariffHandler");
+    private static final Logger LOGGER = LogManager.getLogger(AdminTariffHandler.class);
     private final TariffService tariffService;
     private final OptionService optionService;
     private final DataService dataService;

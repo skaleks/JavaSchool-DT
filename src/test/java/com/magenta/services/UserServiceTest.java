@@ -19,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
@@ -42,16 +41,24 @@ class UserServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        getUsers();
+    }
+
+    private void getUsers(){
+        User user_1 = new User();
+        user_1.setId(1);
+        User user_2 = new User();
+        user_2.setId(2);
+        users.add(user_1);
+        users.add(user_2);
     }
 
     @Test
     void saveUser() {
-
     }
 
     @Test
     void findById() {
-
     }
 
     @Test
@@ -61,6 +68,7 @@ class UserServiceTest {
 
     @Test
     void findByNumberOrEmail() {
+
     }
 
     @Test

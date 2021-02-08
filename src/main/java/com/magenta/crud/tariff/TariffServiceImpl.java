@@ -6,29 +6,27 @@ import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.option.Option;
 import com.magenta.crud.option.OptionDao;
 import com.magenta.crud.option.dto.EditTariffOptionList;
-import com.magenta.crud.option.dto.OptionDto;
 import com.magenta.crud.tariff.dto.NewTariffDto;
 import com.magenta.crud.tariff.dto.TariffDto;
 import com.magenta.crud.type.Status;
 import com.magenta.mapper.MyModelMapper;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
-import org.modelmapper.ModelMapper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 @Service("tariffService")
 @Transactional
 public class TariffServiceImpl implements TariffService {
 
-    private static final Logger LOGGER = Logger.getLogger("Info");
+    private static final Logger LOGGER = LogManager.getLogger(TariffServiceImpl.class);
 
     private final TariffDao tariffDao;
     private final OptionDao optionDao;

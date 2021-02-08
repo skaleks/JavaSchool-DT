@@ -13,6 +13,8 @@ import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,13 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private static final Logger LOGGER = Logger.getLogger("UserService");
+    private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
 
     private final UserDao userDao;
     private final ContractService contractService;
@@ -108,7 +109,6 @@ public class UserServiceImpl implements UserService {
 
         User user = userDao.findById(statusDto.getEntityId());
         
-        /// TODO: 22.01.2021 Find algorithm to user will be able to block contract
         if (!securityService.isAdmin() && user.getStatus().equals(Status.BLOCKED)){
             throw new AuthorizationException("Only administrator can do it");
         }

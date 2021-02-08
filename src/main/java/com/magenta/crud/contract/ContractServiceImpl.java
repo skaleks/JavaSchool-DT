@@ -17,6 +17,8 @@ import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,13 +26,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 @Service("contractService")
 @Transactional
 public class ContractServiceImpl implements ContractService {
 
-    private static final Logger LOGGER = Logger.getLogger("ContractService");
+    private static final Logger LOGGER = LogManager.getLogger(ContractServiceImpl.class);
 
     private final ContractDao contractDao;
     private final UserDao userDao;

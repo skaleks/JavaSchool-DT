@@ -4,6 +4,8 @@ import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.ModelMap;
@@ -12,12 +14,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.logging.Logger;
-
 @ControllerAdvice
 public class ExceptionController {
 
-    private static final Logger LOGGER = Logger.getLogger("Exception");
+    private static final Logger LOGGER = LogManager.getLogger(ExceptionController.class);
 
     private final SecurityService securityService;
 

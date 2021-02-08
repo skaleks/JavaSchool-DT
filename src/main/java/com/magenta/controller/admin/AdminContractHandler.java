@@ -14,20 +14,21 @@ import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/admin/contract")
 @AllArgsConstructor
 public class AdminContractHandler {
 
-    private static final Logger LOGGER = Logger.getLogger("ContractHandler");
+    private static final Logger LOGGER = LogManager.getLogger(AdminContractHandler.class);
     private final TariffService tariffService;
     private final ContractService contractService;
     private final DataService dataService;

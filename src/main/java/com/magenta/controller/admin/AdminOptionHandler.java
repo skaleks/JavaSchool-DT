@@ -10,6 +10,8 @@ import com.magenta.crud.option.dto.NewOptionDto;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -17,14 +19,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/admin/option")
 @AllArgsConstructor
 public class AdminOptionHandler {
 
-    private static final Logger LOGGER = Logger.getLogger("OptionHandler");
+    private static final Logger LOGGER = LogManager.getLogger(AdminOptionHandler.class);
     private final OptionService optionService;
     private final DataService dataService;
 

@@ -17,6 +17,8 @@ import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
 import lombok.AllArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,7 @@ import java.util.List;
 @AllArgsConstructor
 public class UserController {
 
+    private static final Logger LOGGER = LogManager.getLogger(UserController.class);
     private final DataService dataService;
     private final UserService userService;
     private final TariffService tariffService;

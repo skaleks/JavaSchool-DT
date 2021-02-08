@@ -10,6 +10,8 @@ import com.magenta.crud.type.OptionRelative;
 import com.magenta.crud.type.Status;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,13 +20,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.logging.Logger;
 
 @Service("optionService")
 @Transactional
 public class OptionServiceImpl implements OptionService {
 
-    private final static Logger LOGGER = Logger.getLogger("OptionService");
+    private static final Logger LOGGER = LogManager.getLogger(OptionServiceImpl.class);
 
     private final OptionDao optionDao;
     private final ModelMapper modelMapper;
