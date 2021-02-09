@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "USER", schema = "public", catalog = "Magenta_Operator")
+@Table(name = "USERS", schema = "public", catalog = "Magenta_Operator")
 public class User {
 
     @Id
@@ -49,11 +49,11 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "USER_STATUS", nullable = false)
+    @Column(name = "STATUS", nullable = false)
     private Status status;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "USER_ROLE", nullable = false)
+    @Column(name = "ROLE", nullable = false)
     private Role role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

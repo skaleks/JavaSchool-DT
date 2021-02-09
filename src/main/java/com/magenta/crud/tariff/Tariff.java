@@ -12,7 +12,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "TARIFF", schema = "public", catalog = "Magenta_Operator")
+@Table(name = "TARIFFS", schema = "public", catalog = "Magenta_Operator")
 public class Tariff {
 
     @Id
@@ -20,14 +20,14 @@ public class Tariff {
     @Column(name = "TARIFF_ID")
     private Integer id;
 
-    @Column(name = "TARIFF_NAME", nullable = false, unique = true)
+    @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "TARIFF_PRICE",nullable = false)
+    @Column(name = "PRICE",nullable = false)
     private Double price;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "TARIFF_STATUS", nullable = false)
+    @Column(name = "STATUS", nullable = false)
     private Status status;
 
     @OneToMany(mappedBy = "tariff", fetch = FetchType.LAZY)

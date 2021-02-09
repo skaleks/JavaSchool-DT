@@ -11,7 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "OPTION", schema = "public", catalog = "Magenta_Operator")
+@Table(name = "OPTIONS", schema = "public", catalog = "Magenta_Operator")
 public class Option {
 
     @Id
@@ -19,16 +19,16 @@ public class Option {
     @Column(name = "OPTION_ID")
     private Integer id;
 
-    @Column(name = "OPTION_NAME", nullable = false, unique = true)
+    @Column(name = "NAME", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "OPTION_PRICE")
+    @Column(name = "PRICE")
     private Double price;
 
-    @Column(name = "OPTION_COST")
+    @Column(name = "COST")
     private Double addCost;
 
-    @Column(name = "OPTION_STATUS", nullable = false)
+    @Column(name = "STATUS", nullable = false)
     private Status status = Status.ACTIVE;
 
     @Column(name = "DESCRIPTION")

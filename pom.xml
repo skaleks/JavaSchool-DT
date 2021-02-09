@@ -118,7 +118,7 @@
     <dependency>
       <groupId>org.flywaydb</groupId>
       <artifactId>flyway-core</artifactId>
-      <version>7.0.4</version>
+      <version>5.0.7</version>
     </dependency>
 
 
@@ -215,18 +215,6 @@
           <configuration>
             <source>8</source>
             <target>8</target>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.flywaydb</groupId>
-          <artifactId>flyway-maven-plugin</artifactId>
-          <version>7.0.4</version>
-          <configuration>
-            <user>postgres</user>
-            <password>spartak</password>
-            <schemas>
-              <schema>public</schema>
-            </schemas>
           </configuration>
         </plugin>
       </plugins>
