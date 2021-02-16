@@ -38,7 +38,7 @@ public class ContractDaoImpl extends AbstractDao<Contract> implements ContractDa
                 .createQuery("SELECT c FROM Contract c WHERE c.number = :number")
                 .setParameter("number",number)
                 .getResultList();
-        if (resultList.isEmpty()) return null;
+        if (resultList.isEmpty()) throw new DatabaseException("");
         return (Contract) resultList.get(0);
     }
 }
