@@ -10,7 +10,6 @@ create table public.OPTIONS (
     primary key (OPTION_ID),
     constraint "UK_tfbgtqhajtk1vu7a3240e606k" unique (NAME)
 );
-TRUNCATE public.OPTIONS;
 
 -- Tariffs
 drop table if exists public.TARIFFS cascade;
@@ -23,7 +22,6 @@ create table public.TARIFFS (
     primary key (TARIFF_ID),
     constraint "UK_2fvbdkejjpoa49qcgy7urjhlk" unique (NAME)
 );
-TRUNCATE public.TARIFFS;
 
 -- Users
 drop table if exists public.USERS cascade;
@@ -46,7 +44,6 @@ create table public.USERS (
     constraint "UK_l3c3ahdulnjx8bt2ivgyvh1ss"
         unique (LOGIN)
 );
-TRUNCATE public.USERS;
 
 -- Contracts
 drop table if exists public.CONTRACTS cascade;
@@ -67,7 +64,6 @@ create table public.CONTRACTS (
         foreign key (user_USER_ID)
             references public.USERS
 );
-TRUNCATE public.CONTRACTS;
 
 -- Tariff option
 drop table if exists TARIFF_OPTION cascade;
@@ -82,7 +78,6 @@ create table TARIFF_OPTION (
         foreign key (TARIFF_ID)
             references public.TARIFFS
 );
-TRUNCATE TARIFF_OPTION;
 
 -- Contract options
 drop table if exists CONTRACT_OPTIONS cascade;
@@ -97,7 +92,6 @@ create table CONTRACT_OPTIONS (
         foreign key (OPTION_ID)
             references public.OPTIONS
 );
-TRUNCATE CONTRACT_OPTIONS;
 
 -- Related options
 drop table if exists RELATED_OPTIONS cascade;
@@ -112,8 +106,6 @@ create table RELATED_OPTIONS (
         foreign key (OPTION_ID)
             references public.OPTIONS
 );
-TRUNCATE RELATED_OPTIONS;
-
 
 -- Lead options
 drop table if exists LEAD_OPTIONS cascade;
@@ -128,7 +120,6 @@ create table LEAD_OPTIONS (
         foreign key (OPTION_ID)
             references public.OPTIONS
 );
-TRUNCATE LEAD_OPTIONS;
 
 -- Excluding options
 drop table if exists EXCLUDING_OPTIONS cascade;
@@ -143,4 +134,3 @@ create table EXCLUDING_OPTIONS (
         foreign key (OPTION_ID)
             references public.OPTIONS
 );
-TRUNCATE EXCLUDING_OPTIONS;

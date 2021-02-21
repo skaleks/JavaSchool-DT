@@ -2,6 +2,7 @@ package com.magenta.crud.tariff;
 
 import com.magenta.crud.contract.Contract;
 import com.magenta.crud.option.Option;
+import com.magenta.crud.showcase.ShowcaseItem;
 import com.magenta.crud.type.Status;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,6 +34,9 @@ public class Tariff {
     @OneToMany(mappedBy = "tariff", fetch = FetchType.LAZY)
     private Set<Contract> contracts;
 
+    @OneToOne(mappedBy = "tariff", fetch = FetchType.LAZY)
+    private ShowcaseItem showcaseItem;
+
     @Column(name = "DESCRIPTION")
     private String tariffDescription;
 
@@ -41,4 +45,5 @@ public class Tariff {
             joinColumns = {@JoinColumn(name = "TARIFF_ID", referencedColumnName = "TARIFF_ID")},
             inverseJoinColumns = {@JoinColumn(name = "OPTION_ID",referencedColumnName = "OPTION_ID")})
     private Set<Option> options;
+
 }

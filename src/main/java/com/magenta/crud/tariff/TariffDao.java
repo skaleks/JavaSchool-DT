@@ -1,7 +1,6 @@
 package com.magenta.crud.tariff;
 
 import com.magenta.myexception.DatabaseException;
-
 import java.util.List;
 
 public interface TariffDao {

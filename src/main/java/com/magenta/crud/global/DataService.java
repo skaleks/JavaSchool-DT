@@ -6,6 +6,8 @@ import com.magenta.crud.contract.dto.ContractPageDto;
 import com.magenta.crud.global.dto.AdminMainDto;
 import com.magenta.crud.option.OptionService;
 import com.magenta.crud.option.dto.OptionPageDto;
+import com.magenta.crud.showcase.ShowcaseService;
+import com.magenta.crud.showcase.dto.ShowcaseProfileDto;
 import com.magenta.crud.tariff.TariffService;
 import com.magenta.crud.tariff.dto.TariffPageDto;
 import com.magenta.crud.user.UserService;
@@ -31,13 +33,15 @@ public class DataService {
     private final TariffService tariffService;
     private final OptionService optionService;
     private final ContractService contractService;
+    private final ShowcaseService showcaseService;
 
     @Autowired
-    public DataService(UserService userService, TariffService tariffService, OptionService optionService, ContractService contractService) {
+    public DataService(UserService userService, TariffService tariffService, OptionService optionService, ContractService contractService, ShowcaseService showcaseService) {
         this.userService = userService;
         this.tariffService = tariffService;
         this.optionService = optionService;
         this.contractService = contractService;
+        this.showcaseService = showcaseService;
     }
 
 //    public UserMainDto getMainPageForUser(String login) {
@@ -77,6 +81,10 @@ public class DataService {
 
     public ContractPageDto getContractPage(int id) throws DatabaseException {
         return new ContractPageDto(contractService.findById(id), tariffService.findAllTariff());
+    }
+
+    public ShowcaseProfileDto getShowcaseProfile(){
+        return new ShowcaseProfileDto(showcaseService.getItemDtoList());
     }
 
 }
