@@ -21,15 +21,15 @@ public class ShowcaseItem {
     private int id;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "TARIFF_ID", referencedColumnName = "TARIFF_ID")
+    @JoinColumn(name = "TARIFF_ID", referencedColumnName = "TARIFF_ID", nullable = false)
     private Tariff tariff;
 
     public ShowcaseItem(Tariff tariff){
         this.tariff = tariff;
     }
 
-    @Enumerated(value = EnumType.STRING)
-    @Column(name = "ITEM_STATUS")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ITEM_STATUS", nullable = false)
     private Status status;
 
     @Column(name = "ITEM_DESCRIPTION")

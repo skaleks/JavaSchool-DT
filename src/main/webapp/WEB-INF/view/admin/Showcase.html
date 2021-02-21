@@ -8,7 +8,11 @@
 </head>
 <body>
 <header th:replace="~{header::navbarAdmin}"></header>
-
+<main>
+    <div th:each="item: ${profile.tariffList}">
+        <span th:text="${item.tariffName} + ${item.tariffPrice}"></span>
+    </div>
+</main>
 <footer th:replace="~{footer::footer}"></footer>
 </body>
 </html>
