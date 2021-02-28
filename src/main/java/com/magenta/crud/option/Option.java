@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "OPTIONS", schema = "public", catalog = "Magenta_Operator")
-public class Option {
+public class Option implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

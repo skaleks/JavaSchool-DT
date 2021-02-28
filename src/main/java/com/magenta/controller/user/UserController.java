@@ -16,6 +16,7 @@ import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
+import com.magenta.sessioncart.SessionCart;
 import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,12 +39,14 @@ public class UserController {
     private final TariffService tariffService;
     private final ContractService contractService;
     private final SecurityService securityService;
+    private final SessionCart sessionCart;
 
     @GetMapping
     public ModelAndView userPage() throws DatabaseException {
         String login = securityService.getPrincipal();
         ModelAndView mav = new ModelAndView();
         mav.setViewName("user/userPanel");
+        mav.addObject("cart", sessionCart.getCart());
         mav.addObject("profile", dataService.getUserProfileByLogin(login));
         mav.addObject("tariffs", tariffService.findAllTariff());
         return mav;
@@ -121,8 +124,26 @@ public class UserController {
         return mav;
     }
 
-    @PostMapping("/deleteOption")
-    public ModelAndView delOptionFromContract(@ModelAttribute("optionFromContract") EditContractDto editContractDto) throws DatabaseException, MyException {
+    @GetMapping("/cart")
+    public String cart(){
+        return "user/cart";
+    }
+
+    @PostMapping("/contract/addOption")
+    public ModelAndView addItemToCart(@ModelAttribute("editContractDto") EditContractDto editContractDto) throws DatabaseException, MyException {
+//        if (result.hasErrors()){
+//            return "Please, choose option to add";
+//        }
+        sessionCart.addOptionsToCart(editContractDto);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("user/contractInfo");
+        mav.addObject("response", "Success");
+        mav.addObject("profile", dataService.getContractPage(editContractDto.getContractId()));
+        return mav;
+    }
+
+    @PostMapping("/contract/deleteOption")
+    public ModelAndView deleteOptionFromContract(@ModelAttribute("editContractDto") EditContractDto editContractDto) throws DatabaseException, MyException {
         contractService.deleteOptionFromContract(editContractDto);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("user/contractInfo");

@@ -6,14 +6,16 @@ import com.magenta.crud.type.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "SHOWCASE_ITEMS",schema = "public", catalog = "Magenta_Operator")
-public class ShowcaseItem {
+public class ShowcaseItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -32,7 +32,10 @@
                 </ul>
                 <h1 class="text-light pt-2 shadow-lg ml-auto"><b>Magenta</b></h1>
                 <ul class="navbar-nav ml-auto">
-                    <li th:text="${#authentication.name}"></li>
+                    <li class="nav-item" th:text="${#authentication.name}"></li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:text="'Bucket: ' + ${@cart.itemsCount}" th:href="@{/user/cart}"></a>
+                    </li>
                     <li>
                         <div class="dropdown">
                             <a class="btn text-light" role="button" id="logUser" data-toggle="dropdown">Menu</a>

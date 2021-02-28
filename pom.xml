@@ -238,6 +238,11 @@
             <target>8</target>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-maven-plugin</artifactId>
+          <version>2.0.1.Final</version>
+        </plugin>
       </plugins>
   </build>
 </project>

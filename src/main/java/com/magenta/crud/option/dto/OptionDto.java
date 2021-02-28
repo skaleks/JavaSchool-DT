@@ -1,14 +1,15 @@
 package com.magenta.crud.option.dto;
+
 import com.magenta.crud.option.Option;
 import com.magenta.crud.type.Status;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.Set;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 public class OptionDto implements Serializable {
 
     private int id;

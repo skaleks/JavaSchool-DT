@@ -21,6 +21,11 @@
             <p class="lead mb-0 text-center">Contact your administrator to unlock account</p>
         </div>
     </div>
+    <div class="row" th:text="${response}">
+        <div class="alert alert-warning flex-grow-1 shadow-lg mb-4">
+            <h1 class="alert-heading text-center mb-0">Success</h1>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4 pt-4">
             <div class="col-md-12">
@@ -70,14 +75,56 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <th:block th:each="tariff: ${profile.tariffDtoList}">
+                                    <tr th:each="option: ${tariff.getOptions()}">
+                                        <td th:text="${option.name}"></td>
+                                        <td th:text="${option.price}"></td>
+                                        <td th:text="${option.addCost}"></td>
+                                        <td>
+                                            <div th:if="${profile.contract.status == profile.contract.status.ACTIVE
+                                                            && profile.contract.user.status == profile.contract.user.status.ACTIVE}">
+                                                <form class="mt-2 px-4" th:method="POST" th:action="@{/user/contract/addOption}" th:object="${editContractDto}">
+                                                    <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">
+                                                    <input type="hidden" th:value="${option.id}" th:attr="name='optionId'">
+                                                    <button type="submit" class="btn btn-outline-danger">Add</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </th:block>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mt-2">
+                <div class="card">
+                    <h5 class="card-header">
+                        Options
+                    </h5>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Cost of add</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 <tr th:each="option: ${profile.contract.options}">
                                     <td th:text="${option.name}"></td>
                                     <td th:text="${option.price}"></td>
                                     <td th:text="${option.addCost}"></td>
                                     <td>
                                         <div th:if="${profile.contract.status == profile.contract.status.ACTIVE
-                    && profile.contract.user.status == profile.contract.user.status.ACTIVE}">
-                                            <form class="mt-2 px-4" th:method="POST" th:action="@{/user/deleteOption}" th:object="${optionFromContract}">
+                                                           && profile.contract.user.status == profile.contract.user.status.ACTIVE}">
+                                            <form class="mt-2 px-4" th:method="POST" th:action="@{/user/contract/deleteOption}" th:object="${editContractDto}">
                                                 <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">
                                                 <input type="hidden" th:value="${option.id}" th:attr="name='optionId'">
                                                 <button type="submit" class="btn btn-outline-danger">Delete</button>

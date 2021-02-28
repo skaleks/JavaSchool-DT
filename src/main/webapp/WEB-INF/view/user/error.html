@@ -10,9 +10,8 @@
 <header th:replace="~{header::navbarUser}"></header>
 
 <div class="alert alert-danger lead content">
-
-<!--  Cannot find "error" parameter -->
-    <span> Something wrong! </span>
+    <span> Something wrong!</span>
+    <span th:text="${exception}"></span>
 </div>
 
 <footer th:replace="~{footer::footer}"></footer>

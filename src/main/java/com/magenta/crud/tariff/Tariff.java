@@ -8,13 +8,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "TARIFFS", schema = "public", catalog = "Magenta_Operator")
-public class Tariff {
+public class Tariff implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
