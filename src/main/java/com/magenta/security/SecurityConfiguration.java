@@ -22,12 +22,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Qualifier(value = "userDetailsService")
     UserDetailsService userServiceDetails;
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
-    }
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .inMemoryAuthentication()
+//                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
+//    }
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) {

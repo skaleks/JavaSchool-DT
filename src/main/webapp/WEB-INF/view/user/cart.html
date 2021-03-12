@@ -8,15 +8,21 @@
 </head>
 <body>
 <header th:replace="~{header::navbarUser}"></header>
-<main>
-<th:block th:each="item:${@cart.cart}">
-    <div th:each="option:${item.value}">
-        <span th:text="${item.key}"></span>
-        <span th:text="${option.name}"></span>
-        <span th:text="${option.price}"></span>
-        <span th:text="${option.optionDescription}"></span>
+<main class="container m-auto">
+    <div class="card">
+        <h3 class="card-header"> Cart </h3>
+        <div class="card-body">
+            <th:block th:each="item:${@cart.cart}">
+                <h5 th:text="${item.key}"></h5>
+                <ul class="list-group list-group-flush" th:each="option:${item.value}">
+                    <li class="list-group-item" th:text="${option.name} + ${option.price} + ${option.id}"></li>
+                </ul>
+            </th:block>
+        </div>
+        <div class="card-footer">
+            <span th:text="'Total'"></span>
+        </div>
     </div>
-</th:block>
 </main>
 <footer th:replace="~{footer::footer}"></footer>
 </body>

@@ -46,7 +46,6 @@ public class UserController {
         String login = securityService.getPrincipal();
         ModelAndView mav = new ModelAndView();
         mav.setViewName("user/userPanel");
-        mav.addObject("cart", sessionCart.getCart());
         mav.addObject("profile", dataService.getUserProfileByLogin(login));
         mav.addObject("tariffs", tariffService.findAllTariff());
         return mav;
