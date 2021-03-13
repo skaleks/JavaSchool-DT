@@ -57,7 +57,9 @@ public class AdminContractHandler {
 
     @PostMapping("/new")
     public String add(@ModelAttribute("contract") NewContractDto newContractDto) throws DatabaseException, MyException {
+        LOGGER.error("Here?");
         contractService.saveContract(newContractDto);
+        LOGGER.error("Or Here?");
         return "redirect:/admin";
     }
 

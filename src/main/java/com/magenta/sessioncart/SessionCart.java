@@ -30,7 +30,7 @@ public class SessionCart implements Serializable {
     private static final Logger LOGGER = LogManager.getLogger(SessionCart.class);
 
     private int itemsCount;
-    private double totalPrice;
+    private double totalCost;
     private Map<String, HashMap<String, Set<OptionDto>>> session = new HashMap<>();
     private HashMap<String, Set<OptionDto>> cart;
 
@@ -57,11 +57,9 @@ public class SessionCart implements Serializable {
         if (currentCart == null){
             HashMap<String,Set<OptionDto>> newCart = new HashMap<>();
             setCart(newCart);
-            LOGGER.error("Новый пользователь получил свою карту");
             return cart;
         }else {
             setCart(currentCart);
-            LOGGER.error("Существующий пользователь получил свою карту");
         }
         return cart;
     }
@@ -72,26 +70,16 @@ public class SessionCart implements Serializable {
         OptionDto optionDto = optionService.findOptionById(editContractDto.getOptionId());
         String key = contractDto.getNumber();
 
-        LOGGER.info(securityService.getPrincipal() + " с номером: " + key);
-
         if (cart.containsKey(key)){
             Set<OptionDto> currentSet = cart.get(key);
-            LOGGER.info("Номер: " + key);
-            for (OptionDto option: currentSet) {
-                LOGGER.error(option.getName());
-            }
             if (currentSet.contains(optionDto)){
-                LOGGER.info("Карта имеет: " + currentSet.size() + "опций");
-                LOGGER.info("Опция уже добавлена");
                 throw new MyException("This option already added");
             }
             currentSet.add(optionDto);
-            LOGGER.info("Опция" + optionDto.getName() + "только что успешно добавлена");
             cart.put(key,currentSet);
         }else {
             Set<OptionDto> newSet = new HashSet<>();
             newSet.add(optionDto);
-            LOGGER.info("Опция " + optionDto.getName() + " является первой в карте");
             cart.put(key,newSet);
         }
 //        setCart(cart);
@@ -110,14 +98,16 @@ public class SessionCart implements Serializable {
         }
     }
 
-    int logCount = 0;
     public int getItemsCount() {
-        ++logCount;
-        LOGGER.info("Счетчик вхождений " + logCount);
         itemsCount = 0;
         getCart().forEach((k,v) -> itemsCount+=v.size());
-        LOGGER.error("Пользователь с именем " + securityService.getPrincipal() + " имеет " + itemsCount + " опций в корзине");
         return itemsCount;
+    }
+
+    public double getTotalCost(){
+        totalCost = 0;
+        getCart().forEach((k,v) -> v.forEach(optionDto -> totalCost+= optionDto.getAddCost()));
+        return totalCost;
     }
 
     @Override
@@ -125,11 +115,11 @@ public class SessionCart implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SessionCart that = (SessionCart) o;
-        return itemsCount == that.itemsCount && Double.compare(that.totalPrice, totalPrice) == 0 && logCount == that.logCount && Objects.equals(session, that.session) && Objects.equals(cart, that.cart) && Objects.equals(contractService, that.contractService) && Objects.equals(optionService, that.optionService) && Objects.equals(securityService, that.securityService);
+        return itemsCount == that.itemsCount && Double.compare(that.totalCost, totalCost) == 0 && Objects.equals(session, that.session) && Objects.equals(cart, that.cart) && Objects.equals(contractService, that.contractService) && Objects.equals(optionService, that.optionService) && Objects.equals(securityService, that.securityService);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemsCount, totalPrice, session, cart, contractService, optionService, securityService, logCount);
+        return Objects.hash(itemsCount, totalCost, session, cart, contractService, optionService, securityService);
     }
 }

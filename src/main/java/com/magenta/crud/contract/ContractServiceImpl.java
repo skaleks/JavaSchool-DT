@@ -155,6 +155,7 @@ public class ContractServiceImpl implements ContractService {
     }
 
     private boolean isNumberExist(String number) throws DatabaseException {
+        LOGGER.warn("Is number exist?");
         return (contractDao.findByNumber(number) != null);
     }
 }

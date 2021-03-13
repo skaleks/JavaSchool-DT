@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
-<header th:replace="~{header::navbarAdmin}"></header>
+<header th:replace="templates/header::navbarAdmin"></header>
 <main class="container-fluid px-3">
     <div class="row">
         <div class="col-md-4 p-3">
@@ -111,6 +106,6 @@
         </div>
     </div>
 </main>
-<footer th:replace="~{footer::footer}"></footer>
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

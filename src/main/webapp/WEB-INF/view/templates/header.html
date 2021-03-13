@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
 <body>
+
+<!--  Global navbar for start page  -->
+
 <div th:fragment="navbar">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
         <div class="container-fluid">
@@ -21,6 +18,10 @@
         </div>
     </nav>
 </div>
+
+
+<!--  Navbar for User  -->
+
 <div th:fragment="navbarUser">
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top">
         <div class="container-fluid">
@@ -34,7 +35,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item" th:text="${#authentication.name}"></li>
                     <li class="nav-item">
-                        <a class="nav-link" th:text="'Bucket: ' + ${@cart.itemsCount}" th:href="@{/user/cart}"></a>
+                        <a class="nav-link" th:href="@{/user/cart}">Bucket: [[${@cart.itemsCount}]]</a>
                     </li>
                     <li>
                         <div class="dropdown">
@@ -51,6 +52,10 @@
         </div>
     </nav>
 </div>
+
+
+<!--  Navbar for Admin  -->
+
 <div th:fragment="navbarAdmin">
     <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top py-3">
         <div class="container justify-content-center">
@@ -61,7 +66,7 @@
                 </form>
                 <ul class="navbar-nav align-items-center mr-auto">
                     <li class="nav-item mx-2">
-                        <a class="h4 nav-link text-light pt-2 pb-0" th:href="@{/admin}"><b>Magenta</b></a>
+                        <a class="h4 nav-link text-light pt-2 pb-0" th:href="@{/WEB-INF/view/admin}"><b>Magenta</b></a>
                     </li>
                     <li class="nav-item mx-2 mb-0">
                         <div class="dropdown">
@@ -105,59 +110,6 @@
             </div>
         </div>
     </nav>
-<!--    <nav class="navbar navbar-expand-lg bg-dark navbar-dark" >-->
-<!--        <div class="container-fluid">-->
-<!--            <div class="collapse navbar-collapse" id="user-navbar">-->
-<!--                <ul class="navbar-nav">-->
-<!--                    <li class="nav-item mx-1 pt-2">-->
-<!--                        <a class="nav-link active" th:href="@{/admin}">Home</a>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item mx-3 pt-1">-->
-<!--                        <form class="form-inline pt-2" th:action="@{/admin/searchByNumberOrEmail}" th:method="GET">-->
-<!--                            <input class="form-control mr-sm-2" type="search" th:name="search" placeholder="Enter number or e-mail" aria-label="Search">-->
-<!--                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>-->
-<!--                        </form>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--                <h1 class="nav-item text-light pt-2 shadow-lg ml-auto"><b class="badge">Magenta</b></h1>-->
-<!--                <ul class="navbar-nav ml-auto">-->
-<!--                    <li class="nav-item mx-1 text-light" th:text="${#authentication.name}"></li>-->
-<!--                    <li class="nav-item mx-1">-->
-<!--                        <div class="dropdown">-->
-<!--                            <a class="btn text-light" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> New </a>-->
-<!--                            <div class="dropdown-menu" aria-labelledby="userDropdown">-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/admin/new/contract}">Contract</a>-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/admin/new/user}">User</a>-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/admin/new/tariff}">Tariff</a>-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/admin/new/option}">Option</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item mx-1">-->
-<!--                        <div class="dropdown">-->
-<!--                            <a class="btn text-light" role="button" id="contractDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">All</a>-->
-<!--                            <div class="dropdown-menu" aria-labelledby="contractDropdown">-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/admin/allContracts}">Contracts</a>-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/admin/allUsers}">Users</a>-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/admin/allTariffs}">Tariffs</a>-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/admin/allOptions}">Options</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </li>-->
-<!--                    <li class="nav-item mx-1">-->
-<!--                        <div class="dropdown">-->
-<!--                            <a class="btn text-light" role="button" id="logAdmin" data-toggle="dropdown">Menu</a>-->
-<!--                            <div class="dropdown-menu" aria-labelledby="log">-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/admin/profile}">My profile</a>-->
-<!--                                <div class="dropdown-divider"></div>-->
-<!--                                <a class="text-dark dropdown-item" th:href="@{/logout}">Log Out</a>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
 </div>
 </body>
 </html>
