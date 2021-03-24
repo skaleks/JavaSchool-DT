@@ -6,6 +6,7 @@ import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.type.Role;
 import com.magenta.crud.type.Status;
 import com.magenta.crud.user.dto.AddFundsDto;
+import com.magenta.crud.user.dto.EditUserDto;
 import com.magenta.crud.user.dto.NewUserDto;
 import com.magenta.crud.user.dto.UserDto;
 import com.magenta.mapper.MyModelMapper;
@@ -98,7 +99,8 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public void update(UserDto userDto) {
+    public void update(EditUserDto editDto) {
+        UserDto userDto = modelMapper.map(editDto, UserDto.class);
         User user = modelMapper.map(userDto,User.class);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.update(user);

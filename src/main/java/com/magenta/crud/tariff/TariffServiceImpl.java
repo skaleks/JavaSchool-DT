@@ -1,11 +1,12 @@
 package com.magenta.crud.tariff;
 
+import com.magenta.checker.RuleCheckerForOptions;
 import com.magenta.crud.contract.Contract;
 import com.magenta.crud.contract.ContractDao;
 import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.option.Option;
 import com.magenta.crud.option.OptionDao;
-import com.magenta.crud.option.dto.EditTariffOptionList;
+import com.magenta.crud.option.dto.EditTariffOptionDto;
 import com.magenta.crud.tariff.dto.NewTariffDto;
 import com.magenta.crud.tariff.dto.TariffDto;
 import com.magenta.crud.type.Status;
@@ -32,13 +33,15 @@ public class TariffServiceImpl implements TariffService {
     private final OptionDao optionDao;
     private final ContractDao contractDao;
     private final MyModelMapper modelMapper;
+    private final RuleCheckerForOptions checker;
 
     @Autowired
-    public TariffServiceImpl(TariffDao tariffDao, OptionDao optionDao, ContractDao contractDao, MyModelMapper modelMapper) {
+    public TariffServiceImpl(TariffDao tariffDao, OptionDao optionDao, ContractDao contractDao, MyModelMapper modelMapper, RuleCheckerForOptions checker) {
         this.tariffDao = tariffDao;
         this.optionDao = optionDao;
         this.contractDao = contractDao;
         this.modelMapper = modelMapper;
+        this.checker = checker;
     }
 
     @Override
@@ -94,7 +97,7 @@ public class TariffServiceImpl implements TariffService {
     }
 
     @Override
-    public void addOption(EditTariffOptionList optionToTariff) throws DatabaseException, MyException {
+    public void addOption(EditTariffOptionDto optionToTariff) throws DatabaseException, MyException {
         Option option = optionDao.findOptionById(optionToTariff.getOptionId());
         Tariff tariff = tariffDao.findTariffById(optionToTariff.getTariffId());
 
@@ -105,10 +108,12 @@ public class TariffServiceImpl implements TariffService {
     }
 
     @Override
-    public void delOption(EditTariffOptionList optionFromTariff) throws DatabaseException {
+    public void delOption(EditTariffOptionDto optionFromTariff) throws DatabaseException, MyException {
 
         Option option = optionDao.findOptionById(optionFromTariff.getOptionId());
         Tariff tariff = tariffDao.findTariffById(optionFromTariff.getTariffId());
+
+        checker.checkIfStillUsed(option);
 
         tariff.getOptions().remove(option);
     }

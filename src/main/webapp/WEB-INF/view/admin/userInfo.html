@@ -4,32 +4,22 @@
 <body>
 <header th:replace="templates/header::navbarAdmin"></header>
 <main class="mt-4">
-    <div class="py-1" style="">
+    <div class="py-1">
         <div class="container">
             <div class="row justify-content-between">
-                <div class="col-md-12" th:if="${success}">
-                    <div class="alert alert-success flex-grow-1 shadow-lg mb-4">
-                        <button type="button" class="close" data-dismiss="alert"><small>x</small></button>
-                        <h1 class="alert-heading text-center mb-0">Successfull!</h1>
-                    </div>
-                </div>
+                <th:block th:if="${success}">
+                    <div th:replace="templates/alerts :: success_alert"></div>
+                </th:block>
                 <div class="col-md-4">
                     <div class="col-md-12 px-0">
-                        <div class="card text-white bg-info shadow-lg my-0">
-                            <div class="row justify-content-center my-2">
-                                <h4 class="col-md-6 text-center"><b class="text-uppercase">Balance:</b></h4>
-                                <div class="col-md-6">
-                                    <p class="lead text-center mr-auto mb-0" th:text="${profile.user.balance} + '$'"></p>
-                                </div>
-                                <a class="col-md-10 btn btn-outline-dark py-0"
-                                     th:classappend="${profile.user.status != profile.user.status.ACTIVE}? 'disabled' "
-                                     th:href="@{/admin/user/{id}/balance (id = ${profile.user.id})}">Add funds</a>
-                            </div>
-                        </div>
+                        <div th:replace="templates/cards :: balance_card"></div>
                     </div>
                     <div class="form-row card-body pb-2 mb-2">
                         <div class="col-md-12">
                             <div class="form-row">
+
+                                <!--TODO-->
+<!--                                <th:block th:replace="templates/forms :: status_form(check, value)"></th:block>-->
                                 <form th:action="@{/admin/user/status}" th:method="POST" th:object="${status}"
                                       th:if="${profile.user.status == profile.user.status.ACTIVE}" class="col">
                                     <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
@@ -76,8 +66,8 @@
                             </dl>
                         </div>
                         <div class="card-footer">
-                            <a class="btn btn-info" th:href="@{/admin/user/edit{id}(id=${profile.user.id})}">Edit</a>
-                            <a class="btn btn-danger" th:href="@{/admin/user/delete{id}(id=${profile.user.id})}">Delete</a>
+                            <a class="btn btn-info" th:href="@{/admin/user/edit/{id}(id=${profile.user.id})}">Edit</a>
+                            <a class="btn btn-danger" th:href="@{/admin/user/delete/{id}(id=${profile.user.id})}">Delete</a>
                         </div>
                     </div>
                 </div>

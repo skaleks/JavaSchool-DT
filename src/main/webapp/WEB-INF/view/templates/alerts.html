@@ -1,6 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
+
+<!--  Success  -->
+<div class="row" th:fragment="success_alert">
+    <div class="alert alert-success flex-grow-1 shadow-lg mb-4">
+        <button type="button" class="close" data-dismiss="alert"><small>close</small></button>
+        <h1 class="alert-heading text-center mb-0">Successfull!</h1>
+    </div>
+</div>
+
+<!--  Failed  -->
+<div class="row" th:fragment="failed_alert">
+    <div class="alert alert-danger flex-grow-1 shadow-lg mb-4">
+        <button type="button" class="close" data-dismiss="alert"><small>close</small></button>
+        <h1 class="alert-heading text-center mb-0">Failed!</h1>
+    </div>
+</div>
 
 </body>
 </html>

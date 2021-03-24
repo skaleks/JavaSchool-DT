@@ -66,7 +66,7 @@ public class AdminContractHandler {
     @GetMapping("/delete{id}")
     public String delete(@PathVariable("id") int id) throws DatabaseException {
         contractService.deleteContract(id);
-        return "redirect:/admin/allContracts";
+        return "redirect:/admin/contract/list";
     }
 
     @PostMapping("/status")

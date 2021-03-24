@@ -82,7 +82,6 @@ public class SessionCart implements Serializable {
             newSet.add(optionDto);
             cart.put(key,newSet);
         }
-//        setCart(cart);
     }
 
     public void deleteOptionFromCart(EditContractDto editContractDto) throws DatabaseException {

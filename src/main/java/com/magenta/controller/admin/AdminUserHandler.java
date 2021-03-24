@@ -64,31 +64,32 @@ public class AdminUserHandler {
         return "admin/userInfo";
     }
 
-    @GetMapping("/delete{id}")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") int id) throws DatabaseException, MyException {
         userService.deleteById(id);
-        return "admin/allUsers";
+        return "redirect:/admin/user/list";
     }
 
-    @GetMapping("/edit{id}")
+    @GetMapping("/edit/{id}")
     public String editForm(@PathVariable("id") int id, @ModelAttribute("editUserDto") EditUserDto editUserDto, Model model)
             throws DatabaseException {
         model.addAttribute("userDto", userService.findById(id));
         return "admin/updateUser";
     }
 
-    @PostMapping("/edit{id}")
+    @PostMapping("/edit/{id}")
     public String edit(@Valid @ModelAttribute("editUserDto") EditUserDto editUserDto, BindingResult result,
                              @PathVariable int id, Model model) throws DatabaseException {
 
         if (result.hasErrors()) {
             return "admin/updateUser";
         }
-        UserDto userDto = modelMapper.map(editUserDto,UserDto.class);
-//        Изменить на EditUserDto?
-        userService.update(userDto);
-        model.addAttribute("profile",dataService.getUserProfileById(id));
-        return "admin/userInfo";
+        LOGGER.warn("Are you here?  1 ");
+        userService.update(editUserDto);
+//        model.addAttribute("profile",dataService.getUserProfileById(id));
+//        return "admin/userInfo";
+        LOGGER.warn("Are you here?  6 ");
+        return "redirect:/admin/user/" + id;
     }
 
     @GetMapping("/{id}/addContract")

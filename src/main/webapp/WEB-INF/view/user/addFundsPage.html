@@ -10,7 +10,7 @@
             <div class="card bg-light mb-3 border shadow">
                 <div class="card-header h2 text-left">Balance form</div>
                 <div class="card-body">
-                    <h2 class="card-title text-center mb-4" th:text="'Current balance: ' + ${user.balance} + '$'"></h2>
+                    <h2 class="card-title text-center mb-4"> Current balance [[${user.balance}]]$ </h2>
                     <form class="form-inline justify-content-around" th:method="POST" th:action="@{/user/balance}" th:object="${funds}">
                         <div class="input-group">
                             <input type="hidden" th:value="${user.id}" th:attr="name='userId'">

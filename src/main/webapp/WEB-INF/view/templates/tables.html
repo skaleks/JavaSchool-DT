@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+<!--  Options card with table  -->
+<div class="col-md-4" th:fragment="options(title, data, form)">
+    <div class="card">
+        <h5 class="card-header">
+            [[${title}]]
+        </h5>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Cost of add</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="option: ${data}">
+                        <td th:text="${option.id}"></td>
+                        <td th:text="${option.name}"></td>
+                        <td th:text="${option.price}"></td>
+                        <td th:text="${option.addCost}"></td>
+                        <td th:replace="${form}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="card-footer"></div>
+    </div>
+</div>
+
+</body>
+</html>

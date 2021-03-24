@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class ExceptionController {
@@ -50,6 +51,14 @@ public class ExceptionController {
         return choosePath(authorizationException.getMessage());
     }
 
+    @ExceptionHandler(value = NoHandlerFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public ModelAndView notFoundException(Exception exception){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/404");
+        mav.addObject("msg", exception.getMessage());
+        return mav;
+    }
 
     private ModelAndView choosePath(String error){
 

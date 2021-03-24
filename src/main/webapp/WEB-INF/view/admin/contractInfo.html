@@ -115,43 +115,43 @@
                 </div>
             </div>
             <div class="row mt-4">
-<!--                <div class="col-md-6">-->
-<!--                    <div class="card">-->
-<!--                        <h5 class="card-header">-->
-<!--                            Available options-->
-<!--                        </h5>-->
-<!--                        <div class="card-body">-->
-<!--                            <div class="table-responsive">-->
-<!--                                <table class="table">-->
-<!--                                    <thead>-->
-<!--                                    <tr>-->
-<!--                                        <th scope="col">Name</th>-->
-<!--                                        <th scope="col">Price</th>-->
-<!--                                        <th scope="col">Cost of add</th>-->
-<!--                                        <th scope="col"></th>-->
-<!--                                    </tr>-->
-<!--                                    </thead>-->
-<!--                                    <tbody>-->
-<!--                                    <tr th:each="option: ${profile.contract.tariff.availableOptions}">-->
-<!--                                        <td th:text="${option.name}"></td>-->
-<!--                                        <td th:text="${option.price}"></td>-->
-<!--                                        <td th:text="${option.addCost}"></td>-->
-<!--                                        <td>-->
-<!--                                            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/edit/addOptionToContract}" th:object="${optionToContract}">-->
-<!--                                                <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">-->
-<!--                                                <input type="hidden" th:value="${option.id}" th:attr="name='optionId'">-->
-<!--                                                <button type="submit" class="btn btn-outline-danger">Add</button>-->
-<!--                                            </form>-->
-<!--                                        </td>-->
-<!--                                    </tr>-->
-<!--                                    </tbody>-->
-<!--                                </table>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="card-footer">-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-header">
+                            Available options
+                        </h5>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Cost of add</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="option: ${profile.contract.tariff.options}">
+                                        <td th:text="${option.name}"></td>
+                                        <td th:text="${option.price}"></td>
+                                        <td th:text="${option.addCost}"></td>
+                                        <td>
+                                            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/contract/addOption}" th:object="${optionToContract}">
+                                                <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">
+                                                <input type="hidden" th:value="${option.id}" th:attr="name='optionId'">
+                                                <button type="submit" class="btn btn-outline-danger">Add</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -6,6 +6,7 @@ import com.magenta.crud.contract.dto.ContractPageDto;
 import com.magenta.crud.contract.dto.EditContractDto;
 import com.magenta.crud.global.DataService;
 import com.magenta.crud.global.dto.ChangeStatusDto;
+import com.magenta.crud.global.dto.ResponseDto;
 import com.magenta.crud.tariff.TariffService;
 import com.magenta.crud.tariff.dto.SwitchTariffDto;
 import com.magenta.crud.tariff.dto.TariffDto;
@@ -130,15 +131,17 @@ public class UserController {
 
     @PostMapping("/contract/addOption")
     public ModelAndView addItemToCart(@ModelAttribute("editContractDto") EditContractDto editContractDto) throws DatabaseException, MyException {
-//        if (result.hasErrors()){
-//            return "Please, choose option to add";
-//        }
         sessionCart.addOptionsToCart(editContractDto);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("user/contractInfo");
-        mav.addObject("response", "Success");
         mav.addObject("profile", dataService.getContractPage(editContractDto.getContractId()));
         return mav;
+    }
+
+    @PostMapping("/contract/delOptionFromCart")
+    public ModelAndView delItemFromCart(EditContractDto editContractDto) throws DatabaseException {
+        sessionCart.deleteOptionFromCart(editContractDto);
+        return null;
     }
 
     @PostMapping("/contract/deleteOption")
@@ -147,6 +150,15 @@ public class UserController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("user/contractInfo");
         mav.addObject("profile", dataService.getContractPage(editContractDto.getContractId()));
+        return mav;
+    }
+
+    @GetMapping("/buy")
+    public ModelAndView buyOptions() throws DatabaseException {
+        String response = contractService.buyOptions();
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("response", new ResponseDto(response));
+        mav.setViewName("redirect:/user/cart");
         return mav;
     }
 }

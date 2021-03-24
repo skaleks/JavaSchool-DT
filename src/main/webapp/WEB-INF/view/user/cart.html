@@ -8,15 +8,19 @@
         <h3 class="card-header"> Cart </h3>
         <div class="card-body">
             <th:block th:each="item:${@cart.cart}">
-                <h5 th:text="${item.key}"></h5>
+                <h5>[[${item.key}]]</h5>
                 <ul class="list-group list-group-flush" th:each="option:${item.value}">
-                    <li class="list-group-item" th:text="${option.name} + ${option.price} + ${option.id}"></li>
+                    <li class="list-group-item" th:text="${option.name} + ${option.price}"></li>
                 </ul>
                 <br>
             </th:block>
+            <th:block th:if="${@cart.cart.isEmpty()}">
+                <h5> Cart is empty! </h5>
+            </th:block>
         </div>
-        <div class="card-footer">
-            <span th:text="'Total' + ${@cart.totalCost}"></span>
+        <div class="card-footer justify-content-between">
+            <span>Total [[${@cart.totalCost}]]</span>
+            <a class="btn btn-outline-success" th:href="@{/user/buy}"> Buy! </a>
         </div>
     </div>
 </main>

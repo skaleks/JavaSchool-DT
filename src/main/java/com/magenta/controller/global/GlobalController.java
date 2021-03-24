@@ -25,17 +25,7 @@ public class GlobalController {
             return "/index";
         }
         return securityService.isAdmin()? "redirect:/admin" : "redirect:/user";
-//        return "index";
     }
-
-//    @GetMapping("/login")
-//    public String login(){
-//        Authentication auth = securityService.getAuthentication();
-//        if (auth == null || securityService.isAnonymous()){
-//            return "login";
-//        }
-//        return "redirect:/";
-//    }
 
     @GetMapping("/logout")
     public String logout(){
@@ -49,6 +39,11 @@ public class GlobalController {
     @GetMapping("/403")
     public String response403(){
         return "403";
+    }
+
+    @GetMapping("/404")
+    public String response404(){
+        return "404";
     }
 
     @GetMapping("/forgotPassword")

@@ -2,6 +2,7 @@ package com.magenta.crud.user;
 
 import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.user.dto.AddFundsDto;
+import com.magenta.crud.user.dto.EditUserDto;
 import com.magenta.crud.user.dto.NewUserDto;
 import com.magenta.crud.user.dto.UserDto;
 import com.magenta.myexception.AuthorizationException;
@@ -25,7 +26,7 @@ public interface UserService {
 
     void deleteById(int id) throws DatabaseException, MyException;
 
-    void update(UserDto userDto);
+    void update(EditUserDto userDto);
 
     void setStatus(ChangeStatusDto statusDto) throws DatabaseException, AuthorizationException;
 

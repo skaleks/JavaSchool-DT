@@ -38,7 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/login").permitAll()
+                .antMatchers("/","/login", "/404").permitAll()
                 .antMatchers("/admin/**").access("(hasRole('ADMIN'))")
                 .antMatchers("/user/**").access("(hasRole('USER'))")
                 .and()
@@ -69,4 +69,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationSuccessHandler authenticationSuccessHandler(){
         return new CustomAuthenticationSuccessHandler();
     }
+
+
 }

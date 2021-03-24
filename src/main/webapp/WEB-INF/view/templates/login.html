@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
     <div th:fragment="loginForm" class="col-md-5 px-2">
         <div class="row">
@@ -21,7 +22,7 @@
                             <a th:href="@{/forgotPassword}"> Forgot your password?</a>
                         </small>
                     </div>
-                    <button type="submit" class="btn btn-primary">Log in!</button>
+                    <button id="loginBtn" type="submit" class="btn">Log in!</button>
                 </form>
             </div>
         </div>

@@ -200,42 +200,6 @@
             </div>
         </div>
     </div>
-<!--    -->
-<!--    <div class="row" th:if="${profile.contract.status == profile.contract.status.BLOCKED}">-->
-<!--        <div class="alert alert-warning flex-grow-1 shadow-lg mb-4">-->
-<!--            <h1 class="alert-heading text-center mb-0">Contract blocked!</h1>-->
-<!--            <p class="lead mb-0 text-center">Contact your administrator to unlock contract</p>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div class="col-12">-->
-<!--        <div class="form-row">-->
-<!--            <form th:action="@{/user/block-contract}" th:method="POST" th:object="${status}"-->
-<!--                  th:if="${profile.contract.status == profile.contract.status.ACTIVE}" class="col">-->
-<!--                <input type="hidden" th:attr="name='entityId'" th:value="${profile.contract.id}">-->
-<!--                <input type="hidden" th:attr="name='status'" th:value="'BLOCKED'">-->
-<!--                <button type="submit" class="btn btn-block btn-outline-danger">Block contract</button>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <div th:text="${profile.contract.number}"></div>-->
-<!--    <div th:text="${profile.contract.user.login}"></div>-->
-<!--    <div th:text="${profile.contract.tariff.name}"></div>-->
-<!--    <div th:each="option : ${profile.contract.options}">-->
-<!--        <span th:text="${option.name}"></span>-->
-<!--    </div>-->
-<!--    <div th:if="${profile.contract.status != profile.contract.status.BLOCKED}">-->
-<!--        <form th:action="@{/user/switchTariff}" th:method="POST" th:object="${switch}">-->
-<!--            <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">-->
-<!--            <input type="hidden" th:value="${profile.contract.user.id}" th:attr="name='userId'">-->
-<!--            <select id="tariff" class="custom-select" th:attr="name='tariffId'">-->
-<!--                <option th:each="tariff: ${tariffs}"-->
-<!--                        th:value="${tariff.id}"-->
-<!--                        th:text="${tariff.name}">-->
-<!--                </option>-->
-<!--            </select>-->
-<!--            <button type="submit" class="btn btn-primary">Switch tariff</button>-->
-<!--        </form>-->
-<!--    </div>-->
 </main>
 <footer th:replace="templates/footer::footer"></footer>
 </body>

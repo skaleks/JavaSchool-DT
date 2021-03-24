@@ -2,7 +2,7 @@ package com.magenta.controller.admin;
 
 import com.magenta.crud.global.DataService;
 import com.magenta.crud.option.OptionService;
-import com.magenta.crud.option.dto.EditTariffOptionList;
+import com.magenta.crud.option.dto.EditTariffOptionDto;
 import com.magenta.crud.tariff.TariffService;
 import com.magenta.crud.tariff.dto.AllTariffDto;
 import com.magenta.crud.tariff.dto.NewTariffDto;
@@ -67,7 +67,7 @@ public class AdminTariffHandler {
     }
 
     @PostMapping("/addOption")
-    public ModelAndView addOptionToTariff(@ModelAttribute("optionToTariff") EditTariffOptionList optionToTariff)
+    public ModelAndView addOptionToTariff(@ModelAttribute("optionToTariff") EditTariffOptionDto optionToTariff)
             throws DatabaseException, MyException {
 
         tariffService.addOption(optionToTariff);
@@ -78,7 +78,7 @@ public class AdminTariffHandler {
     }
 
     @PostMapping("/delOption")
-    public ModelAndView delOptionFromTariff(@ModelAttribute("optionFromTariff") EditTariffOptionList optionFromTariff)
+    public ModelAndView delOptionFromTariff(@ModelAttribute("optionFromTariff") EditTariffOptionDto optionFromTariff)
             throws DatabaseException, MyException {
 
         tariffService.delOption(optionFromTariff);

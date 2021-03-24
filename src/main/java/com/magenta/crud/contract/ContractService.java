@@ -30,4 +30,6 @@ public interface ContractService {
     void addOptionToContract(EditContractDto editContractDto) throws DatabaseException, MyException;
 
     void deleteOptionFromContract(EditContractDto editContractDto) throws DatabaseException, MyException;
+
+    String buyOptions() throws DatabaseException;
 }

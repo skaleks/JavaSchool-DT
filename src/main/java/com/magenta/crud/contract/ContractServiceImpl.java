@@ -6,6 +6,7 @@ import com.magenta.crud.contract.dto.NewContractDto;
 import com.magenta.crud.global.dto.ChangeStatusDto;
 import com.magenta.crud.option.Option;
 import com.magenta.crud.option.OptionDao;
+import com.magenta.crud.option.dto.OptionDto;
 import com.magenta.crud.tariff.Tariff;
 import com.magenta.crud.tariff.TariffDao;
 import com.magenta.crud.tariff.dto.SwitchTariffDto;
@@ -17,12 +18,14 @@ import com.magenta.myexception.AuthorizationException;
 import com.magenta.myexception.DatabaseException;
 import com.magenta.myexception.MyException;
 import com.magenta.security.SecurityService;
+import com.magenta.sessioncart.SessionCart;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -39,15 +42,17 @@ public class ContractServiceImpl implements ContractService {
     private final OptionDao optionDao;
     private final MyModelMapper modelMapper;
     private final SecurityService securityService;
+    private final SessionCart sessionCart;
 
     @Autowired
-    public ContractServiceImpl(ContractDao contractDao, UserDao userDao, TariffDao tariffDao, OptionDao optionDao, MyModelMapper modelMapper, SecurityService securityService) {
+    public ContractServiceImpl(ContractDao contractDao, UserDao userDao, TariffDao tariffDao, OptionDao optionDao, MyModelMapper modelMapper, SecurityService securityService, SessionCart sessionCart) {
         this.contractDao = contractDao;
         this.userDao = userDao;
         this.tariffDao = tariffDao;
         this.optionDao = optionDao;
         this.modelMapper = modelMapper;
         this.securityService = securityService;
+        this.sessionCart = sessionCart;
     }
 
     @Override
@@ -152,6 +157,17 @@ public class ContractServiceImpl implements ContractService {
 
         Option option = optionDao.findOptionById(editContractDto.getOptionId());
         contract.getOptions().remove(option);
+    }
+
+    @Override
+    public String buyOptions() throws DatabaseException {
+        HashMap<String, Set<OptionDto>> cart = sessionCart.getCart();
+        for (String number:cart.keySet()) {
+            Contract contract = contractDao.findByNumber(number);
+            cart.get(number).forEach(optionDto -> contract.getOptions().add(modelMapper.map(optionDto, Option.class)));
+        }
+        cart.clear();
+        return "Options was added!";
     }
 
     private boolean isNumberExist(String number) throws DatabaseException {
