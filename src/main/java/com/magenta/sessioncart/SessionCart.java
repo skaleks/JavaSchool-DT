@@ -3,6 +3,7 @@ package com.magenta.sessioncart;
 
 import com.magenta.crud.contract.ContractService;
 import com.magenta.crud.contract.dto.ContractDto;
+import com.magenta.crud.contract.dto.DelOptionFromCartDto;
 import com.magenta.crud.contract.dto.EditContractDto;
 import com.magenta.crud.option.OptionService;
 import com.magenta.crud.option.dto.OptionDto;
@@ -84,16 +85,20 @@ public class SessionCart implements Serializable {
         }
     }
 
-    public void deleteOptionFromCart(EditContractDto editContractDto) throws DatabaseException {
+    public void deleteOptionFromCart(DelOptionFromCartDto fromCartDto) throws DatabaseException {
 
-        ContractDto contractDto = contractService.findById(editContractDto.getContractId());
-        OptionDto optionDto = optionService.findOptionById(editContractDto.getOptionId());
-        String key = contractDto.getNumber();
+//        ContractDto contractDto = contractService.findById(fromCartDto.getNumber());
+        OptionDto optionDto = optionService.findOptionById(fromCartDto.getOptionId());
+        String key = fromCartDto.getNumber();
 
         if (cart.containsKey(key)){
             Set<OptionDto> currentSet = cart.get(key);
             currentSet.removeIf(option -> option.equals(optionDto));
-            cart.put(key, currentSet);
+            if (currentSet.isEmpty()){
+                cart.remove(key);
+            }else {
+              cart.put(key, currentSet);
+            }
         }
     }
 

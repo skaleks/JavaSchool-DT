@@ -3,25 +3,39 @@
 <head th:replace="templates/head :: head(title = 'Magenta Operator')"></head>
 <body>
 <header th:replace="templates/header:: navbarUser"></header>
-<main class="container m-auto">
-    <div class="card">
-        <h3 class="card-header"> Cart </h3>
-        <div class="card-body">
-            <th:block th:each="item:${@cart.cart}">
-                <h5>[[${item.key}]]</h5>
-                <ul class="list-group list-group-flush" th:each="option:${item.value}">
-                    <li class="list-group-item" th:text="${option.name} + ${option.price}"></li>
-                </ul>
-                <br>
-            </th:block>
-            <th:block th:if="${@cart.cart.isEmpty()}">
-                <h5> Cart is empty! </h5>
-            </th:block>
+<main class="container d-flex justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <h3 class="card-header"> Cart </h3>
+            <div class="card-body">
+                <th:block th:if="${@cart.cart.isEmpty()}">
+                    <h5> Cart is empty! </h5>
+                </th:block>
+                <th:block th:unless="${@cart.cart.isEmpty()}">
+                    <th:block th:each="item:${@cart.cart}">
+                        <h5 th:text="${item.key}"></h5>
+                        <ul class="list-group list-group-flush" th:each="option:${item.value}">
+                            <li class="list-group-item d-inline-flex justify-content-between">
+                                <span th:text="${option.name} + ${option.price}"></span>
+                                <form th:method="POST" th:action="@{/user/cart/deleteItem}" th:object="${delFromCart}">
+                                    <input type="hidden" th:attr="name='number'" th:value="${item.key}">
+                                    <input type="hidden" th:attr="name='optionId'" th:value="${option.id}">
+                                    <button type="submit" class="close"><i class="fas fa-times-circle"></i></button>
+                                </form>
+                            </li>
+                        </ul>
+                        <br>
+                    </th:block>
+                </th:block>
+            </div>
+            <div class="card-footer d-inline-flex justify-content-between">
+                <span>Total [[${@cart.totalCost}]]</span>
+                <a class="btn btn-outline-success" th:href="@{/user/cart/buy}"> Buy! </a>
+            </div>
         </div>
-        <div class="card-footer justify-content-between">
-            <span>Total [[${@cart.totalCost}]]</span>
-            <a class="btn btn-outline-success" th:href="@{/user/buy}"> Buy! </a>
-        </div>
+    </div>
+    <div class="col-md-4">
+        <div th:replace="templates/cards :: balance_card"></div>
     </div>
 </main>
 <footer th:replace="templates/footer::footer"></footer>

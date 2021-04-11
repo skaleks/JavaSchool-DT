@@ -3,8 +3,11 @@
 <head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
 <header th:replace="templates/header::navbar"></header>
-<!--TODO-->
-<div class="display-1 alert alert-danger">Error 403</div>
+<main class="container justify-content-center">
+    <div class="col-md-6">
+        <img src="/static/images/access-denied.png">
+    </div>
+</main>
 <footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

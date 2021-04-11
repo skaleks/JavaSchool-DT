@@ -3,6 +3,7 @@ package com.magenta.controller.user;
 
 import com.magenta.crud.contract.ContractService;
 import com.magenta.crud.contract.dto.ContractPageDto;
+import com.magenta.crud.contract.dto.DelOptionFromCartDto;
 import com.magenta.crud.contract.dto.EditContractDto;
 import com.magenta.crud.global.DataService;
 import com.magenta.crud.global.dto.ChangeStatusDto;
@@ -22,6 +23,7 @@ import lombok.AllArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -125,12 +127,13 @@ public class UserController {
     }
 
     @GetMapping("/cart")
-    public String cart(){
+    public String cart(Model model){
+        model.addAttribute("delFromCart", new DelOptionFromCartDto());
         return "user/cart";
     }
 
     @PostMapping("/contract/addOption")
-    public ModelAndView addItemToCart(@ModelAttribute("editContractDto") EditContractDto editContractDto) throws DatabaseException, MyException {
+    public ModelAndView addOptionToCart(@ModelAttribute("editContractDto") EditContractDto editContractDto) throws DatabaseException, MyException {
         sessionCart.addOptionsToCart(editContractDto);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("user/contractInfo");
@@ -138,10 +141,10 @@ public class UserController {
         return mav;
     }
 
-    @PostMapping("/contract/delOptionFromCart")
-    public ModelAndView delItemFromCart(EditContractDto editContractDto) throws DatabaseException {
-        sessionCart.deleteOptionFromCart(editContractDto);
-        return null;
+    @PostMapping("/cart/deleteItem")
+    public String delOptionFromCart(@ModelAttribute("delFromCart") DelOptionFromCartDto delOptionFromCartDto) throws DatabaseException {
+        sessionCart.deleteOptionFromCart(delOptionFromCartDto);
+        return "redirect:/user/cart";
     }
 
     @PostMapping("/contract/deleteOption")
@@ -153,7 +156,7 @@ public class UserController {
         return mav;
     }
 
-    @GetMapping("/buy")
+    @GetMapping("/cart/buy")
     public ModelAndView buyOptions() throws DatabaseException {
         String response = contractService.buyOptions();
         ModelAndView mav = new ModelAndView();
