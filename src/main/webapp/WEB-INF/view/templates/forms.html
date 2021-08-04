@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+    <!--  Change status form  -->
+    <form th:fragment="status_form(check, value)" th:action="@{/admin/user/status}" th:method="POST" th:object="${status}"
+          th:if="${profile.user.status == profile.user.status.${check}}" class="col">
+        <input type="hidden" th:attr="name='entityId'" th:value="${profile.user.id}">
+        <input type="hidden" th:attr="name='status'" th:value="${value}">
+        <button type="submit" class="btn btn-block btn-outline-danger">Deactivate</button>
+    </form>
+
+
+</body>
+</html>

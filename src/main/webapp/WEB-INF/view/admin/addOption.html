@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
+<body>
+<header th:replace="templates/header::navbarAdmin"></header>
+<main>
+    <div class="py-2">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="display-4 mx-2">Give people a new option</h1>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <form class="my-2" th:method="POST" th:action="@{/admin/option/new}" th:object="${option}">
+                        <div class="form-row mb-2">
+                            <div class="col-7 px-3">
+                                <div class="form-row">
+                                    <div class="form-group col-6">
+                                        <label for="name" class="form-label ml-1">Name</label>
+                                        <input type="text" class="form-control shadow-sm" th:classappend="${#fields.hasErrors('name')}?'is-invalid'" th:field="*{name}" placeholder="Come up with a new name" id="name">
+                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                                    </div>
+                                    <div class="form-group col-3">
+                                        <label for="price" class="form-label ml-1">Price</label>
+                                        <input id="price" type="number" class="form-control shadow-sm" th:classappend="${#fields.hasErrors('price')}?'is-invalid'" th:field="*{price}">
+                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></small>
+                                    </div>
+                                    <div class="form-group col-3">
+                                        <label for="price" class="form-label ml-1">Cost</label>
+                                        <input id="cost" type="number" class="form-control shadow-sm" th:classappend="${#fields.hasErrors('addCost')}?'is-invalid'" th:field="*{addCost}">
+                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('addCost')}" th:errors="*{addCost}"></small>
+                                    </div>
+                                    <div class="form-group col-12">
+                                        <label class="form-label ml-1" for="descript">Description</label>
+                                        <textarea id="descript" type="text" class="form-control form-control-lg shadow-sm" th:classappend="${#fields.hasErrors('optionDescription')}?'is-invalid'" placeholder="Description" th:field="*{optionDescription}" rows="5"></textarea>
+                                        <small class="invalid-feedback" th:if="${#fields.hasErrors('optionDescription')}" th:errors="*{optionDescription}"></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="w-75">
+                        <div class="form-row pt-3">
+                            <div class="col"><button type="submit" class="btn btn-block btn-sm btn-success">Create</button></div>
+                            <div class="col"><a th:href="@{/admin/option/all}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="templates/footer::footer"></footer>
+</body>
+</html>

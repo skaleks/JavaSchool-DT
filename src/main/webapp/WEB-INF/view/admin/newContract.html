@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
+<body>
+<header th:replace="templates/header::navbarAdmin"></header>
+<main class="container p-5">
+    <div class="py-5">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Find user by Number or E-mail</h3>
+                <form class="form-inline pt-2" th:action="@{/admin/search}" th:method="GET">
+                    <input class="form-control mr-sm-2" type="search" th:name="search" placeholder="Enter number or e-mail" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-outline-primary" th:href="@{/admin/user/new}">New user</a>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="templates/footer::footer"></footer>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
+<body>
+<header th:replace="templates/header::navbarAdmin"></header>
+<main class="container-fluid mr-2">
+    <div class="row" th:if="${profile.contract.status == profile.contract.status.BLOCKED}">
+        <div class="alert alert-warning flex-grow-1 shadow-lg mb-4">
+            <h1 class="alert-heading text-center mb-0">Contract blocked!</h1>
+        </div>
+    </div>
+    <div class="row" th:if="${profile.contract.user.status == profile.contract.user.status.BLOCKED}">
+        <div class="alert alert-warning flex-grow-1 shadow-lg mb-4">
+            <h1 class="alert-heading text-center mb-0">User blocked!</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 pt-4">
+            <div class="col-md-12">
+                <div class="form-row">
+                    <form th:action="@{/admin/contract/status}" th:method="POST" th:object="${status}"
+                          th:if="${profile.contract.status == profile.contract.status.ACTIVE}" class="col">
+                        <input type="hidden" th:attr="name='entityId'" th:value="${profile.contract.id}">
+                        <input type="hidden" th:attr="name='status'" th:value="'BLOCKED'">
+                        <button type="submit" class="btn btn-block btn-outline-warning">Block</button>
+                    </form>
+                    <form th:action="@{/admin/contract/status}" th:method="POST" th:object="${status}"
+                          th:if="${profile.contract.status == profile.contract.status.BLOCKED
+                  && profile.contract.user.status == profile.contract.user.status.ACTIVE}" class="col">
+                        <input type="hidden" th:attr="name='entityId'" th:value="${profile.contract.id}">
+                        <input type="hidden" th:attr="name='status'" th:value="'ACTIVE'">
+                        <button type="submit" class="btn btn-block btn-outline-success">Activate</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12 mt-2">
+                <div class="card border rounded-lg border-dark shadow">
+                    <h4 class="card-header">Contract</h4>
+                    <div class="card-body">
+                        <dl>
+                            <dt>Number</dt>
+                            <dd th:text="${profile.contract.number}"></dd>
+                            <dt>First name</dt>
+                            <dd th:text="${profile.contract.user.firstname}"></dd>
+                            <dt>Last name</dt>
+                            <dd th:text="${profile.contract.user.lastname}"></dd>
+                            <dt>Tariff</dt>
+                            <dd th:text="${profile.contract.tariff.name}"></dd>
+                        </dl>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-danger" th:href="@{/admin/contract/delete{id}(id=${profile.contract.id})}">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 mt-2">
+                <div class="card">
+                    <h5 class="card-header">
+                        Options
+                    </h5>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Cost of add</th>
+                                    <th scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="option: ${profile.contract.options}">
+                                    <td th:text="${option.name}"></td>
+                                    <td th:text="${option.price}"></td>
+                                    <td th:text="${option.addCost}"></td>
+                                    <td>
+                                        <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/contract/deleteOption}" th:object="${optionFromContract}">
+                                            <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">
+                                            <input type="hidden" th:value="${option.id}" th:attr="name='optionId'">
+                                            <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 pt-4">
+            <div class="col-md-6">
+                <div th:if="${profile.contract.status == profile.contract.status.ACTIVE
+                    && profile.contract.user.status == profile.contract.user.status.ACTIVE}">
+                    <h2>Available tariff</h2>
+                    <form th:action="@{/admin/contract/switchTariff}" th:method="POST" th:object="${switch}">
+                        <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">
+                        <input type="hidden" th:value="${profile.contract.user.id}" th:attr="name='userId'">
+                        <select id="tariff" class="custom-select" th:attr="name='tariffId'">
+                            <option th:each="tariff: ${profile.tariffDtoList}"
+                                    th:value="${tariff.id}"
+                                    th:text="${tariff.name}">
+                            </option>
+                        </select>
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Switch tariff</button>
+                    </form>
+                </div>
+                <div th:unless="${profile.contract.status == profile.contract.status.ACTIVE
+                    && profile.contract.user.status == profile.contract.user.status.ACTIVE}">
+                    You cannot switch tariff. Contract blocked or account not active
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-header">
+                            Available options
+                        </h5>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Cost of add</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="option: ${profile.contract.tariff.options}">
+                                        <td th:text="${option.name}"></td>
+                                        <td th:text="${option.price}"></td>
+                                        <td th:text="${option.addCost}"></td>
+                                        <td>
+                                            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/contract/addOption}" th:object="${optionToContract}">
+                                                <input type="hidden" th:value="${profile.contract.id}" th:attr="name='contractId'">
+                                                <input type="hidden" th:value="${option.id}" th:attr="name='optionId'">
+                                                <button type="submit" class="btn btn-outline-danger">Add</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="templates/footer::footer"></footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
+<body>
+<header th:replace="templates/header::navbarAdmin"></header>
+<main class="container mt-3">
+    <div class="row justify-content-center mt-2"><h1 class="h1">New contract</h1></div>
+    <div class="row mt-4">
+        <div th:unless="${user.id == 0}" class="col-4">
+            <div class="card">
+                <h4 class="card-header bg-danger">User info</h4>
+                <div class="card-body">
+                    <dl>
+                        <dt>First name</dt>
+                        <dd th:text="${user.firstname}"></dd>
+                        <dt>Last name</dt>
+                        <dd th:text="${user.lastname}"></dd>
+                        <dt>Address</dt>
+                        <dd th:text="${user.address}"></dd>
+                        <dt>Birth date</dt>
+                        <dd th:text="${user.birthdate}"></dd>
+                        <dt>E-mail</dt>
+                        <dd th:text="${user.email}"></dd>
+                        <dt>Passport</dt>
+                        <dd th:text="${user.passport}"></dd>
+                        <dt>Login</dt>
+                        <dd th:text="${user.login}"></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 border border-3 border-dark rounded align-self-end">
+            <div class="row justify-content-center"><h3 class=" h3 text-center">New contract</h3></div>
+            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/contract/new}" th:object="${contract}">
+                <h4 class="h4">Contract</h4>
+                <div class="row">
+                    <div class="col-6 px-2">
+                        <label for="number" class="form-label">Number</label>
+                        <input id="number" type="text" class="form-control" placeholder="Number" th:field = "*{number}">
+                        <input type="hidden" th:value="${user.id}" th:attr="name='userId'">
+                    </div>
+                    <div class="col-6 px-2">
+                        <label for="tariff" class="form-label">Tariff</label>
+                        <select id="tariff" class="custom-select" th:field="*{tariffId}">
+                            <option th:each="tariff: ${tariffs}"
+                                    th:value="${tariff.id}"
+                                    th:text="${tariff.name}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select th:each="tariff: ${tariffs}" multiple class="custom-select" th:field="*{optionsId}">
+                            <option th:each="option: ${tariff.options}"
+                                    th:value="${option.id}"
+                                    th:text="${option.name}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 pb-3">
+                    <br/>
+                    <button type="submit" class="btn btn-primary">Create contract</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+<footer th:replace="templates/footer::footer"></footer>
+</body>
+</html>

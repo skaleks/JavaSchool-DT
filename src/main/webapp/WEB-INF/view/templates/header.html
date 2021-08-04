@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!--  Global navbar for start page  -->
+
+<header th:fragment="navbar">
+    <nav class="custom-navbar navbar navbar-expand-lg sticky-top mb-4">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item mx-1">
+                        <a class="nav-link" th:href="@{/}"><i class="fas fa-home" aria-hidden="true"></i> Home </a>
+                    </li>
+                </ul>
+                <h1 class="label-magenta shadow-lg"><b>Magenta</b></h1>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<!--  Navbar for User  -->
+
+<header th:fragment="navbarUser">
+    <nav class="custom-navbar navbar navbar-expand-lg sticky-top mb-4">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item mx-1">
+                        <a class="nav-link" th:href="@{/user}"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+                    </li>
+                </ul>
+                <h1 class="label-magenta shadow-lg"><b>Magenta</b></h1>
+                <ul class="navbar-nav ml-auto mr-2">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/user/cart}"><i class="fas fa-shopping-bag" aria-hidden="true"></i> [[${@cart.itemsCount}]]</a>
+                    </li>
+                    <li>
+                        <div class="dropdown">
+                            <a class="btn" role="button" id="logUser" data-toggle="dropdown">Menu <i class="fas fa-bars" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="log">
+                                <h5 class="dropdown-header"><i class="fas fa-user" aria-hidden="true"></i> [[${#authentication.name}]] </h5>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/user/profile}">My profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/logout}">Log Out</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+<!--  Navbar for Admin  -->
+
+<header th:fragment="navbarAdmin">
+    <nav class="custom-navbar navbar navbar-expand-md sticky-top mb-4">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav">
+                    <li class="nav-item mx-1">
+                        <a class="nav-link" th:href="@{/admin}"><i class="fas fa-home" aria-hidden="true"></i> Home</a>
+                    </li>
+                </ul>
+                <form class="form-inline mr-auto" th:action="@{/admin/search}" th:method="GET">
+                    <input class="form-control mr-sm-2" type="search" th:name="search" placeholder="Enter number or e-mail" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search" aria-hidden="true"></i></button>
+                </form>
+                <h1 class="label-magenta shadow-lg"><b>Magenta</b></h1>
+                <ul class="navbar-nav ml-auto mr-2">
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="btn" role="button" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Create new</a>
+                            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                <a class="text-dark dropdown-item" th:href="@{/admin/contract/new}">Contract</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/user/new}">User</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/tariff/new}">Tariff</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/option/new}">Option</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="btn" role="button" id="contractDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Find all</a>
+                            <div class="dropdown-menu" aria-labelledby="contractDropdown">
+                                <a class="text-dark dropdown-item" th:href="@{/admin/contract/list}">Contracts</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/user/list}">Users</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/tariff/list}">Tariffs</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/option/list}">Options</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn" role="button" th:href="@{/admin/showcase}">Showcase</a>
+                    </li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="btn" role="button" id="logAdmin" data-toggle="dropdown">Menu <i class="fas fa-bars" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="log">
+                                <h5 class="dropdown-header"><i class="fas fa-user" aria-hidden="true"></i> [[${#authentication.name}]](Admin) </h5>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/admin/profile}">My profile</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="text-dark dropdown-item" th:href="@{/logout}">Log Out</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+</html>
