@@ -1,6 +1,6 @@
 package com.magenta.crud;
 
-import com.magenta.myexception.MyException;
+import com.magenta.myexception.DatabaseException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public abstract class AbstractDao<T> {
         return sessionFactory.getCurrentSession();
     }
 
-    public T findById(int id) throws MyException {
+    public T findById(int id) throws DatabaseException {
         return getSession().find(entity,id);
     }
 

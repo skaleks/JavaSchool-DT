@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
+<body>
+<header th:replace="templates/header::navbarAdmin"></header>
+<main class="container-fluid px-3">
+    <div class="row">
+        <div class="col-md-4 p-3">
+            <div class="card border rounded-lg border-dark shadow">
+                <h4 class="card-header">Tariff</h4>
+                <div class="card-body">
+                    <dl>
+                        <dt>Name</dt>
+                        <dd th:text="${profile.tariff.name}"></dd>
+                        <dt>Price</dt>
+                        <dd th:text="${profile.tariff.price}"></dd>
+                        <dt>Description</dt>
+                        <dd th:text="${profile.tariff.tariffDescription}"></dd>
+                        <dt>Status</dt>
+                        <dd th:text="${profile.tariff.status}"></dd>
+                    </dl>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-danger" th:href="@{/admin/tariff/delete{id}(id = ${profile.tariff.id})}">Delete</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8 pt-3">
+            <div class="row justify-content-between">
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-header">
+                            Current options
+                        </h5>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Cost of add</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="option: ${profile.tariff.options}">
+                                        <td th:text="${option.id}"></td>
+                                        <td th:text="${option.name}"></td>
+                                        <td th:text="${option.price}"></td>
+                                        <td th:text="${option.addCost}"></td>
+                                        <td>
+                                            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/tariff/delOption}" th:object="${optionFromTariff}">
+                                                <input type="hidden" th:value="${profile.tariff.id}" th:attr="name='tariffId'">
+                                                <input type="hidden" th:value="${option.id}" th:attr="name='optionId'">
+                                                <button type="submit" class="btn btn-outline-danger">Delete</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <h5 class="card-header">
+                            All options
+                        </h5>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Cost of add</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="option: ${profile.options}">
+                                        <td th:text="${option.id}"></td>
+                                        <td th:text="${option.name}"></td>
+                                        <td th:text="${option.price}"></td>
+                                        <td th:text="${option.addCost}"></td>
+                                        <td>
+                                            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/tariff/addOption}" th:object="${optionToTariff}">
+                                                <input type="hidden" th:value="${profile.tariff.id}" th:attr="name='tariffId'">
+                                                <input type="hidden" th:value="${option.id}" th:attr="name='optionId'">
+                                                <button type="submit" class="btn btn-outline-danger">Add</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="templates/footer::footer"></footer>
+</body>
+</html>

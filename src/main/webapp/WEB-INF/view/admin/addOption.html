@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
-<header th:replace="~{header::navbarAdmin}"></header>
+<header th:replace="templates/header::navbarAdmin"></header>
 <main>
     <div class="py-2">
         <div class="container">
@@ -18,7 +13,7 @@
             </div>
             <div class="row mt-3">
                 <div class="col-md-12">
-                    <form class="my-2" th:method="POST" th:action="@{/admin/new/option}" th:object="${option}">
+                    <form class="my-2" th:method="POST" th:action="@{/admin/option/new}" th:object="${option}">
                         <div class="form-row mb-2">
                             <div class="col-7 px-3">
                                 <div class="form-row">
@@ -44,58 +39,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-5 px-3">
-                                <label class="form-label ml-1">Excluded options</label>
-                                <div class="list-group">
-                                    <div class="list-group-item list-group-item-action">
-                                        <div class="form-check-inline">
-                                            <input id="exclude" class="form-check-input" type="checkbox">
-                                            <label for="exclude" class="form-check-label">option</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <hr class="w-75">
                         <div class="form-row pt-3">
                             <div class="col"><button type="submit" class="btn btn-block btn-sm btn-success">Create</button></div>
-                            <div class="col"><a th:href="@{/admin/allOptions}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
+                            <div class="col"><a th:href="@{/admin/option/all}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-<!--  Не удалять!  -->
-<!--    <div class="row mt-4 justify-content-center"><h3 class="h3">Option form</h3></div>-->
-<!--    <div class="row justify-content-center">-->
-<!--        <div class="col-6 border border-3 border-dark rounded justify-content-center">-->
-<!--            <div class="row justify-content-center"><h1 class="text-center">New option</h1></div>-->
-<!--            <form class="row" th:method="POST" th:action="@{/admin/new/option}" th:object="${option}">-->
-<!--                <div class="col-6">-->
-<!--                    <label for="name" class="form-label">Name</label>-->
-<!--                    <input  id="name" type="text" class="form-control" placeholder="Name" th:field = "*{name}">-->
-<!--                </div>-->
-<!--                <div class="col-3">-->
-<!--                    <label for="price" class="form-label">Price</label>-->
-<!--                    <input id="price" type="text" class="form-control" th:field = "*{price}">-->
-<!--                </div>-->
-<!--                <div class="col-3">-->
-<!--                    <label for="costAdd" class="form-label">Option connection cost</label>-->
-<!--                    <input id="costAdd" type="text" class="form-control" th:field = "*{addCost}">-->
-<!--                </div>-->
-<!--                <div class="col-12">-->
-<!--                    <label for="descript" class="form-label">Description</label>-->
-<!--                    <textarea id="descript" type="text" class="form-control" placeholder="Description" th:field = "*{optionDescription}"></textarea>-->
-<!--                </div>-->
-<!--                <div class="col-12 pb-3">-->
-<!--                    <br/>-->
-<!--                    <button type="submit" class="btn btn-primary">Sign in</button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
 </main>
-<footer th:replace="~{footer::footer}"></footer>
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

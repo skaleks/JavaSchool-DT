@@ -1,0 +1,20 @@
+body{
+    background-image: url(/static/images/line.png);
+    background-position: inherit;
+}
+
+#container-404{
+    position: fixed;
+    margin-top: 7%;
+    margin-left: 19%;
+}
+
+#div404{
+    color: #940a1f;
+    text-align: center;
+    font-size: 17rem;
+}
+
+#container-404 h1{
+    font-family: "Dubai Medium", sans-serif;
+}

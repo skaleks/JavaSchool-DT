@@ -23,16 +23,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     UserDetailsService userServiceDetails;
 
 //    @Autowired
-//    public SecurityConfiguration(@Qualifier(value = "userDetailsService") CustomUserServiceDetails userServiceDetails) {
-//        this.userServiceDetails = userServiceDetails;
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .inMemoryAuthentication()
+//                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
 //    }
-
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-                .inMemoryAuthentication()
-                .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADMIN");
-    }
 
     @Autowired
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) {
@@ -43,15 +38,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/","/login").permitAll()
+                .antMatchers("/","/login", "/404").permitAll()
                 .antMatchers("/admin/**").access("(hasRole('ADMIN'))")
                 .antMatchers("/user/**").access("(hasRole('USER'))")
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                .loginProcessingUrl("/login")
+                .loginPage("/")
+                .loginProcessingUrl("/")
                 .usernameParameter("login").passwordParameter("password").successHandler(authenticationSuccessHandler())
-                .failureUrl("/403")
+                .and()
+                .exceptionHandling().accessDeniedPage("/403")
                 .and()
                 .logout();
     }
@@ -73,4 +69,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationSuccessHandler authenticationSuccessHandler(){
         return new CustomAuthenticationSuccessHandler();
     }
+
+
 }

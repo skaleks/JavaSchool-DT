@@ -1,66 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
-<header th:replace="~{header::navbarAdmin}"></header>
-<main class="container-fluid">
-<!--    <div class="row mt-4 justify-content-center"><h3 class="h3 text-center">Something</h3></div>-->
-<!--    <div class="row justify-content-center">-->
-<!--        <div class="col-5 border border-3 border-dark rounded ">-->
-<!--            <div class="row justify-content-center"><h1 class="text-center">New user</h1></div>-->
-<!--            <form class="row" th:method="POST" th:action="@{/admin/new/user}" th:object="${user}">-->
-<!--                <div class="col-6">-->
-<!--                    <label for="firstname" class="form-label">First name</label>-->
-<!--                    <input  id="firstname" type="text" class="form-control" placeholder="Telekom" th:field = "*{firstname}">-->
-<!--                </div>-->
-<!--                <div class="col-6">-->
-<!--                    <label for="lastname" class="form-label">Last name</label>-->
-<!--                    <input id="lastname" type="text" class="form-control" placeholder="Deutsche" th:field = "*{lastname}">-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                    <label for="birthdate" class="form-label">Birth date</label>-->
-<!--                    <input id="birthdate" type="date" class="form-control" placeholder="Birthdate" th:field = "*{birthdate}">-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                    <label for="e-mail" class="form-label">E-mail</label>-->
-<!--                    <input id="e-mail" type="text" class="form-control" placeholder="E-mail" th:field = "*{email}">-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                    <label for="passport" class="form-label">Passport</label>-->
-<!--                    <input id="passport" type="text" class="form-control" placeholder="Passport" th:field = "*{passport}">-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                    <label for="login" class="form-label">Login</label>-->
-<!--                    <input id="login" type="text" class="form-control" placeholder="Login" th:field = "*{login}">-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                    <label for="password" class="form-label">Password</label>-->
-<!--                    <input id="password" type="text" class="form-control" placeholder="Password" th:field = "*{password}">-->
-<!--                </div>-->
-<!--                <div class="col-4">-->
-<!--                    <label for="role" class="form-label">Role</label>-->
-<!--                    <input id="role" type="text" class="form-control" placeholder="Who are you?" th:field = "*{role}">-->
-<!--                </div>-->
-<!--                <div class="col-12">-->
-<!--                    <label for="address" class="form-label">Address</label>-->
-<!--                    <input id="address" type="text" class="form-control" placeholder="Address" th:field = "*{address}">-->
-<!--                </div>-->
-<!--                <div class="col-12">-->
-<!--                    <label for="status" class="form-label">Status</label>-->
-<!--                    <input id="status" type="text" class="form-control" placeholder="Status" th:field = "*{status}">-->
-<!--                </div>-->
-<!--                <div class="col-12">-->
-<!--                    <br/>-->
-<!--                    <button type="submit" class="btn btn-primary">Sign in</button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
+<header th:replace="templates/header::navbarAdmin"></header>
+<main>
     <div class="py-2">
         <div class="container">
             <div class="row">
@@ -70,7 +13,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-md-8">
-                    <form class="m-1" th:method="POST" th:action="@{/admin/new/user}" th:object="${user}">
+                    <form class="m-1" th:method="POST" th:action="@{/admin/user/new}" th:object="${user}">
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="firstname" class="form-label ml-1">First name</label>
@@ -122,53 +65,14 @@
                         </div>
                         <div class="form-row pt-3">
                             <div class="col-8"><button type="submit" class="btn btn-block btn-sm btn-success">Sign in</button></div>
-                            <div class="col"><a th:href="@{/admin/allUsers}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
+                            <div class="col"><a th:href="@{/admin/user/all}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <!--        <form th:method="POST" th:action="@{/admin/user}" th:object="${user}">-->
-    <!--            <div class="row">-->
-    <!--                <div class="col">-->
-    <!--                    <input type="text" class="form-control" placeholder="Enter first name" th:field = "*{firstname}">-->
-    <!--                </div>-->
-    <!--                <div class="col">-->
-    <!--                    <input type="text" class="form-control" placeholder="Enter last name" th:field = "*{lastname}">-->
-    <!--                </div>-->
-    <!--            </div>-->
-    <!--            <label for="firstname">Name:</label>-->
-    <!--            <input type="text" th:field = "*{firstname}" id="firstname">-->
-    <!--            <br/>-->
-    <!--            <label for="lastname">Surname:</label>-->
-    <!--            <input type="text" th:field = "*{lastname}" id="lastname">-->
-    <!--            <br/>-->
-    <!--            <label for="birthdate">Birthdate:</label>-->
-    <!--            <input type="date" th:field = "*{birthdate}" id="birthdate">-->
-    <!--            <br/>-->
-    <!--            <label for="email">E-mail:</label>-->
-    <!--            <input type="text" th:field = "*{email}" id="email">-->
-    <!--            <br/>-->
-    <!--            <label for="passport">Passport:</label>-->
-    <!--            <input type="text" th:field = "*{passport}" id="passport">-->
-    <!--            <br/>-->
-    <!--            <label for="login">Login</label>-->
-    <!--            <input type="text" th:field = "*{login}" id="login">-->
-    <!--            <br/>-->
-    <!--            <label for="password">Password:</label>-->
-    <!--            <input type="text" th:field = "*{password}" id="password">-->
-    <!--            <br/>-->
-    <!--            <label for="address">Address</label>-->
-    <!--            <input type="text" th:field = "*{address}" id="address">-->
-    <!--            <br/>-->
-    <!--            <label for="role">Role</label>-->
-    <!--            <input type="text" th:field = "*{role}" id="role">-->
-    <!--            <br/>-->
-    <!--            <br/>-->
-    <!--            <input type="submit" value="Create User">-->
-    <!--        </form>-->
 </main>
-<footer th:replace="~{footer::footer}"></footer>
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

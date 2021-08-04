@@ -1,6 +1,6 @@
 package com.magenta.security;
 
-import com.magenta.crud.user.User;
+import com.magenta.crud.user.dto.UserDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,27 +11,27 @@ import java.util.List;
 
 public class CustomUserPrincipal implements UserDetails {
 
-    User user;
+    UserDto userDto;
 
-    public CustomUserPrincipal(User user) {
-        this.user = user;
+    public CustomUserPrincipal(UserDto userDto) {
+        this.userDto = userDto;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + userDto.getRole()));
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return userDto.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return user.getLogin();
+        return userDto.getLogin();
     }
 
     @Override

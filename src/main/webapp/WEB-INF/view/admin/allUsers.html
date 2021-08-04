@@ -1,57 +1,84 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body class="d-flex flex-column min-vh-100 bg-light">
-<header th:replace="~{header::navbarAdmin}"></header>
+<header th:replace="templates/header::navbarAdmin"></header>
 <main class="container-fluid">
     <div class="py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <h1 class="display-3 ml-5" style="">Users</h1>
+                    <div class="row display-3 mx-auto">Users</div>
                 </div>
-                <div class="col-md-4">
+                <div class="btn btn-success col-md-4 text-center text-uppercase p-4">
+                    <a class="btn text-light" th:href="@{/admin/user/new}">Add new user</a>
                 </div>
             </div>
         </div>
     </div>
     <div>
         <div class="container">
-            <div class="row">
-                <div class="col-md-10">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-dark">
-                            <thead>
-                            <tr>
-                                <th scope="col">Id<br></th>
-                                <th scope="col">First Name</th>
-                                <th scope="col">Last Name</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Status</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="user: ${users.listOfUsers}">
-                                <th th:text="${user.id}">1</th>
-                                <td><a th:text="${user.firstname}" th:href="@{/admin/user{id}(id = ${user.getId()})}"></a></td>
-                                <td th:text="${user.lastname}">Otto</td>
-                                <td th:text="${user.login}">Mark</td>
-                                <td th:text="${user.status}" class="bg-success">Active</td>
-                            </tr>
-                            </tbody>
-                        </table>
+            <div class="row p-2">
+                <div class="bg-info col-md-12">
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action flex-column align-items-start list-group-item-light"
+                           th:each="user: ${users.listOfUsers}" th:href="@{/admin/user/{id}(id = ${user.id})}">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h3 class="mb-1" th:text="${user.firstname +' '+ user.lastname}"></h3>
+                                <strong class="h4" th:text="${user.status}"></strong>
+                            </div>
+                            <p class="mb-1 lead text-uppercase" th:text="${user.role}"></p>
+                        </a>
                     </div>
-                    <a class="btn btn-info" th:href="@{/admin}">Back to main</a>
                 </div>
             </div>
         </div>
     </div>
 </main>
-<footer class="mt-auto" th:replace="~{footer::footer}"></footer>
+<!--<main class="container-fluid">-->
+<!--    <div class="py-4">-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-8">-->
+<!--                    <h1 class="display-3 ml-5">Users</h1>-->
+<!--                </div>-->
+<!--                <div class="col-md-4">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div>-->
+<!--        <div class="container">-->
+<!--            <div class="row">-->
+<!--                <div class="col-md-10">-->
+<!--                    <div class="table-responsive">-->
+<!--                        <table class="table table-hover table-dark">-->
+<!--                            <thead>-->
+<!--                            <tr>-->
+<!--                                <th scope="col">Id<br></th>-->
+<!--                                <th scope="col">First Name</th>-->
+<!--                                <th scope="col">Last Name</th>-->
+<!--                                <th scope="col">Username</th>-->
+<!--                                <th scope="col">Status</th>-->
+<!--                            </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                            <tr th:each="user: ${users.listOfUsers}">-->
+<!--                                <th th:text="${user.id}">1</th>-->
+<!--                                <td><a th:text="${user.firstname}" th:href="@{/admin/user{id}(id = ${user.getId()})}"></a></td>-->
+<!--                                <td th:text="${user.lastname}">Otto</td>-->
+<!--                                <td th:text="${user.login}">Mark</td>-->
+<!--                                <td th:text="${user.status}" class="bg-success">Active</td>-->
+<!--                            </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                    <a class="btn btn-info" th:href="@{/admin}">Back to main</a>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</main>-->
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

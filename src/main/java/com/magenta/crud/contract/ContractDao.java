@@ -1,15 +1,15 @@
 package com.magenta.crud.contract;
 
 
-import com.magenta.myexception.MyException;
+import com.magenta.myexception.DatabaseException;
 
 import java.util.List;
 
 public interface ContractDao {
 
     void saveContract(Contract contract);
-    void deleteContract(Contract contract) throws Exception;
+    void deleteContract(Contract contract) throws DatabaseException;
     List<Contract> findAllContracts();
-    Contract findById(int id) throws Exception;
-    Contract findByNumber(String number) throws MyException;
+    Contract findById(int id) throws DatabaseException;
+    Contract findByNumber(String number) throws DatabaseException;
 }

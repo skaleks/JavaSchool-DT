@@ -1,45 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
-<header th:replace="~{header::navbarAdmin}"></header>
-<main class="container">
-    <h1>List of contracts</h1>
-    <div class="row">
-        <div class="col-8 justify-content-start">
-            <table class="table table-hover table-danger">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Number</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">Tariff</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Delete</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="contract: ${contracts.contractDtoList}">
-                    <td th:text="${contract.getId()}"></td>
-                    <td th:text="${contract.getNumber()}"></td>
-                    <td th:text="${contract.getUser().getFirstname()}"></td>
-                    <td th:text="${contract.getTariff().getName()}"></td>
-                    <td th:text="${contract.getStatus()}"></td>
-                    <td th:text="${contract.getTariff().getPrice()}"></td>
-                    <td><a th:href="@{/admin/edit/deleteContract{id}(id = ${contract.getId()})}">Delete</a></td>
-                </tr>
-                </tbody>
-            </table>
+<header th:replace="templates/header::navbarAdmin"></header>
+<main class="container-fluid">
+    <div class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row display-3 mx-auto">Contracts</div>
+                </div>
+                <div class="btn btn-success col-md-4 text-center text-uppercase p-4">
+                    <a class="btn text-light" th:href="@{/admin/contract/new}">Add new contract</a>
+                </div>
+            </div>
         </div>
     </div>
-    <a th:href="@{/admin}">Back to main</a>
+    <div>
+        <div class="container">
+            <div class="row p-2">
+                <div class="bg-info col-md-12">
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action flex-column align-items-start list-group-item-light"
+                           th:each="contract: ${contracts.contractDtoList}" th:href="@{/admin/contract/{id}(id = ${contract.id})}">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h3 class="mb-1" th:text="${contract.number}"></h3>
+                                <strong class="h4" th:text="${contract.status}"></strong>
+                            </div>
+                            <p class="mb-1 lead text-uppercase" th:text="${contract.tariff.name}"></p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
-<footer th:replace="~{footer::footer}"></footer>
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

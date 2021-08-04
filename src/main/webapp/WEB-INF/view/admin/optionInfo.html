@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
+<body>
+<header th:replace="templates/header::navbarAdmin"></header>
+<main class="container-fluid px-3">
+    <div class="row">
+        <div class="col-md-3 p-3">
+            <div class="card border rounded-lg border-dark shadow">
+                <h4 class="card-header">Option</h4>
+                <div class="card-body">
+                    <dl>
+                        <dt>Name</dt>
+                        <dd th:text="${profile.option.name}"></dd>
+                        <dt>Price</dt>
+                        <dd th:text="${profile.option.price}"></dd>
+                        <dt>Description</dt>
+                        <dd th:text="${profile.option.optionDescription}"></dd>
+                        <dt>Status</dt>
+                        <dd th:text="${profile.option.status}"></dd>
+                        <dt>Connection cost</dt>
+                        <dd th:text="${profile.option.addCost}"></dd>
+                    </dl>
+                </div>
+                <div class="card-footer">
+                    <a class="btn btn-danger" th:href="@{/admin/option/delete{id}(id=${profile.option.id})}">Delete</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 pt-3">
+            <div class="row justify-content-between">
+                <th:block th:replace="templates/tables :: options('Related options', ${profile.option.relatedOptions}, ~{:: .related_form})">
+                    <td class="related_form">
+                        <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/option/relativeDel}" th:object="${relDel}">
+                            <input type="hidden" th:value="${profile.option.id}" th:attr="name='targetOptionId'">
+                            <input type="hidden" th:value="${option.id}" th:attr="name='addedOptionId'">
+                            <input type="hidden" th:value="'RELATED'" th:attr="name='optionRelative'">
+                            <button type="submit" class="btn btn-outline-danger">Cancel</button>
+                        </form>
+                    </td>
+                </th:block>
+                <th:block th:replace="templates/tables :: options('Excluded options', ${profile.option.excludedOptions}, ~{:: .excluded_form})">
+                    <td class="excluded_form">
+                        <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/option/relativeDel}" th:object="${relDel}">
+                            <input type="hidden" th:value="${profile.option.id}" th:attr="name='targetOptionId'">
+                            <input type="hidden" th:value="${option.id}" th:attr="name='addedOptionId'">
+                            <input type="hidden" th:value="'EXCLUDED'" th:attr="name='optionRelative'">
+                            <button type="submit" class="btn btn-outline-danger">Cancel</button>
+                        </form>
+                    </td>
+                </th:block>
+                <th:block th:replace="templates/tables :: options('Lead options', ${profile.option.leadOptions}, ~{})">
+                </th:block>
+<!--                <div class="col-md-4">-->
+<!--                    <div class="card">-->
+<!--                        <h5 class="card-header">-->
+<!--                            Related options-->
+<!--                        </h5>-->
+<!--                        <div class="card-body">-->
+<!--                            <th:block th:replace="templates/tables :: options(${profile.option.relatedOptions}, ~{:: .related_form})">-->
+<!--                                <td class="related_form">-->
+<!--                                    <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/option/relativeDel}" th:object="${relDel}">-->
+<!--                                        <input type="hidden" th:value="${profile.option.id}" th:attr="name='targetOptionId'">-->
+<!--                                        <input type="hidden" th:value="${option.id}" th:attr="name='addedOptionId'">-->
+<!--                                        <input type="hidden" th:value="'RELATED'" th:attr="name='optionRelative'">-->
+<!--                                        <button type="submit" class="btn btn-outline-danger">Cancel</button>-->
+<!--                                    </form>-->
+<!--                                </td>-->
+<!--                            </th:block>-->
+<!--                        </div>-->
+<!--                        <div class="card-footer">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-4">-->
+<!--                    <div class="card">-->
+<!--                        <h5 class="card-header">-->
+<!--                            Excluded options-->
+<!--                        </h5>-->
+<!--                        <div class="card-body">-->
+<!--                            <th:block th:replace="templates/tables :: options(${profile.option.excludedOptions}, ~{::.excluded_form})">-->
+<!--                                <td class="excluded_form">-->
+<!--                                    <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/option/relativeDel}" th:object="${relDel}">-->
+<!--                                        <input type="hidden" th:value="${profile.option.id}" th:attr="name='targetOptionId'">-->
+<!--                                        <input type="hidden" th:value="${option.id}" th:attr="name='addedOptionId'">-->
+<!--                                        <input type="hidden" th:value="'EXCLUDED'" th:attr="name='optionRelative'">-->
+<!--                                        <button type="submit" class="btn btn-outline-danger">Cancel</button>-->
+<!--                                    </form>-->
+<!--                                </td>-->
+<!--                            </th:block>-->
+<!--                        </div>-->
+<!--                        <div class="card-footer"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-4">-->
+<!--                    <div class="card">-->
+<!--                        <h5 class="card-header">-->
+<!--                            Lead options-->
+<!--                        </h5>-->
+<!--                        <div class="card-body">-->
+<!--                            <th:block th:replace="templates/tables :: options(${profile.option.leadOptions}, ~{})"></th:block>-->
+<!--                        </div>-->
+<!--                        <div class="card-footer"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="col-md-12">
+                    <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/option/relativeAdd}" th:object="${relAdd}">
+                        <h4 class="h4">All available options</h4>
+                        <div class="row">
+                            <div class="col-6 p-2">
+                                <input type="hidden" th:value="${profile.option.id}" th:attr="name='targetOptionId'">
+                                <select class="custom-select my-2" th:attr="name='optionRelative'">
+                                    <option th:each="rule: ${T(com.magenta.crud.type.OptionRelative).values()}"
+                                            th:value="${rule.getRule()}"
+                                            th:text="${rule.getRule()}">
+                                    </option>
+                                </select>
+                                <select class="custom-select" th:attr="name='addedOptionId'">
+                                    <option th:each="option: ${profile.availableOptionsToChoose}"
+                                            th:value="${option.id}"
+                                            th:text="${option.name}">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12 pb-3">
+                            <br/>
+                            <button type="submit" class="btn btn-primary">Add option</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="templates/footer::footer"></footer>
+</body>
+</html>

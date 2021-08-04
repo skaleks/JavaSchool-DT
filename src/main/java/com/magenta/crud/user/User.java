@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.Set;
 
@@ -16,8 +17,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "USER", schema = "public", catalog = "Magenta_Operator")
-public class User {
+@Table(name = "USERS", schema = "public", catalog = "Magenta_Operator")
+public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,13 +50,16 @@ public class User {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "USER_STATUS", nullable = false)
-    private Status status = Status.ACTIVE;
+    @Column(name = "STATUS", nullable = false)
+    private Status status;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "USER_ROLE", nullable = false)
+    @Column(name = "ROLE", nullable = false)
     private Role role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private Set<Contract> numbers;
+
+    @Column(name = "BALANCE")
+    private Double balance;
 }

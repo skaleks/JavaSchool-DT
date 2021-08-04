@@ -1,60 +1,88 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
-<header th:replace="~{header::navbarAdmin}"></header>
-<main class="container">
-    <h1>List of tariffs</h1>
-    <div class="row">
-        <div class="col-8 justify-content-start">
-            <table class="table table-hover table-danger">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Status</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="tariff: ${tariffs.tariffDtoList}">
-                    <td th:text="${tariff.getId()}"></td>
-                    <td th:text="${tariff.getName()}"></td>
-                    <td th:text="${tariff.getPrice()}"></td>
-                    <td th:text="${tariff.getTariffDescription()}"></td>
-                    <td th:text="${tariff.getStatus()}"></td>
-                    <td><a th:href="@{/admin/edit/deleteTariff{id}(id = ${tariff.getId()})}">Delete</a></td>
-                </tr>
-                </tbody>
-            </table>
-            <table th:each="tariff: ${tariffs.tariffDtoList}" class="table table-hover table-info">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Add Cost</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="option: ${tariff.options}">
-                    <td th:text="${option.id}"></td>
-                    <td th:text="${option.name}"></td>
-                    <td th:text="${option.price}"></td>
-                    <td th:text="${option.addCost}"></td>
-                </tr>
-                </tbody>
-            </table>
+<header th:replace="templates/header::navbarAdmin"></header>
+<main class="container-fluid">
+    <div class="py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row display-3 mx-auto">List of tariff</div>
+                </div>
+                <div class="btn btn-success col-md-4 text-center text-uppercase p-4">
+                    <a class="btn text-light" th:href="@{/admin/tariff/new}">Add new tariff</a>
+                </div>
+            </div>
         </div>
     </div>
-    <a th:href="@{/admin}">Back to main</a>
+    <div>
+        <div class="container">
+            <div class="row p-2">
+                <div class="bg-dark col-md-12">
+                    <div class="list-group">
+                        <a class="list-group-item list-group-item-action flex-column align-items-start list-group-item-light"
+                           th:each="tariff: ${tariffs.tariffDtoList}" th:href="@{/admin/tariff/{id}(id = ${tariff.id})}">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h3 class="mb-1" th:text="${tariff.name}"></h3>
+                                <strong class="h4" th:text="${tariff.status}"></strong>
+                            </div>
+                            <p class="lead mb-1" th:text="${tariff.tariffDescription}"></p>
+                            <b th:text="${tariff.price}">Price</b>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
-<footer th:replace="~{footer::footer}"></footer>
+<!--<main class="container">-->
+<!--    <h1>List of tariffs</h1>-->
+<!--    <div class="row">-->
+<!--        <div class="col-8 justify-content-start">-->
+<!--            <table class="table table-hover table-danger">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th scope="col">Id</th>-->
+<!--                    <th scope="col">Name</th>-->
+<!--                    <th scope="col">Price</th>-->
+<!--                    <th scope="col">Description</th>-->
+<!--                    <th scope="col">Status</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="tariff: ${tariffs.tariffDtoList}">-->
+<!--                    <td th:text="${tariff.getId()}"></td>-->
+<!--                    <td th:text="${tariff.getName()}"></td>-->
+<!--                    <td th:text="${tariff.getPrice()}"></td>-->
+<!--                    <td th:text="${tariff.getTariffDescription()}"></td>-->
+<!--                    <td th:text="${tariff.getStatus()}"></td>-->
+<!--                    <td><a th:href="@{/admin/edit/deleteTariff{id}(id = ${tariff.getId()})}">Delete</a></td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--            <table th:each="tariff: ${tariffs.tariffDtoList}" class="table table-hover table-info">-->
+<!--                <thead>-->
+<!--                <tr>-->
+<!--                    <th scope="col">Id</th>-->
+<!--                    <th scope="col">Name</th>-->
+<!--                    <th scope="col">Price</th>-->
+<!--                    <th scope="col">Add Cost</th>-->
+<!--                </tr>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                <tr th:each="option: ${tariff.options}">-->
+<!--                    <td th:text="${option.id}"></td>-->
+<!--                    <td th:text="${option.name}"></td>-->
+<!--                    <td th:text="${option.price}"></td>-->
+<!--                    <td th:text="${option.addCost}"></td>-->
+<!--                </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <a th:href="@{/admin}">Back to main</a>-->
+<!--</main>-->
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

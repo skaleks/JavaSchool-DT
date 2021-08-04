@@ -1,7 +1,7 @@
 package com.magenta.crud.tariff;
 
 import com.magenta.crud.AbstractDao;
-import com.magenta.myexception.MyException;
+import com.magenta.myexception.DatabaseException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -26,13 +26,9 @@ public class TariffDaoImpl extends AbstractDao<Tariff> implements TariffDao {
     }
 
     @Override
-    public Tariff findTariffById(int id) throws MyException {
+    public Tariff findTariffById(int id) throws DatabaseException {
         return findById(id);
     }
-
-//    @Override
-//    public void addOption(Option option) {
-//    }
 
     @Override
     public void updateTariff(Tariff tariff) {

@@ -1,7 +1,6 @@
 package com.magenta.crud.tariff;
 
-import com.magenta.myexception.MyException;
-
+import com.magenta.myexception.DatabaseException;
 import java.util.List;
 
 public interface TariffDao {
@@ -12,9 +11,7 @@ public interface TariffDao {
 
     List<Tariff> findAllTariff();
 
-    Tariff findTariffById(int id) throws MyException;
-
-//    void addOption(Option option);
+    Tariff findTariffById(int id) throws DatabaseException;
 
     void updateTariff(Tariff tariff);
 }

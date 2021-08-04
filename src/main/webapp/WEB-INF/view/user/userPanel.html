@@ -1,43 +1,71 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = ${#authentication.name})">
 <body>
-<header th:replace="~{header::navbarUser}"></header>
-<!--<main>-->
-<!--    <div class="col-md-4">-->
-<!--        <div class="card">-->
-<!--            <h5 class="card-header">-->
-<!--                Info-->
-<!--            </h5>-->
-<!--            <div class="card-body">-->
-<!--                <dl>-->
-<!--                    <dt>First name</dt>-->
-<!--                    <dd th:text="${user.firstname}"></dd>-->
-<!--                    <dt>Last name</dt>-->
-<!--                    <dd th:text="${user.lastname}"></dd>-->
-<!--                    <dt>Address</dt>-->
-<!--                    <dd th:text="${user.address}"></dd>-->
-<!--                    <dt>Birth date</dt>-->
-<!--                    <dd th:text="${user.birthdate}"></dd>-->
-<!--                    <dt>E-mail</dt>-->
-<!--                    <dd th:text="${user.email}"></dd>-->
-<!--                    <dt>Passport</dt>-->
-<!--                    <dd th:text="${user.passport}"></dd>-->
-<!--                </dl>-->
-<!--            </div>-->
-<!--            <div class="card-footer">-->
-<!--                <a th:href="@{/admin/edit/deleteUser{id}(id = ${user.getId()})}"-->
-<!--                   class="btn btn-outline-danger btn-sm">Delete</a>-->
-<!--                <a th:href="@{/admin/edit/updateUser{id}(id = ${user.getId()})}"-->
-<!--                   class="btn btn-outline-primary btn-sm">Edit</a>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</main>-->
+<header th:replace="templates/header:: navbarUser"></header>
+<main class="container">
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-md-7">
+                <h3 class="text-center display-4">Welcome,  [[${profile.user.firstname}]]</h3>
+                <div class="row mt-3 justify-content-start">
+                    <div class="col-md-12 pt-3">
+                        <div class="list-group-item-action card bg-light shadow mb-3" th:each="contract: ${profile.numbers}">
+                            <div class="card-header bg-info"></div>
+                            <div class="card-body row justify-content-between">
+                                <div class="col-7">
+                                    <h1 class="text-center mb-1 border-bottom border-info" th:text="${contract.number}"></h1>
+                                    <ul class="mt-1" th:each="option: ${contract.options}">
+                                        <li th:text="${option.name}">Option</li>
+                                    </ul>
+                                </div>
+                                <div class="col-4 text-center mb-0">
+                                    <h3 th:text="${contract.tariff.name}"></h3>
+                                    <p class="mb-1" th:text="${contract.tariff.tariffDescription}"></p>
+                                    <div class="card-footer p-0" th:text="${contract.tariff.price}"></div>
+                                </div>
+                            </div>
+                            <div class="card-footer py-1 bg-light">
+                                <span><b th:text="${contract.price}"></b></span>
+                                <a class="btn btn-outline-info" th:href="@{/user/contract{id}(id = ${contract.id})}">More-></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="col-md-12 my-2">
+                    <div th:replace="templates/cards :: balance_card"></div>
+                </div>
+<!--                   <div class="col-md-12 pt-2">-->
+<!--                       <div class="carousel slide shadow" data-ride="carousel" id="carousel">-->
+<!--                           <div class="carousel-inner" th:each="tariff: ${tariffs}">-->
+<!--                               <div class="carousel-item active" >-->
+<!--                                   <div class="card mx-4">-->
+<!--                                       <div class="card-body">-->
+<!--                                           <h3 class="mb-1 text-center" th:text="${tariff.name}"></h3>-->
+<!--                                           <p th:text="${tariff.tariffDescription}"></p>-->
+<!--                                       </div>-->
+<!--                                       <div class="card-footer text-right px-3 py-1">-->
+<!--                                           <span th:text="${tariff.price}">Price</span>-->
+<!--                                       </div>-->
+<!--                                   </div>-->
+<!--                               </div>-->
+<!--                           </div>-->
+<!--                           <a class="carousel-control-prev bg-light" href="#carousel" role="button" data-slide="prev">-->
+<!--                               <span class="carousel-control-prev-icon"></span>-->
+<!--                               <span class="sr-only">Previous</span>-->
+<!--                           </a>-->
+<!--                           <a class="carousel-control-next bg-light" href="#carousel" role="button" data-slide="next">-->
+<!--                               <span class="carousel-control-next-icon"></span>-->
+<!--                               <span class="sr-only">Next</span>-->
+<!--                           </a>-->
+<!--                       </div>-->
+<!--                   </div>-->
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

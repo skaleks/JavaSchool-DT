@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
-<header th:replace ="~{header::navbarAdmin}"></header>
-<main>
-    <h1 class="display-1 mt-2">Welcome, Admin!</h1>
-<!--    <p th:text="${s}"></p>-->
+<header th:replace = "templates/header::navbarAdmin"></header>
+<main class="container">
+    <div class="row">
+        <h1 class="display-1 mt-2">Hello, Admin!</h1>
+    </div>
 </main>
-<footer th:replace="~{footer::footer}"></footer>
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

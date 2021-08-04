@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
-<header th:replace="~{header::navbarAdmin}"></header>
+<header th:replace="templates/header::navbarAdmin"></header>
 <main class="container-fluid">
     <div class="py-2">
         <div class="container">
@@ -18,7 +13,7 @@
             </div>
             <div class="row mt-4">
                 <div class="col-md-8">
-                    <form class="m-1" th:method="POST" th:action="@{/admin/edit/{id}(id = ${userDto.getId()})}" th:object="${editUserDto}">
+                    <form class="m-1" th:method="POST" th:action="@{/admin/user/edit/{id}(id = ${userDto.getId()})}" th:object="${editUserDto}">
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="firstname" class="form-label ml-1">First name</label>
@@ -34,7 +29,7 @@
                         <div class="form-row">
                             <div class="form-group col-4">
                                 <label for="birthdate" class="form-label ml-1">Birth date</label>
-                                <input id="birthdate" type="date" class="form-control" th:field = "${userDto.birthdate}" readonly>
+                                <input id="birthdate" type="date" class="form-control" th:placeholder = "${userDto.birthdate}" readonly>
                             </div>
                             <div class="form-group col-4">
                                 <label for="email" class="form-label ml-1">E-mail</label>
@@ -58,7 +53,7 @@
                         <div class="form-row">
                             <div class="form-group col-6">
                                 <label for="login" class="form-label ml-1">Login</label>
-                                <input id="login" type="text" class="form-control" th:field = "${userDto.login}" readonly>
+                                <input id="login" type="text" class="form-control" th:placeholder = "${userDto.login}" readonly>
                             </div>
                             <div class="form-group col-6">
                                 <label for="password" class="form-label ml-1">Password</label>
@@ -66,11 +61,11 @@
                                 <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
                             </div>
                         </div>
-                        <input id="role" type="hidden" name="role" th:value="${userDto.role}">
-                        <input id="status" type="hidden" name="status" th:value="${userDto.status}">
+<!--                        <input id="role" type="hidden" th:name="'role'" th:value="${userDto.role}">-->
+<!--                        <input id="status" type="hidden" th:name="'status'" th:value="${userDto.status}">-->
                         <div class="form-row pt-3">
                             <div class="col-8"><button type="submit" class="btn btn-block btn-sm btn-success">Save changes</button></div>
-                            <div class="col"><a th:href="@{/admin/adminPanel}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
+                            <div class="col"><a th:href="@{/admin/user/{id}(id = ${userDto.id})}" class="btn btn-block btn-sm btn-outline-danger">Cancel</a></div>
                         </div>
                     </form>
                 </div>
@@ -83,6 +78,6 @@
         </div>
     </div>
 </main>
-<footer th:replace="~{footer::footer}"></footer>
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>

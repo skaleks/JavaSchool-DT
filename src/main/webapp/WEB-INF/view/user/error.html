@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
+<body>
+<header th:replace="templates/header:: navbarUser"></header>
+
+<div class="alert alert-danger lead content">
+    <span> Something wrong!</span>
+    <span th:text="${exception}"></span>
+</div>
+
+<footer th:replace="templates/footer::footer"></footer>
+</body>
+</html>

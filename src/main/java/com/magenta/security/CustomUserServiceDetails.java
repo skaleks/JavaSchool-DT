@@ -1,8 +1,8 @@
 package com.magenta.security;
 
-import com.magenta.crud.user.User;
 import com.magenta.crud.user.UserService;
-import com.magenta.myexception.MyException;
+import com.magenta.crud.user.dto.UserDto;
+import com.magenta.myexception.DatabaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -22,13 +22,13 @@ public class CustomUserServiceDetails implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
 
-        User user;
+        UserDto userDto;
         try {
-            user = userService.findByLogin(s);
-        } catch (MyException mye) {
-            LOGGER.info(mye.getMessage());
+            userDto = userService.findByLogin(s);
+        } catch (DatabaseException dbe) {
+            LOGGER.info(dbe.getMessage());
             throw new UsernameNotFoundException("Username not found");
         }
-        return new CustomUserPrincipal(user);
+        return new CustomUserPrincipal(userDto);
     }
 }

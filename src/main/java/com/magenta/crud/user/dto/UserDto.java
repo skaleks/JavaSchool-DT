@@ -1,6 +1,6 @@
 package com.magenta.crud.user.dto;
 
-import com.magenta.crud.contract.Contract;
+import com.magenta.crud.contract.dto.ContractDto;
 import com.magenta.crud.type.Role;
 import com.magenta.crud.type.Status;
 import lombok.Data;
@@ -19,6 +19,7 @@ public class UserDto implements Serializable {
     private int id;
     private String firstname;
     private String lastname;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthdate;
     private String passport;
@@ -28,5 +29,6 @@ public class UserDto implements Serializable {
     private String password;
     private Role role;
     private Status status;
-    private List<Contract> numbers;
+    private List<ContractDto> numbers;
+    private String balance;
 }

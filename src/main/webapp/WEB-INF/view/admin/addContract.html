@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Magenta Operator</title>
-    <link rel="stylesheet" th:href="@{~/static/bootstrap/css/bootstrap.min.css}">
-    <link rel="stylesheet"  type="text/css" href="/static/css/style.css">
-</head>
+<head th:replace="templates/head :: head(title = 'Magenta Operator')">
 <body>
-<header th:replace="~{header::navbarAdmin}"></header>
+<header th:replace="templates/header::navbarAdmin"></header>
 <main class="container mt-3">
     <div class="row justify-content-center mt-2"><h1 class="h1">New contract</h1></div>
     <div class="row mt-4">
@@ -35,8 +30,8 @@
             </div>
         </div>
         <div class="col-6 border border-3 border-dark rounded align-self-end">
-            <div class="row justify-content-center"><h3 class=" h3 text-center">BlaBlaBla</h3></div>
-            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/new/contract}" th:object="${contract}">
+            <div class="row justify-content-center"><h3 class=" h3 text-center">New contract</h3></div>
+            <form class="mt-2 px-4" th:method="POST" th:action="@{/admin/contract/new}" th:object="${contract}">
                 <h4 class="h4">Contract</h4>
                 <div class="row">
                     <div class="col-6 px-2">
@@ -47,14 +42,22 @@
                     <div class="col-6 px-2">
                         <label for="tariff" class="form-label">Tariff</label>
                         <select id="tariff" class="custom-select" th:field="*{tariffId}">
-                            <option th:each="tariff : ${tariffs}"
-                                    th:value="${tariff.getId()}"
-                                    th:text="${tariff.getName()}">
+                            <option th:each="tariff: ${tariffs}"
+                                    th:value="${tariff.id}"
+                                    th:text="${tariff.name}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <select th:each="tariff: ${tariffs}" multiple class="custom-select" th:field="*{optionsId}">
+                            <option th:each="option: ${tariff.options}"
+                                    th:value="${option.id}"
+                                    th:text="${option.name}">
                             </option>
                         </select>
                     </div>
                 </div>
-                <div class="col-12">
+                <div class="col-12 pb-3">
                     <br/>
                     <button type="submit" class="btn btn-primary">Create contract</button>
                 </div>
@@ -62,6 +65,6 @@
         </div>
     </div>
 </main>
-<footer th:replace="~{footer::footer}"></footer>
+<footer th:replace="templates/footer::footer"></footer>
 </body>
 </html>
